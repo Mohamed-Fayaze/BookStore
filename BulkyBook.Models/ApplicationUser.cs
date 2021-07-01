@@ -9,7 +9,7 @@ namespace BulkyBook.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        
+        //first name property
         [Required]  
         [Display(Name ="First Name")]
         [MaxLength(200)]
