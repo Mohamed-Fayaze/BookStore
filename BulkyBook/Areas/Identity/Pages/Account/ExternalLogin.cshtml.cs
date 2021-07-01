@@ -55,11 +55,12 @@ namespace BulkyBook.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            public string Name { get; set; }
-            public string StreetAddress { get; set; }
-            public string City { get; set; }
-            public string State { get; set; }
-            public string PostalCode { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            //public string StreetAddress { get; set; }
+            //public string City { get; set; }
+            //public string State { get; set; }
+            //public string PostalCode { get; set; }
             public string PhoneNumber { get; set; }
         }
 
@@ -108,11 +109,12 @@ namespace BulkyBook.Areas.Identity.Pages.Account
                 ReturnUrl = returnUrl;
                 LoginProvider = info.LoginProvider;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
-                {
+                { string[] Name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(" ").ToArray();
                     Input = new InputModel
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                        Name = info.Principal.FindFirstValue(ClaimTypes.Name)
+                        FirstName = Name[0],
+                        LastName = Name[1]
                     };
                 }
                 return Page();
@@ -136,11 +138,12 @@ namespace BulkyBook.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
-                    StreetAddress = Input.StreetAddress,
-                    City = Input.City,
-                    State = Input.State,
-                    PostalCode = Input.PostalCode,
-                    Name = Input.Name,
+                    //StreetAddress = Input.StreetAddress,
+                    //City = Input.City,
+                    //State = Input.State,
+                    //PostalCode = Input.PostalCode,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber,
                 };
                 var result = await _userManager.CreateAsync(user);

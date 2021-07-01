@@ -1,0 +1,108 @@
+﻿@model BulkyBook.Models.ViewModels.CategoryVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create SubCategory";
+}
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.SubCategory.SecondaryId != 0)
+        {
+            title = "Edit SubCategory";
+        }
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    CATEGORY
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.SubCategory.CategoryId, Model.categorylist, "-Select the category",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Category.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="SubCategory.SecondaryName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SubCategory.SecondaryName" class="form-control" /><br />
+                    <span asp-validation-for="SubCategory.SecondaryName" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="SubCategory.SubCategoryIcon"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SubCategory.SubCategoryIcon" style="display:none" />
+                    <input asp-for="SubCategory.formFile2" class="custom-control-label" accept="image/*" type="file" /><br />
+                    @*<input asp-for="formFile1" accept="image/*" type="file" />*@
+                    <span asp-validation-for="SubCategory.formFile2" class="text-danger"></span><br />
+                </div><br />
+                <div class="col-4">
+                    <label asp-for="SubCategory.SubCategoryImage"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="SubCategory.SubCategoryImage" style="display:none" />
+                    <input asp-for="SubCategory.formFile3" class="custom-control-label" accept="image/*" type="file" /><br />
+                    @*<input asp-for="formFile" accept="image/*" type="file" />*@
+                    <span asp-validation-for="SubCategory.formFile3" class="text-danger"></span>
+                </div><br />
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+
+                    @if (Model.SubCategory.SecondaryId != 0)
+                    {
+                        <partial name="_edit" model="Model.SubCategory.SecondaryId" />
+                    }
+                    else
+                    {
+
+                        <partial name="_CreateAndBackToListButton" />
+                    }
+                </div>
+                @if (Model.SubCategory.SecondaryId != 0)
+                {
+
+                    <div class="col-3 offset-1 pt-4">
+                        <img src="@Model.SubCategory.SubCategoryIcon" width="50%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                    </div>
+                }
+                @if (Model.SubCategory.SecondaryId != 0)
+                {
+
+                    <div class="col-3 offset-1 pt-4">
+                        <img src="@Model.SubCategory.SubCategoryImage" width="50%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                    </div>
+                }
+            </div>
+        </div>
+        @*@if (Model.SecondaryId != null)
+            {
+
+                <div class="col-3 offset-1 pt-4">
+                    <img src="@Model.SubCategoryIcon" width="500%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            }
+            @if (Model.CategoryId != null)
+            {
+
+                <div class="col-3 offset-1 pt-4">
+                    <img src="@Model.SubCategoryImage" width="500%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            }*@
+
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
+
+}

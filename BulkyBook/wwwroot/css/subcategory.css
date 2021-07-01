@@ -1,0 +1,8 @@
+﻿.dropdown {
+    display: none;
+    position: relative;
+}
+
+#menu li:hover .dropdown {
+    display: block;
+}

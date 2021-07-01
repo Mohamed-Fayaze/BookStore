@@ -1,4 +1,4 @@
-﻿@model BulkyBook.Models.Company
+﻿@model BulkyBook.Models.ViewModels.CompanyVM
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,7 @@
 <form method="post">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (Model.Id != 0)
+        @if (Model.Company.Id != 0)
         {
             //edit
             title = "Edit Company";
@@ -20,71 +20,82 @@
         <div class="col-8 pt-4">
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Name"></label>
+                    <label asp-for="Company.Name"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Company.Name" class="form-control" />
+                    <span asp-validation-for="Company.Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="StreetAddress"></label>
+                    <label asp-for="Company.ParentCorporation"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="StreetAddress" class="form-control" />
-                    <span asp-validation-for="StreetAddress" class="text-danger"></span>
+                    <input asp-for="Company.ParentCorporation" class="form-control" />
+                    <span asp-validation-for="Company.ParentCorporation" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="City"></label>
+                    Business Type
                 </div>
                 <div class="col-8">
-                    <input asp-for="City" class="form-control" />
-                    <span asp-validation-for="City" class="text-danger"></span>
+                    @Html.DropDownListFor(m => m.Company.BusinessTypeId, Model.BusinessTypeList, "-Select a Business Type",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Company.BusinessTypeId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="State"></label>
+                    Industry Type
                 </div>
                 <div class="col-8">
-                    <input asp-for="State" class="form-control" />
-                    <span asp-validation-for="State" class="text-danger"></span>
+                    @Html.DropDownListFor(m => m.Company.CategoryId, Model.PrimaryCategoryList, "-Select a Industry Type",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Company.CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+            @*<div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Company.DateOfRegistered"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Company.DateOfRegistered" class="form-control" />
+                    <span asp-validation-for="Company.DateOfRegistered" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="PostalCode"></label>
+                    <label asp-for="Company.GSTNo"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="PostalCode" class="form-control" />
-                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                    <input asp-for="Company.GSTNo" class="form-control" />
+                    <span asp-validation-for="Company.GSTNo" class="text-danger"></span>
                 </div>
-            </div>
+            </div>*@
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="PhoneNumber"></label>
+                    <label asp-for="Company.Description"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    <input asp-for="Company.Description" class="form-control" />
+                    <span asp-validation-for="Company.Description" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
+            @*<div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="IsAuthorizedCompany"></label>
+                    <label asp-for="Company.IsAuthorizedCompany"></label>
                 </div>
                 <div class="col-8">
-                    <input type="checkbox" asp-for="IsAuthorizedCompany" class="form-control" />
+                    <input type="checkbox" asp-for="Company.IsAuthorizedCompany" class="form-control" />
                 </div>
-            </div>
+            </div>*@
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    @if (Model.Id != 0)
+                    @if (Model.Company.Id != 0)
                     {
-                        <partial name="_EditAndBackToListButton" model="Model.Id" />
+                        <partial name="_EditAndBackToListButton" model="Model.Company.Id" />
                     }
                     else
                     {

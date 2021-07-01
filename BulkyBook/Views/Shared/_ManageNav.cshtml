@@ -1,0 +1,113 @@
+﻿@using BulkyBook
+
+@using Microsoft.AspNetCore.Identity
+@*@inject SignInManager<IdentityUser> SignInManager
+    @inject UserManager<IdentityUser> UserManager*@
+
+
+@*@model BulkyBook.Models.ApplicationUser*@
+@*@inject SignInManager<IdentityUser> SignInManager
+    @{
+        var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    }*@
+
+
+<!--<ul class="nav nav-pills flex-column">
+    <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-controller="UserProfile" asp-action="Index" id="profile">Profile</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="AddressTables" asp-action="Index" id="profile">My Addresses</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="BusinessProfile" asp-action="MyListing" id="mylisting">My Listing</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="BusinessProfile" asp-action="Favourite" id="myfavourite">My Favourite</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Identity" id="email" asp-page="/Account/Manage/Email">Email</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Identity" id="change-password" asp-page="/Account/Manage/ChangePassword">Password</a></li>-->
+@*@if (hasExternalLogins)
+    {*@
+<!--<li id="external-logins" class="nav-item"><a asp-area="Identity" id="external-login" class="nav-link" asp-page="/Account/Manage/ExternalLogins">External logins</a></li>
+
+    <li class="nav-item"><a class="nav-link" asp-area="Identity" id="two-factor" asp-page="/Account/Manage/TwoFactorAuthentication">Two-factor authentication</a></li>
+    <li class="nav-item"><a class="nav-link" asp-area="Identity" id="personal-data" asp-page="/Account/Manage/PersonalData">Personal data</a></li>
+
+</ul>-->
+
+<div class="user-profile-box mb-5">
+    <div class="sidebar-header"> <a asp-area="Customer" asp-controller="Home" asp-action="City"><strong>Kubri</strong></a> </div>
+    <div class="header clearfix">
+       @* @await Component.InvokeAsync("UserName")*@
+        @*@if (SignInManager.IsSignedIn(User))
+            {
+                @if (!string.IsNullOrEmpty(Model.ProfilePhoto))
+                {
+                    <img src="@Model.ProfilePhoto" alt="" class="img-fluid profile-img">
+
+                }
+                else
+                {
+                    <img src="~/images/dummyprofile/maleprofile.jpg" class="img-fluid profile-img" />
+                }
+            }*@
+    </div>
+    <div class="active-user">
+        @*<h2>Mary Smith</h2>*@
+    </div>
+    <div class="detail clearfix">
+        <ul class="mb-0">
+            @*<li>
+                <a href="dashboard.html">
+                    <i class="fa fa-map-marker"></i> Dashboard
+                </a>
+            </li>*@
+            <li>
+                <a asp-area="Identity" asp-controller="UserProfile" asp-action="Index" id="profile">
+                    <i class="fa fa-user"></i>Profile
+                </a>
+            </li>
+            <li>
+                <a asp-area="Customer" asp-controller="BusinessProfile" asp-action="MyListing" id="mylisting">
+                    <i class="fa fa-list" aria-hidden="true"></i>My Listings
+                </a>
+            </li>
+            <li>
+                <a asp-area="Customer" asp-controller="BusinessProfile" asp-action="Favourite" id="myfavourite">
+                    <i class="fa fa-heart" aria-hidden="true"></i>Favorited Listings
+                </a>
+            </li>
+            @*<li>
+            <a class="active" href="add-listing.html">
+                <i class="fa fa-list" aria-hidden="true"></i>Add Listing
+            </a>
+        </li>*@
+            <li>
+                <a asp-area="Customer" asp-controller="AddressTables" asp-action="Index" id="profile">
+                    <i class="fa fa-heart" aria-hidden="true"></i>My Address
+                </a>
+            </li>
+            @*<li>
+            <a href="payment-method.html">
+                <i class="fas fa-credit-card"></i>Payments
+            </a>
+        </li>
+        <li>
+            <a href="invoice.html">
+                <i class="fas fa-paste"></i>Invoices
+            </a>
+        </li>*@
+            <li>
+                <a asp-area="Identity" id="change-password" asp-page="/Account/Manage/ChangePassword">
+                    <i class="fa fa-lock"></i>Change Password
+                </a>
+            </li>
+            @*<li>
+                <a href="index.html">
+                    <i class="fas fa-sign-out-alt"></i>Log Out
+                </a>
+            </li>*@
+            <li>
+                <a>
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button type="submit" style="background-color:transparent;color:inherit;font:inherit;border:none"><i class="fas fa-sign-out-alt"></i>Log Out</button>
+                    </form>
+                </a>
+                
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+﻿@model BulkyBook.Models.ViewModels.ReviewRatingVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/FeatureRating.css" rel="stylesheet" />
+<link href="~/css/Index.css" rel="stylesheet" />
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-12 text-center mb-5">
+            <div class="card">
+                <div class="row justify-content-left d-flex">
+                    <div class="col-md-4 d-flex flex-column">
+                        <div class="rating-box">
+                            <h1 class="pt-4">@ViewBag.AverageRating</h1>
+                            <p class="">OverallRating</p>
+                        </div>
+                        <div>
+                            @for (decimal i = 0; i < (ViewBag.AverageRating); i++)
+                            {
+                                <i class="fa fa-star "></i>
+                            }
+                            @for (decimal? i = ViewBag.AverageRating; i < 5; i++)
+                            {
+                                <i class="fa fa-star-o"></i>
+                            }@ViewBag.AverageRating
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="rating-bar0 justify-content-center">
+                            <table class="text-left mx-auto">
+                                @*<tr>
+                                <td class="rating-label">Overall</td>
+                                <td class="rating-bar">
+                                    <div class="bar-container">
+                                        <div class="bar-5"></div>
+                                    </div>
+                                </td>
+                                <td class="text-right">123</td>
+                            </tr>
+                            <tr>
+                                <td class="rating-label">Service</td>
+                                <td class="rating-bar">
+                                    <div class="bar-container">
+                                        <div class="bar-4"></div>
+                                    </div>
+                                </td>
+                                <td class="text-right">23</td>
+                            </tr>
+                            <tr>
+                                <td class="rating-label">ValueForMoney</td>
+                                <td class="rating-bar">
+                                    <div class="bar-container">
+                                        <div class="bar-3"></div>
+                                    </div>
+                                </td>
+                                <td class="text-right">10</td>
+                            </tr>
+                            <tr>
+                                <td class="rating-label">FoodQuality</td>
+                                <td class="rating-bar">
+                                    <div class="bar-container">
+                                        <div class="bar-2"></div>
+                                    </div>
+                                </td>
+                                <td class="text-right">3</td>
+                            </tr>*@
+
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6 align-text-bottom">
+                <a class="btn btn-primary" asp-action="Upsert" asp-route-businessid="@Model.ReviewRating.BussinessId"><i class="fas fa-plus"></i> &nbsp; Write your Review</a>
+                <input asp-for="ReviewRating.BussinessId" type="hidden" />
+            </div>
+            <div>
+                <a asp-action="Index" asp-route-sort="0" asp-route-businessId="@Model.ReviewRating.BussinessId"><input value="Most Recent" class="btn btn-success" /><i class="fas fa-sort"></i></a>
+                <a asp-action="Index" asp-route-sort="1" asp-route-businessId="@Model.ReviewRating.BussinessId"><input value="Most Liked" class="btn btn-primary"><i class="fa-thumbs-up"></i></a>
+            </div>
+            @foreach (var item in Model.ReviewRatings)
+            {
+                @*<a asp-action="Upsert" asp-route-id="@item.Id"><i class="fas fa-edit" aria-hidde="true"></i>Edit</a>*@
+                <button type="button" onclick=Delete("/Admin/ReviewRating/Delete/@item.Id")><i class="fas fa-trash-alt"></i>Delete</button>
+
+                <div class="card">
+                    <div class="row d-flex">
+                        <div class="">
+                            <img class="profile-pic" src="@item.ApplicationUser.ProfilePhoto" />
+                        </div>
+                        <div class="d-flex flex-column">
+                            <h3 class="mt-2 mb-0">@Html.DisplayFor(modelItem => item.ApplicationUser.FirstName)</h3>
+                            <div>
+                                @for (decimal i = 0; i < (@item.OverallRating); i++)
+                                {
+                                    <i class="fa fa-star "></i>
+                                }
+                                @for (decimal? i = @item.OverallRating; i < 5; i++)
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                }
+                                @Html.DisplayFor(modelItem => item.OverallRating)
+
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <p class="text-muted pt-5 pt-sm-3">@Html.DisplayFor(modelItem => item.ReviewOn)</p>
+                            <p class="checkbox">@Html.DisplayFor(modelItem => item.Recommendation)</p>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <h4 class="blue-text mt-1">@Html.DisplayFor(modelItem => item.Title)</h4>
+                    </div>
+                    <div class="row text-left">
+                        <p class="content mt-3">@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+
+
+
+                    <div class="row text-left"> <img id="img" src="@item.Image" class="img-thumbnail" style="width:80px" /> </div>
+                    <div class="row text-left mt-4">
+
+                        <div> <a class="btn btn-outline-success" asp-action="Helpful" asp-route-id="@item.Id">Helpful<span class="blue-text pl-2">@item.HelpfulCount</span> </a></div>
+                        <div><a class="btn btn-outline-danger" asp-action="ReportAbuse" asp-route-id="@item.Id"> ReportAbuse<span class="text-muted pl-2"></span></a> </div>
+                    </div>
+                </div>
+            }
+            @if (Model.PagingInfo.TotalItem > 0)
+            {
+                <nav aria-label="..." class="pt-3">
+                    <ul class="pagination mt-0">
+                        @if (Model.PagingInfo.CurrentPage == 1 || Model.PagingInfo.TotalPage == 1)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Previous</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="Index" asp-route-businessid="@Model.ReviewRating.BussinessId" asp-route-ReviewPage="@(Model.PagingInfo.CurrentPage - 1)">Previous</a>
+                            </li>
+                        }
+                        @for (var val = 1; val <= Model.PagingInfo.TotalPage; val++)
+                        {
+
+                            if (val == Model.PagingInfo.CurrentPage)
+                            {
+                                <li class="page-item active">
+                                    <a class="page-link" asp-action="Index" asp-route-businessid="@Model.ReviewRating.BussinessId" asp-route-ReviewPage="@val">@val <span class="sr-only">(current)</span></a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" asp-route-businessid="@Model.ReviewRating.BussinessId" asp-action="Index" asp-route-ReviewPage="@val">@val</a></li>
+                            }
+
+                        }
+                        @if (Model.PagingInfo.TotalPage == 1 || Model.PagingInfo.TotalPage == Model.PagingInfo.CurrentPage)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Next</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="Index" asp-route-businessid="@Model.ReviewRating.BussinessId" asp-route-ReviewPage="@(Model.PagingInfo.CurrentPage + 1)">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/Data/reviewRating.js"></script>
+}

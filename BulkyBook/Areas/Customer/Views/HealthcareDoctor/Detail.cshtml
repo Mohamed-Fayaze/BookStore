@@ -1,0 +1,297 @@
+@model BulkyBook.Models.ViewModels.HealthcareDoctorVM
+@{ 
+    var hospitalName = ViewData["Hospital"];
+}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="~/MedicalDoctor/images/icon.png">
+
+    <!-- wow animation style -->
+    <!-- <link rel="stylesheet" href="./css/animate.css"> -->
+    <!-- owl-carousel -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.theme.default.min.css">
+
+    <!-- fancybox 3 css -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/jquery.fancybox.min.css">
+
+    <!-- bootstrap style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/bootstrap.min.css">
+
+    <!-- template style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/main.css">
+
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<body>
+
+    <!-- Start of .preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <h6 class="preloader-text">Kubri</h6>
+    </div>
+    <!-- End of .preloader -->
+    <!------------------------------------------------------------------------>
+
+    <div class="page">
+
+
+        <!-- Start of .doctors -->
+        <section class="doctors main-blog">
+            <div class="main-blog__bg">
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/form-shape.png">
+                </div>
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/specialists__left-bottom-shape.png">
+                </div>
+            </div>
+            <div class="container container_right-sidebar">
+                <div class="article">
+                    <div class="slider">
+                        <h1 class="title"></h1>
+                        <div class="doctors-testimonials__carousel owl-carousel">
+                            <div class="item row">
+                                <div class="img">
+                                    <img src="@Model.healthcareDoctor.HealthcareBranch.UploadImage" style="height:190px; width:190px; ">
+                                </div>
+                                <div class="content">
+                                    <h1 class="name"><a asp-controller="HealthcareBranch" asp-action="Detail" asp-route-Id="@Model.healthcareDoctor.BranchId">@Model.healthcareDoctor.HealthcareBranch.Name [ @hospitalName ]</a></h1>
+                                    <div class="profession">@Model.healthcareDoctor.HealthcareBranch.Address</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    &emsp;
+
+                    <div class="doctors-block">
+                        @*<a asp-controller="HealthcareBranch" asp-action="Detail" asp-route-Id="@Model.healthcareDoctor.BranchId">Go to Branch</a>*@
+                        <div class="img col-md-4 col-sm-12 col-xs-12">
+                            @if (Model.healthcareDoctor.DoctorPhoto != null)
+                            {
+                <img src="@Model.healthcareDoctor.DoctorPhoto" alt="Doctor's Profile"> }
+            else
+            {
+                <img src="~/images/dummyprofile/maleprofile.jpg" alt="Doctor's Profile">}
+                        </div>
+                        <div class="content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h1 class="title">Dr. @Model.healthcareDoctor.Name</h1>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Speciality</th>
+                                        <td>@Model.healthcareDoctor.Speciality.SpecialityName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Years of Experiance:</th>
+                                        <td>@Model.healthcareDoctor.Experience Years</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nationality :</th>
+                                        <td>@Model.healthcareDoctor.Nationality.Name</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Language:</th>
+                                        <td>
+                                            @foreach (var item in Model.doctorLanguages)
+                                            {
+                                                var lang = Model.LanguageList.FirstOrDefault(s => s.Value == item.LanguageId.ToString());
+                                                var text = lang.Text + " ";
+                                    @text}
+                                        </td>
+                                        <p>Total Number of visitors: @ViewData["viewcount"] </p>
+                                    </tr>
+
+                                    @*<tr>
+                            <th>Working Time:</th>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Mon-Thu</td>
+                                        <td>08:00-20:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Friday</td>
+                                        <td>07:00-22:00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saturday</td>
+                                        <td>08:00-18:00</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>*@
+                                    <tr>
+                                        <th>Contacts:</th>
+                                        <td>
+                                            <a href="tel:+11234564466">+ 1 123 456 44 66</a><br>
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-instagram"></i></a>
+                                            <a href="#"><i class="fa fa-share-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="doctors-text">
+                        <p class="text">
+                            @Model.healthcareDoctor.About
+                        </p>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="doctors-sidebar">
+                        <div class="work-hours">
+                            <h1 class="title">work hours</h1>
+                            <ul class="lists">
+                                <li class="list-item">
+                                    <span class="date">Sunday</span>
+                                    <span class="time">@Model.healthcareDoctor.SundayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.SundayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Monday</span>
+                                    <span class="time">@Model.healthcareDoctor.MondayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.MondayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Tuesday</span>
+                                    <span class="time">@Model.healthcareDoctor.TuesdayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.TuesdayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Wednesday</span>
+                                    <span class="time">@Model.healthcareDoctor.WednesdayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.WednesdayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Thrusday</span>
+                                    <span class="time">@Model.healthcareDoctor.ThrusdayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.ThrusdayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Friday</span>
+                                    <span class="time">@Model.healthcareDoctor.FridayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.FridayTo</span>
+                                </li>
+                                <li class="list-item">
+                                    <span class="date">Saturday</span>
+                                    <span class="time">@Model.healthcareDoctor.SaturdayFrom</span>-
+                                    <span class="time">@Model.healthcareDoctor.SaturdayTo</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*<div class="doctors-text">
+                <p class="text">
+                    @Model.healthcareDoctor.About
+                </p>
+            </div>*@
+        </section>
+        <!-- End of .doctors -->
+    </div>
+    <!------------------------------------------------------------------------>
+    <!-- scroll top - to top page -->
+    <div class="to-top" id="scrollUp"><i class="fa fa-angle-up"></i></div>
+    <!-- search box -->
+    <div class="searchBox">
+        <span class="searchBox-close">&times;</span>
+        <form>
+            <input type="search" placeholder="Write Search Keyword & Press Enter">
+            <button type="submit">
+                <svg width="24.71" height="25.687" viewBox="0 0 24.71 24.687">
+                    <path id="search.svg" class="cls-2"
+                          d="M1144.4,440.468l8.19,8.178-3.47,3.467-8.19-8.178,1.18-1.177-1.38-1.385a7.878,7.878,0,1,1,1.11-1.11l1.38,1.383Zm-2.36-5.172a6.29,6.29,0,1,0-6.29,6.282A6.293,6.293,0,0,0,1142.04,435.3Zm8.33,13.35-3.61-3.6-1.24,1.245,3.6,3.6Zm-5.97-3.465,1.25-1.246-1.25-1.245-1.24,1.245Zm-11.79-9.885h-1.57a4.715,4.715,0,0,1,4.71-4.712v1.57A3.146,3.146,0,0,0,1132.61,435.3Z"
+                          transform="translate(-1127.88 -427.438)" />
+                </svg>
+                search
+            </button>
+        </form>
+    </div>
+
+    <!-- Popup Form -->
+    <div class="popup-form">
+        <div class="inner-block">
+            <span class="popup-form-close" id="popup-form-close">&times;</span>
+            <div class="img">
+                <img src="~/MedicalDoctor/images/jpg/popup-form.jpg">
+            </div>
+            <form>
+                <h1 class="section-title">make an appointment</h1>
+                <div class="input-box">
+                    <label for="popup-name">Name *</label>
+                    <input type="text" id="popup-name" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-email">Email *</label>
+                    <input type="text" id="popup-email" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-phone">Phone *</label>
+                    <input type="tel" id="popup-phone" required>
+                </div>
+
+                <div class="select-box">
+                    <i class="fa fa-angle-down"></i>
+                    <select>
+                        <option selected>Department</option>
+                        <option selected>Department2</option>
+                        <option selected>Department3</option>
+                        <option selected>Department4</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-2_pink">send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts + Jquery plagins -->
+    <!-- .preloader  -->
+    <script src="~/MedicalDoctor/js/my-preloader.js"></script>
+
+    <!-- jQuery -->
+    <script src="~/MedicalDoctor/js/jQuery-3.4.1.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/MedicalDoctor/js/bootstrap.min.js"></script>
+
+    <!-- wow js animation -->
+    <!-- <script src="./js/wow.min.js"></script> -->
+    <!-- owl-carousel js -->
+    <script src="~/MedicalDoctor/js/owl.carousel.min.js"></script>
+    <script src="~/MedicalDoctor/js/carousel.js"></script>
+
+    <!-- fancybox 3 js -->
+    <script src="~/MedicalDoctor/js/jquery.fancybox.js"></script>
+
+    <!-- Counter up -->
+    <script src="~/MedicalDoctor/js/jquery.waypoints.min.js"></script>
+    <script src="~/MedicalDoctor/js/jquery.countup.min.js"></script>
+
+    <!-- isotope filter card -->
+    <script src="~/MedicalDoctor/js/isotope.pkgd.min.js"></script>
+
+    <!-- customer js -->
+    <script src="~/MedicalDoctor/js/index.js"></script>
+
+</body>
+
+</html>

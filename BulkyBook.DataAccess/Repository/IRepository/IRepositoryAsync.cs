@@ -23,6 +23,7 @@ namespace BulkyBook.DataAccess.Repository.IRepository
             );
 
         Task AddAsync(T entity);
+        Task AddRangeAsync(IEnumerable<T> entity);
         Task RemoveAsync(int id);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entity);

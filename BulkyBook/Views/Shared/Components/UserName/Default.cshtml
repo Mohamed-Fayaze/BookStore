@@ -1,3 +1,12 @@
 ﻿@model BulkyBook.Models.ApplicationUser
+    <span>
+        @if (!string.IsNullOrEmpty(Model.ProfilePhoto))
+        {
+            <img src="@Model.ProfilePhoto" alt="">
 
-Hi! @Model.Name <i class="far fa-user"></i>
+        }
+        else
+        {
+            <img src="~/images/dummyprofile/maleprofile.jpg" />
+        }
+    </span> Hi, @Model.FirstName @Model.LastName!

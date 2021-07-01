@@ -1,0 +1,129 @@
+﻿@model BulkyBook.Models.ViewModels.FAQVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/FAQ.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                @if (ViewBag.busUserId == ViewBag.userId)
+                {
+                    <a class="btn btn-primary" asp-action="Question" asp-route-businessid="@Model.FAQ.BussinessId"><i class="fas fa-plus"></i> &nbsp; Add your Answer</a>
+                }
+                <input asp-for="@Model.FAQ.Company.UserId" type="hidden" />
+                <div class="ibox-content m-b-sm border-bottom">
+                    <div class="text-center p-md">
+                        <h2>If you don't find the answer to your question</h2>
+                        <form method="get" asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewBag.busUserId">
+                            <p>
+                                <input class="form-control " type="text" placeholder="Search " value="@ViewData["searchval"]" name="search" style="width:500px;" />
+                                <input asp-for="@Model.FAQ.BussinessId" name="businessId" type="hidden" />
+                                <input name="busUserId" value="@ViewBag.busUserId" type="hidden" />
+                                <input type="submit" value="search" class="btn btn-primary" />
+                                @if (ViewBag.searchval != null)
+                                {
+                                <a asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewData["busUserId"]"> ListAllFAQ</a>
+                                }
+                            </p>
+                        </form>
+
+                        @*<button title="Create new cluster" class="btn btn-primary btn-sm" asp-action="Upsert"><i class="fa fa-plus"></i> <span class="bold">Add question</span></button> button*@
+                        <a class="btn btn-primary" asp-action="Upsert" asp-route-businessid="@Model.FAQ.BussinessId"><i class="fas fa-plus"></i> &nbsp; Add your Question</a>
+
+                    </div>
+                </div>
+
+                @foreach (var item in Model.FAQs)
+                {
+                    @*<a asp-action="Upsert" asp-route-id="@item.Id"><i class="fas fa-edit text-right" aria-hidde="true"></i>Edit</a>*@
+                    @if (ViewBag.busUserId == ViewBag.userId)
+                    {
+                        <button type="button" onclick=Delete("/Admin/FAQ/Delete/@item.Id")><i class="fas fa-trash-alt text-right"></i>Delete</button>
+                    }
+                    <div class="faq-item">
+                        <div> <a class="btn btn-outline-success" asp-action="FAQHelpful" asp-route-id="@item.Id">Helpful<span class="blue-text pl-2">@item.FAQHelpfulCount</span> </a><a class="btn btn-outline-danger" asp-action="FAQReportAbuse" asp-route-id="@item.Id"> ReportAbuse<span class="text-muted pl-2"></span></a> </div>
+                        <div><small>Added by <strong>@item.ApplicationUser.FirstName</strong> <i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.QuestionOn)</small></div>
+                        <button class="accordion">@Html.DisplayFor(modelItem => item.FAQQuestion)</button>
+
+                        <div class="panel">
+
+                            <p> @Html.DisplayFor(modelItem => item.FAQAnswer)</p><small><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.AnswerOn)</small>
+
+                        </div>
+                    </div>
+
+                }
+                @if (Model.PagingInfo.TotalItem > 0)
+                {
+                    <nav aria-label="..." class="pt-3">
+                        <ul class="pagination mt-0">
+                            @if (Model.PagingInfo.CurrentPage == 1 || Model.PagingInfo.TotalPage == 1)
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Previous</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewBag.busUserId" asp-route-faqPage="@(Model.PagingInfo.CurrentPage - 1)">Previous</a>
+                                </li>
+                            }
+                            @for (var val = 1; val <= Model.PagingInfo.TotalPage; val++)
+                            {
+
+                                if (val == Model.PagingInfo.CurrentPage)
+                                {
+                                    <li class="page-item active">
+                                        <a class="page-link" asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewBag.busUserId" asp-route-faqPage="@val">@val <span class="sr-only">(current)</span></a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewBag.busUserId" asp-route-faqPage="@val">@val</a></li>
+                                }
+
+                            }
+                            @if (Model.PagingInfo.TotalPage == 1 || Model.PagingInfo.TotalPage == Model.PagingInfo.CurrentPage)
+                            {
+                                <li class="page-item disabled">
+                                    <a class="page-link">Next</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Index" asp-route-businessId="@Model.FAQ.BussinessId" asp-route-busUserId="@ViewBag.busUserId" asp-route-faqPage="@(Model.PagingInfo.CurrentPage + 1)">Next</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="~/js/Data/FAQ.js"></script>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+}

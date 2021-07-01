@@ -1,0 +1,219 @@
+@model BulkyBook.Models.ViewModels.HealthcareVM
+@{
+    ViewData["Title"] = "Hospital Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html lang="en-US">
+
+<head>
+    <title>Tabib HTML5 Health Directory Template</title>
+    <meta name="author" content="Nile-Theme">
+    <meta name="robots" content="index follow">
+    <meta name="googlebot" content="index follow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="directory, doctor, doctor directory, Health directory, listing, map, medical, medical directory, professional directory, reservation, reviews">
+    <meta name="description" content="Health Care & Medical Services Directory">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800%7CPoppins:300i,300,400,700,400i,500%7CDancing+Script:700%7CDancing+Script:700" rel="stylesheet">
+    <!-- animate -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/animate.css" />
+    <!-- owl Carousel assets -->
+    <link href="~/MedicalListing/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/MedicalListing/assets/css/owl.theme.css" rel="stylesheet">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/bootstrap.min.css">
+    <!-- hover anmation -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/hover-min.css">
+    <!-- flag icon -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/flag-icon.min.css">
+    <!-- main style -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/style.css">
+    <!-- colors -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/colors/main.css">
+    <!-- elegant icon -->
+    <link rel="stylesheet" href="~/MedicalListing/assets/css/elegant_icon.css">
+
+    <!-- jquery library  -->
+    <script src="~/MedicalListing/assets/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Maps library  -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="~/MedicalListing/assets/js/jquery.gomap-1.3.3.min.js"></script>
+
+    <!-- fontawesome  -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+
+
+
+    <link rel="stylesheet" href="~/MedicalBranch/css/easy-responsive-tabs.css">
+
+    <link href="~/MedicalBranch/css/font-awesome.css" rel="stylesheet">		<!-- font-awesome icons-css-file -->
+    <link href="~/MedicalBranch/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">	<!-- bootstrap-css-file -->
+    <link href="~/MedicalBranch/css/style.css" type="text/css" rel="stylesheet" media="all">	<!-- style-css-file -->
+    <!-- gallery -->
+    <link rel="stylesheet" href="~/MedicalBranch/css/lightbox.css">
+    <!-- //gallery -->
+
+    <!-- Default-JavaScript-File -->
+    <script type="text/javascript" src="~/MedicalBranch/js/jquery-2.1.4.min.js"></script>
+    <!-- //Default-JavaScript-File -->
+
+
+
+
+</head>
+
+<body>
+
+
+
+    <div id="page-title" class="padding-tb-30px gradient-white">
+        <div class="container">
+            <h1 class="font-weight-300">@Model.healthcare.Name</h1>
+        </div>
+    </div>
+
+
+    <div class="margin-tb-30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <div class="margin-bottom-30px box-shadow">
+                        <img src="~/MedicalListing/assets/img/Hospital/online-marketing-hIgeoQjS_iE-unsplash.jpg" /> 
+                        <div class="padding-30px background-white">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="rating clearfix">
+                                        <span class="float-left text-grey-2"><i class="far fa-map"></i>Riyadh</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row no-gutters">
+                                        <div class="col-4"><a href="#" class="text-lime"><i class="far fa-bookmark"></i> Open Now!</a></div>
+                                        <div class="col-4 text-right"><a href="#" class="text-blue"><i class="far fa-hospital"></i> Hospital</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="margin-bottom-30px box-shadow">
+                        <div class="padding-30px background-white">
+                            <h3><i class="far fa-hospital margin-right-10px text-main-color"></i> About Clinic</h3>
+                            <hr>
+                            <p>  @Model.healthcare.Description </p>
+                        </div>
+                    </div>
+
+                    <div class="margin-bottom-30px box-shadow">
+                        <div class="padding-30px background-white">
+                            <h3><i class="far fa-map margin-right-10px text-main-color"></i> Clinic Location</h3>
+                            <hr>
+                            <p>Established on @Model.healthcare.YearOfEstablishment</p>
+                            <p>Website : @Model.healthcare.WebsiteURL</p>
+                            <p>Working Hours :- @Model.healthcare.FromWorkingHour - @Model.healthcare.ToWorkingHour</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-4">
+                    @*<div class="background-second-color border-radius-10 margin-bottom-45px text-white box-shadow">
+                        <h3 class="padding-lr-30px padding-top-20px"><i class="far fa-clock margin-right-10px"></i> Work Time</h3>
+                        <div class="padding-bottom-30px">
+                            <ul class="padding-0px margin-0px">
+                                <li class="padding-lr-30px padding-tb-10px">Monday <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px ba-2">Tuesday <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px">Wednesday <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px ba-2">Thursday <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px">Friday  <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px ba-2">Saturday  <span class="float-right">10:00 AM - 5:00 PM</span></li>
+                                <li class="padding-lr-30px padding-tb-10px">Sunday    <span class="float-right">Closed</span></li>
+                            </ul>
+                        </div>
+                    </div>*@
+
+
+
+                </div>
+            </div>
+            <div class="team" id="team">
+                <div class="container">
+                    <div class="w3ls-heading">
+                        <h3>Our Branch</h3>
+                    </div>
+                    <div class="agile_team_grids">
+
+                        @foreach (var item in Model.Branches)
+                        {
+                            <div class="col-md-3 agile_team_grid  agile_team_gridf">
+                                <div class="agile_team_grid_main">
+                                    @if (item.UploadImage != null)
+                                    {
+                                        <img src="@item.UploadImage" class="img-responsive" alt="Doctor's Profile" style="height:250px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/dummyprofile/maleprofile.jpg" class="img-responsive" alt="Doctor's Profile" style="height:250px">
+                                    }
+                                    <div class="p-mask">
+                                        <ul class="social-icons">
+                                            <li><a asp-controller="HealthcareBranch" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-primary">View<span></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="agile_team_grid1">
+                                    <h4>@item.Name</h4>
+                                    <p>@item.State</p>
+                                    <p>@item.ContactNo1</p>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/MedicalBranch/js/easy-responsive-tabs.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#horizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true,   // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                activate: function (event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#tabInfo');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+            $('#verticalTab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true
+            });
+        });
+    </script>
+
+
+    <script src="~/MedicalListing/assets/js/sticky-sidebar.js"></script>
+    <script src="~/MedicalListing/assets/js/YouTubePopUp.jquery.js"></script>
+    <script src="~/MedicalListing/assets/js/owl.carousel.min.js"></script>
+    <script src="~/MedicalListing/assets/js/imagesloaded.min.js"></script>
+    <script src="~/MedicalListing/assets/js/wow.min.js"></script>
+    <script src="~/MedicalListing/assets/js/custom.js"></script>
+    <script src="~/MedicalListing/assets/js/popper.min.js"></script>
+    <script src="~/MedicalListing/assets/js/bootstrap.min.js"></script>
+</body>
+
+</html>

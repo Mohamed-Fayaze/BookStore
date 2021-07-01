@@ -26,6 +26,10 @@ namespace BulkyBook.DataAccess.Repository
         {
             await dbSet.AddAsync(entity);
         }
+        public async Task AddRangeAsync(IEnumerable<T> entity)
+        {
+            await dbSet.AddRangeAsync(entity);
+        }
 
         public async Task<T> GetAsync(int id)
         {
@@ -85,7 +89,7 @@ namespace BulkyBook.DataAccess.Repository
 
         public async Task RemoveAsync(T entity)
         {
-            dbSet.Remove(entity);
+           dbSet.Remove(entity);
         }
 
         public async Task RemoveRangeAsync(IEnumerable<T> entity)

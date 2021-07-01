@@ -1,0 +1,157 @@
+﻿@model BulkyBook.Models.ViewModels.PromotionVM
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create Promotion";
+}
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row p-3 border">
+        <input asp-for="Promotion.Id" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Promotion.Id != 0)
+        {
+            title = "Edit Category";
+        }
+
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    CATEGORY
+                </div>
+                <div class="col-8">
+                    <div class="ui-element">
+                        <div class="select-option">
+                            @*  <i class="ti-angle-down"></i>*@
+                            @Html.DropDownListFor(m => m.Promotion.BusinessId, Model.BusinessList, "-Select the Business")
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-4">
+                        <label asp-for="BusinessName"></label>
+                    </div>
+                *@
+                @*<div class="col-8">
+                        @Html.DropDownListFor(m =>m.CategoryId, Model.primaries, "-Select the Category",
+                       new  { @class = "form-control" })
+                    </div>*@
+                <div class="col-4">
+                    <label asp-for="Promotion.OldPrice"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.OldPrice" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.OldPrice" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Promotion.OfferPrice"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.OfferPrice" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.OfferPrice" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Promotion.Discount"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.Discount" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.Discount" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Promotion.StartDate"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.StartDate" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Promotion.EndDate"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.EndDate" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.EndDate" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <label asp-for="Promotion.PromoDescription"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.PromoDescription" class="form-control" /><br />
+                    <span asp-validation-for="Promotion.PromoDescription" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="images" id="bussimg">
+                        <div>
+                            @if (Model.Promotion.Id != 0 && Model.Promotionimages != null)
+                            {
+                                @foreach (var item in Model.Promotionimages)
+                                {
+                                    <div class="img">
+                                        <img src="@item.Images" />
+
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <input type="file" name="businessImages" id="uploadBox" class="form-control" multiple />
+                    <input id="businessimagevalue" type="hidden" />
+                    <input name="businessimage" id="businessimage" type="file" multiple="multiple" accept="image/*" style="display:none" />
+
+                </div>
+
+                <!--<div class="col-4">
+                    <label asp-for="Promotion.UploadFile"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Promotion.UploadFile" style="display:none" />
+                    <input asp-for="Promotion.UploadFile" class="custom-control-label" accept="image/*" type="file"  mul/><br />-->
+                @*<input asp-for="formFile" accept="image/*" type="file" />*@<!--<input asp-for="formFile" accept="image/*" type="file" />-->@*<input asp-for="formFile" accept="image/*" type="file" />*@<!--<input asp-for="formFile" accept="image/*" type="file" />-->
+                <!--<span asp-validation-for="Promotion.UploadFile" class="text-danger"></span>
+                </div><br />-->
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+
+                    @if (Model.Promotion.Id != 0)
+                    {
+                        <partial name="_EditAndBackToListButton" model="Model.Promotion.Id" />
+                    }
+                    else
+                    {
+
+                        <partial name="_CreateAndBackToListButton" />
+                    }
+                </div>
+                @*@if (Model.PromotionId != 0)
+                    {
+
+                        <div class="col-3 offset-1 pt-4">
+                            <img src="@Model.UploadFile" width="50%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                        </div>
+                    }*@
+                @*@if (Model.PromotionId != 0)
+                    {
+
+                        <div class="col-3 offset-1 pt-4">
+                            <img src="@Model.UploadFile" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                        </div>
+                    }*@
+            </div>
+        </div>
+
+    </div>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
+
+}

@@ -1,17 +1,29 @@
-﻿@{
+﻿@*@using Microsoft.AspNetCore.Identity
+    @inject SignInManager<IdentityUser> SignInManager
+    @inject UserManager<IdentityUser> UserManager*@
+@using BulkyBook.Models.ViewModels
+
+@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Manage your account</h1>
+@*<h2>Manage your account</h2>*@
 
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
+    @*<h4>Change your account settings</h4>
+        <hr />*@
     <div class="row">
-        <div class="col-md-3">
+        @*<div class="user-heading round">
+                <a href="#">
+                    <img src="@Model.ApplicationUser.ProfilePhoto" alt="">
+                </a>
+                <h1>@Model.applicaton.FirstName @Model.LastName</h1>
+                <p>@Model.UserName</p>
+            </div>*@
+        <div class="col-lg-3 col-md-12 col-xs-12 pl-0 pr-0 user-dash">
             <partial name="_ManageNav" />
         </div>
-        <div class="col-md-9">
+        <div class="col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2 bg-white">
             @RenderBody()
         </div>
     </div>

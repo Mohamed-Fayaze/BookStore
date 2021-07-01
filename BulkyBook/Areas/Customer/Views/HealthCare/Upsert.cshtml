@@ -1,0 +1,277 @@
+﻿@model BulkyBook.Models.ViewModels.HealthcareVM
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create HealthCare";
+}
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta name="author" content="Nile-Theme">
+    <meta name="robots" content="index follow">
+    <meta name="googlebot" content="index follow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="directory, doctor, doctor directory, Health directory, listing, map, medical, medical directory, professional directory, reservation, reviews">
+    <meta name="description" content="Health Care & Medical Services Directory">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="~/MedicalListing/assets/css/animate.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/style.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/elegant_icon.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/sb-admin.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/owl.theme.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/flag-icon.min.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/hover-min.css" rel="stylesheet" />
+    <link href="~/MedicalListing/assets/css/owl.carousel.css" rel="stylesheet" />
+    <link href="~/css/Chosen/chosen.min.css" rel="stylesheet" />
+
+    <!-- google fonts -->
+    <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800%7CPoppins:300i,300,400,700,400i,500%7CDancing+Script:700%7CDancing+Script:700" rel="stylesheet">-->
+    <!-- animate -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/animate.css" />-->
+    <!-- owl Carousel assets -->
+    <!--<link href="~/MedicalListing/assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/MedicalListing/assets/css/owl.theme.css" rel="stylesheet">-->
+    <!-- bootstrap -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/bootstrap.min.css">-->
+    <!-- hover anmation -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/hover-min.css">-->
+    <!-- flag icon -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/flag-icon.min.css">-->
+    <!-- main style -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/style.css">-->
+    <!-- colors -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/colors/main.css">-->
+    <!-- elegant icon -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/elegant_icon.css">-->
+    <!-- admin style -->
+    <!--<link rel="stylesheet" href="~/MedicalListing/assets/css/sb-admin.css">-->
+    <!-- jquery library  -->
+    <!--<script src="~/MedicalListing/assets/js/jquery-3.2.1.min.js"></script>-->
+    <!-- fontawesome  -->
+    <!--<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>-->
+
+
+</head>
+
+<body>
+
+
+    <div class="content-wrapper" style="margin-top:-180px">
+        <div class="container-fluid overflow-hidden">
+            <div class="row margin-tb-90px ">
+                <div class="margin-tb-45px full-width">
+                    <div class="padding-30px background-white border-radius-20">
+                        <form method="post" enctype="multipart/form-data">
+
+                            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+
+                            @*@if (Model.healthcare.Id != 0)
+                                {
+                                    title = "Edit HealthCare";
+                                }
+                                <input type="hidden" asp-for="healthcare.Id" />
+                                <div class="col-12 border-bottom">
+                                    <h2 class="text-black-50">@title</h2>
+                                </div>*@
+                            <h3><i class="far fa-list-alt margin-right-10px text-main-color "></i> Healthcare Information </h3>
+                            <hr>
+
+                            <div class="form-group margin-bottom-20px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold"><i class="far fa-envelope-open margin-right-10px"></i>Category</label>
+                                        @Html.DropDownListFor(m => m.healthcare.SubCategoryId, Model.CategoryList, "-Select the category",
+                              new { @class = "form-control  multiSelectDropDown" })
+                                        <span asp-validation-for="healthcare.SubCategoryId" class="text-danger"></span><br />
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-20px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold"><i class="far fa-envelope-open margin-right-10px "></i>Name</label>
+                                        <input type="text" class="form-control form-control-sm" asp-for="healthcare.Name" placeholder="Name">
+                                        <span asp-validation-for="healthcare.Name"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-20px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold"><i class="far fa-envelope-open margin-right-10px"></i>Description</label>
+                                        <textarea asp-for="healthcare.Description" class="form-control border-black"></textarea>
+                                        <span asp-validation-for="healthcare.Description" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group margin-bottom-20px">
+                                <label class="font-weight-bold "><i class="far fa-envelope-open margin-right-10px"></i>Year Of Establishment</label>
+                                <div class="col-sm-6">
+                                    <select style="height:30px;width:748px;border-color:lightgray;border-radius:5px" id="ddlYears"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-20px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold"><i class="far fa-envelope-open margin-right-10px"></i>Website URL</label>
+                                        <input type="text" class="form-control form-control-sm" asp-for="healthcare.WebsiteURL" placeholder="Website URL">
+                                        <span asp-validation-for="healthcare.WebsiteURL" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group margin-bottom-20px">
+
+                                <div class="col-sm-6">
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="form-group margin-bottom-20px">
+                                <label class="font-weight-bold"><i class="far fa-envelope-open margin-right-10px"></i>Is FullDay Available</label>
+                                <div class="col-sm-6">
+                                    <input asp-for="healthcare.isFullDayAvailable" class="form-control border-black" />
+
+                                </div>
+                                <span asp-validation-for="healthcare.isFullDayAvailable" class="text-danger"></span><br />
+
+                            </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+
+                                    @if (Model.healthcare.Id != 0)
+                                    {
+                                        <partial name="_edit" model="Model.healthcare.Id" />
+                                    }
+                                    else
+                                    {
+
+                                        <partial name="_CreateAndBackToListButton" />
+                                    }
+                                </div>
+
+                            </div>
+
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+
+    </div>
+
+    <script src="~/MedicalListing/assets/js/sticky-sidebar.js"></script>
+    <script src="~/MedicalListing/assets/js/YouTubePopUp.jquery.js"></script>
+    <script src="~/MedicalListing/assets/js/owl.carousel.min.js"></script>
+    <script src="~/MedicalListing/assets/js/imagesloaded.min.js"></script>
+    <script src="~/MedicalListing/assets/js/wow.min.js"></script>
+    <script src="~/MedicalListing/assets/js/custom.js"></script>
+    <script src="~/MedicalListing/assets/js/popper.min.js"></script>
+    <script src="~/MedicalListing/assets/js/bootstrap.min.js"></script>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
+
+        <script type="text/javascript">
+            window.onload = function () {
+                //Reference the DropDownList.
+                var ddlYears = document.getElementById("ddlYears");
+
+                //Determine the Current Year.
+                var currentYear = (new Date()).getFullYear();
+
+                //Loop and add the Year values to DropDownList.
+                for (var i = 1950; i <= currentYear; i++) {
+                    var option = document.createElement("OPTION");
+                    option.innerHTML = i;
+                    option.value = i;
+                    ddlYears.appendChild(option);
+                }
+            };
+        </script>
+        <script src="~/js/chosen.jquery.min.js"></script>
+        <script>
+            $(function () {
+
+                $(".multiSelectDropDown").chosen();
+            });
+        </script>
+    }
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

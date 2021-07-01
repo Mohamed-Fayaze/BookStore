@@ -24,7 +24,7 @@ namespace BulkyBook.Utility
         private Task Execute(string sendGridKEy, string subject,string message, string email)
         {
             var client = new SendGridClient(sendGridKEy);
-            var from = new EmailAddress("admin@bulky.com", "Bulky Books");
+            var from = new EmailAddress("Fayaze117@gmail.com", "Kubri");
             var to = new EmailAddress(email, "End User");
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "", message);
             return client.SendEmailAsync(msg);

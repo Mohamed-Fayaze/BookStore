@@ -17,5 +17,14 @@ namespace BulkyBook.DataAccess.Repository
             _db = db;
         }
 
+        public void Update(ApplicationUser applicationUser)
+        {
+            var objFromDb = _db.ApplicationUsers.FirstOrDefault(s => s.Id == applicationUser.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.ProfilePhoto = applicationUser.ProfilePhoto;
+            };
+        }
+
     }
 }

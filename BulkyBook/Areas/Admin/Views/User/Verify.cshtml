@@ -1,0 +1,198 @@
+﻿@model BulkyBook.Models.ViewModels.UserProfileVM
+
+@{
+    ViewData["Title"] = "User verification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2 bg-white">
+    <div class="single-add-property">
+        <h3>User Verification</h3>
+        <div class="property-form-group">
+            <form method="post" asp-controller="User" asp-action="Verify">
+                <input type="hidden" asp-for="ApplicationUser.Id" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <label for="title">Status</label>
+                            <select asp-for="ApplicationUser.VerifiedStatus" class="input-form dropdown-item col-md-6">
+                                <option value="Approved" style="color:green;">Approve</option>
+                                <option value="Rejected" style="color:red">Reject</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <label for="description">Reason</label>
+                            <textarea type="text" asp-for="ApplicationUser.RejectedReason"></textarea>
+                        </p>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="col-md-12 pb-3">
+                            <div class="checkboxes float-left">
+                                <div class="filter-tags-wrap">
+                                    <input id="check-a" asp-for="Business.IsVerified" type="checkbox">
+                                    <label for="check-a">Verify</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="prperty-submit-button">
+                            <button type="submit">Submit </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="single-add-property">
+        <h3>Basic Informations</h3>
+        <div class="property-form-group">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <img src="@Model.ApplicationUser.ProfilePhoto" class="card-img-top rounded" />
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <label for="title">Name</label>
+                        <input type="text" value="@Model.ApplicationUser.FirstName @Model.ApplicationUser.LastName" disabled />
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <label for="description">User Name</label>
+                        <input type="text" asp-for="ApplicationUser.UserName" disabled />
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <label for="description">Email</label>
+                        <input type="text" asp-for="ApplicationUser.Email" disabled />
+                    </p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <label for="description">Phone No</label>
+                        <input type="text" asp-for="ApplicationUser.PhoneNumber" disabled />
+                    </p>
+                </div>
+            </div>
+            @if (Model.UserPrivate != null)
+            {
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <p>
+                            <label for="description">Gender</label>
+                            <input type="text" value="@Model.UserPrivate.Gender" disabled />
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <p>
+                            <label for="description">Date of Birth</label>
+                            <input type="text" value="@Convert.ToDateTime(Model.UserPrivate.DateOfBirth).ToShortDateString()" disabled />
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <p>
+                            <label for="description">Marital status</label>
+                            <input type="text" value="@Model.UserPrivate.MaritalStatus" disabled />
+                        </p>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <p>
+                            <label for="description">Occupation</label>
+                            <input type="text" value="@Model.UserPrivate.Occupation" disabled />
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <label for="description">Company Name</label>
+                            <input type="text" value="@Model.UserPrivate.CompanyName" />
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <label for="description">About</label>
+                            <textarea disabled>@Model.UserPrivate.About</textarea>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="single-add-property">
+        <h3>Preferences</h3>
+        <div class="property-form-group">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <p>
+                        <label for="description">Language</label>
+                        <input type="text" value="@Model.Preference.Language" disabled />
+                    </p>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Preference.Industry))
+            {
+                var industrylist = "";
+                foreach (var item in Model.Preference.Industry.Split(','))
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        var indval = Model.IndustryList.Where(s => s.Value == item).ToList();
+
+                        if (string.IsNullOrEmpty(industrylist))
+                        {
+                            industrylist = indval[0].Text;
+                        }
+                        else
+                        {
+                            industrylist += ", " + indval[0].Text;
+                        }
+                    }
+                }
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <p>
+                            <label for="description">Industry</label>
+                            <input type="text" value="@industrylist" disabled />
+                        </p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="single-add-property">
+        <h3>Listing Location</h3>
+        @foreach (var item in Model.addressTable)
+        {
+            <div class="property-form-group">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <p>
+                            <label for="address">Address</label>
+
+                            <textarea disabled>@item.HouseNo @item.AddressField @System.Environment.NewLine @item.AreaStreet @System.Environment.NewLine @item.CityTown @System.Environment.NewLine @item.StateProvinceRegion @System.Environment.NewLine @item.Country @System.Environment.NewLine Pincode - @item.Pincode</textarea>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

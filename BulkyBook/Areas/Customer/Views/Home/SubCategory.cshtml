@@ -1,0 +1,275 @@
+﻿@model BulkyBook.Models.ViewModels.CategoryVM
+@{ 
+    var location = ViewData["location"];
+    var search = ViewData["search"];
+    var category = ViewData["category"];
+}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+
+    <title>Ibn Sino Html-5 Template | Home-2</title>
+    <link rel="icon" href="~/MedicalDoctor/images/icon.png">
+
+    <!-- wow animation style -->
+    <!-- <link rel="stylesheet" href="./css/animate.css"> -->
+    <!-- owl-carousel -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.theme.default.min.css">
+
+    <!-- fancybox 3 css -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/jquery.fancybox.min.css">
+
+    <!-- bootstrap style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/bootstrap.min.css">
+
+    <!-- template style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/main.css">
+
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<body>
+
+    <!-- Start of .preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <h6 class="preloader-text">Kubri</h6>
+    </div>
+    <!-- End of .preloader -->
+    <!------------------------------------------------------------------------>
+    <!-- Start of .page -->
+    <div class="page">
+
+
+        <!-- End of .header-middle -->
+        <!-- Start of .header-bottom -->
+        <header class="header-bottom-2">
+
+            <!-- Start of .header-bottom-2__banner -->
+            <div class="header-bottom-2__banner owl-carousel owl-theme">
+
+                <div class="slide-item">
+                    <img src="~/MedicalDoctor/images/banner/Banner0.3.jpg">
+                    <div class="slide-item__bg"></div>
+                    <div class="container">
+                        <div class="slide-item__block">
+                            <h1 class="slide-item__title">
+                                Multidisciplinary <span>Medical<br>Center</span> in new york
+                            </h1>
+                            @*<h4 class="slide-item__subtitle">30% discount on full examination</h4>
+                                <a href="departments-details_right.html" class="btn btn_pink">BOOK A CONSULTATION</a>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-item">
+                    <img src="~/MedicalDoctor/images/banner/Banner0.1.jpg">
+                    <div class="slide-item__bg"></div>
+                    <div class="container">
+                        <div class="slide-item__block">
+                            <h1 class="slide-item__title">
+                                Multidisciplinary <span>Medical<br>Center</span> in new york
+                            </h1>
+                            @*<h4 class="slide-item__subtitle">30% discount on full examination</h4>
+                                <a href="#" class="btn btn_pink">BOOK A CONSULTATION</a>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-item">
+                    <img src="~/MedicalDoctor/images/banner/Banner0.2.jpg">
+                    <div class="slide-item__bg"></div>
+                    <div class="container">
+                        <div class="slide-item__block">
+                            <h1 class="slide-item__title">
+                                Multidisciplinary <span>Medical<br>Center</span> in new york
+                            </h1>
+                            @*<h4 class="slide-item__subtitle">30% discount on full examination</h4>
+                                <a href="#" class="btn btn_pink">BOOK A CONSULTATION</a>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide-item">
+                    <img src="~/MedicalDoctor/images/banner/Banner0.3.jpg">
+                    <div class="slide-item__bg"></div>
+                    <div class="container">
+                        <div class="slide-item__block">
+                            <h1 class="slide-item__title">
+                                Multidisciplinary <span>Medical<br>Center</span> in new york
+                            </h1>
+                            @*<h4 class="slide-item__subtitle">30% discount on full examination</h4>
+                                <a href="#" class="btn btn_pink">BOOK A CONSULTATION</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <!-- End of .header-bottom -->
+        <!-- Start of .our-departments -->
+        <section class="our-departments" id="departments">
+            <div class="our-departments__bg">
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/ornament__right-top.png">
+                </div>
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/ornament__left-bottom.png">
+                </div>
+            </div>
+            <div class="container">
+                <h1 class="section-title section-title_60">our <span>Services</span></h1>
+                <div class="our-departments__items">
+                    <div>
+                        <a asp-area="Customer" asp-controller="Healthcare" asp-action="Index" asp-route-filter.SubCategory="hospital" asp-route-filter.categoryId="@category" asp-route-filter.State="@location" asp-route-filter.searchletter="@search" class="our-departments__inner-item">
+                            <div class="icon">
+                                <img src="~/MedicalDoctor/images/icons/diagnostics.png">
+                            </div>
+                            <h1 class="title">Hospital</h1>
+                        </a>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/./cardiology.png">
+                        </div>
+                        <h1 class="title">Nursing</h1>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/dental.png">
+                        </div>
+                        <h1 class="title">Ambulatory</h1>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/ophtalmology.png">
+                        </div>
+                        <h1 class="title">MedicalPractioners</h1>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/pulmonary.png">
+                        </div>
+                        <h1 class="title">MedicalDevice</h1>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/urology.png">
+                        </div>
+                        <h1 class="title">MedicalInsurance</h1>
+                    </div>
+
+                    <div class="our-departments__inner-item">
+                        <div class="icon">
+                            <img src="~/MedicalDoctor/images/icons/laboratory.png">
+                        </div>
+                        <h1 class="title">TestingLab</h1>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- End of .our-departments -->
+
+
+
+    </div>
+    <!-- End of .page -->
+    <!------------------------------------------------------------------------>
+    <!-- scroll top - to top page -->
+    <div class="to-top" id="scrollUp"><i class="fa fa-angle-up"></i></div>
+
+    <!-- search box -->
+    <div class="searchBox">
+        <span class="searchBox-close">&times;</span>
+        <form>
+            <input type="search" placeholder="Write Search Keyword & Press Enter">
+            <button type="submit">
+                <svg width="24.71" height="25.687" viewBox="0 0 24.71 24.687">
+                    <path id="search.svg" class="cls-2"
+                          d="M1144.4,440.468l8.19,8.178-3.47,3.467-8.19-8.178,1.18-1.177-1.38-1.385a7.878,7.878,0,1,1,1.11-1.11l1.38,1.383Zm-2.36-5.172a6.29,6.29,0,1,0-6.29,6.282A6.293,6.293,0,0,0,1142.04,435.3Zm8.33,13.35-3.61-3.6-1.24,1.245,3.6,3.6Zm-5.97-3.465,1.25-1.246-1.25-1.245-1.24,1.245Zm-11.79-9.885h-1.57a4.715,4.715,0,0,1,4.71-4.712v1.57A3.146,3.146,0,0,0,1132.61,435.3Z"
+                          transform="translate(-1127.88 -427.438)" />
+                </svg>
+                search
+            </button>
+        </form>
+    </div>
+
+    <!-- Popup Form -->
+    <div class="popup-form">
+        <div class="inner-block">
+            <span class="popup-form-close" id="popup-form-close">&times;</span>
+            <div class="img">
+                <img src="~/MedicalDoctor/images/jpg/popup-form.jpg">
+            </div>
+            <form>
+                <h1 class="section-title">make an appointment</h1>
+                <div class="input-box">
+                    <label for="popup-name">Name *</label>
+                    <input type="text" id="popup-name" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-email">Email *</label>
+                    <input type="text" id="popup-email" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-phone">Phone *</label>
+                    <input type="tel" id="popup-phone" required>
+                </div>
+
+                <div class="select-box">
+                    <i class="fa fa-angle-down"></i>
+                    <select>
+                        <option selected>Department</option>
+                        <option selected>Department2</option>
+                        <option selected>Department3</option>
+                        <option selected>Department4</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-2_pink">send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts + Jquery plagins -->
+    <!-- .preloader  -->
+    <script src="~/MedicalDoctor/js/my-preloader.js"></script>
+
+    <!-- jQuery -->
+    <script src="~/MedicalDoctor/js/jQuery-3.4.1.js"></script>
+
+    <!-- wow js animation -->
+    <!-- <script src="./js/wow.min.js"></script> -->
+    <!-- owl-carousel js -->
+    <script src="~/MedicalDoctor/js/owl.carousel.min.js"></script>
+    <script src="~/MedicalDoctor/js/carousel.js"></script>
+
+    <!-- fancybox 3 js -->
+    <script src="~/MedicalDoctor/js/jquery.fancybox.js"></script>
+
+    <!-- Counter up -->
+    <script src="~/MedicalDoctor/js/jquery.waypoints.min.js"></script>
+    <script src="~/MedicalDoctor/js/jquery.countup.min.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/MedicalDoctor/js/bootstrap.min.js"></script>
+
+    <!-- customer js -->
+    <script src="~/MedicalDoctor/js/index.js"></script>
+
+</body>
+
+</html>

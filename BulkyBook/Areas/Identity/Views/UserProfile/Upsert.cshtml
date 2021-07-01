@@ -1,0 +1,413 @@
+﻿@model BulkyBook.Models.ViewModels.UserProfileVM
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    ViewData["Title"] = "User details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    body {
+        background: #eee
+    }
+
+    #regForm {
+        background-color: #ffffff;
+        margin: 0px auto;
+        font-family: Raleway;
+        padding: 40px;
+        border-radius: 10px
+    }
+
+    h1 {
+        text-align: center
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        font-family: Raleway;
+        border: 1px solid #aaaaaa
+    }
+
+        input.invalid {
+            background-color: #ffdddd
+        }
+
+    .tab {
+        display: none
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 17px;
+        font-family: Raleway;
+        cursor: pointer
+    }
+
+        button:hover {
+            opacity: 0.8
+        }
+
+    #prevBtn {
+        background-color: #bbbbbb
+    }
+
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5
+    }
+
+        .step.active {
+            opacity: 1
+        }
+
+        .step.finish {
+            background-color: #4CAF50
+        }
+
+    .all-steps {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px
+    }
+
+    .thanks-message {
+        display: none
+    }
+</style>
+
+
+<div class="row">
+
+    <div class="col-md-9">
+        @* start *@
+        <div class="container mt-5">
+
+            <div class="row d-flex justify-content-center align-items-center">
+
+                <div class="col-md-6">
+
+                    @*<form id="regForm">*@
+                    <form asp-action="Upsert" method="post" enctype="multipart/form-data" id="regForm">
+                        <div class="col row">
+                            <a class="btn btn-outline-secondary text-dark" asp-action="Index" style="cursor:pointer"><span style="text-size-adjust:150%">&lsaquo;</span> Back to Profile</a>
+                        </div>
+                        <h1 id="register">
+                            @{
+                                var header = "User details";
+                                if (Model.UserPrivate.Id != 0)
+                                {
+                                    header = "Edit User Details";
+                                }
+                            }
+                            @header
+                        </h1>
+                        <div class="all-steps" id="all-steps"> <span class="step"></span> <span class="step"></span> <span class="step"></span> <span class="step"></span> </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        @if (Model.UserPrivate.Id != 0)
+                                        {
+                                            <input asp-for="UserPrivate.Id" type="hidden" />
+                                        }
+                                        <label asp-for="UserPrivate.Gender" class="control-label"></label>
+                                        @Html.DropDownListFor(m => m.UserPrivate.Gender, Model.GenderList, "-Select a Gender",
+                                           new { @class = "form-control" })
+                                        <span asp-validation-for="UserPrivate.Gender" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="UserPrivate.DateOfBirth" class="control-label"></label>
+                                        <input asp-for="UserPrivate.DateOfBirth" class="form-control" value="@DateTime.Now" />
+                                        <span asp-validation-for="UserPrivate.DateOfBirth" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <input asp-for="ApplicationUser.Id" type="hidden" />
+                                    <input asp-for="ApplicationUser.FirstName" type="hidden" />
+                                    <input asp-for="ApplicationUser.LastName" type="hidden" />
+                                    <input asp-for="ApplicationUser.ProfilePhoto" type="hidden" />
+                                    <label asp-for="ApplicationUser.ProfilePhoto" class="control-label"></label>
+                                    <input type="file" name="files" id="uploadBox" class="form-control" accept="image/*" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="UserPrivate.About" class="control-label"></label>
+                                    <textarea asp-for="UserPrivate.About" class="form-control" rows="5"></textarea>
+                                    <span asp-validation-for="UserPrivate.About" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label asp-for="UserPrivate.MaritalStatus" class="control-label"></label>
+                                    @Html.DropDownListFor(m => m.UserPrivate.MaritalStatus, Model.MaritalstatusList, "-Select a Marital status",
+                                           new { @class = "form-control" })
+                                    <span asp-validation-for="UserPrivate.MaritalStatus" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="UserPrivate.Occupation" class="control-label"></label>
+                                    @Html.DropDownListFor(m => m.UserPrivate.Occupation, Model.OccupationList, "-Select a Occupation",
+                                           new { @class = "form-control" })
+                                    <span asp-validation-for="UserPrivate.Occupation" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="UserPrivate.CompanyName" class="control-label"></label>
+                                    <input asp-for="UserPrivate.CompanyName" class="form-control" />
+                                    <span asp-validation-for="UserPrivate.CompanyName" class="text-danger"></span>
+                                </div>
+                                @*<div class="form-group">
+                                        <label asp-for="UserPrivate.Position" class="control-label"></label>
+                                        <input asp-for="UserPrivate.Position" class="form-control" />
+                                        @Html.DropDownListFor(m => m.UserPrivate.Position, Model.PositionList, "-Select a Position",
+                                               new { @class = "form-control" })
+                                        <span asp-validation-for="UserPrivate.Position" class="text-danger"></span>
+                                    </div>*@
+
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div class="col">
+                                <div class="form-group">
+                                    @if (Model.Preference.Id != 0)
+                                    {
+                                        <input asp-for="Preference.Id" type="hidden" />
+                                    }
+                                    @*<input id="languagevalues" name="languagevalues" type="text" style="display:none" />*@
+                                    <input id="languagevalues" asp-for="Preference.Language" style="display:none" />
+                                    <label asp-for="Preference.Language" class="control-label"></label>
+                                    @Html.DropDownList("LanguageList", Model.LanguageList, "-Select a Language",
+                                           new { @class = "form-control", id = "ddlLanguageList" })
+                                    <select id="lstLanguageList" class="form-control" size="5">
+                                        @if (Model.Preference.Language != null)
+                                        {
+                                            @foreach (var item in Model.Preference.Language.Split(','))
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input id="industryvalues" asp-for="Preference.Industry" style="display:none" />
+                                    <label asp-for="Preference.Industry" class="control-label"></label>
+                                    @Html.DropDownList("IndustryList", Model.IndustryList, "-Select a Industry",
+                                        new { @class = "form-control", id = "ddlIndustryList" })
+                                    <select id="lstIndustryList" class="form-control" size="5">
+                                        @if (Model.Preference.Industry != null)
+                                        {
+                                            @foreach (var item in Model.Preference.Industry.Split(','))
+                                            {
+
+                                                var val = Model.IndustryList.Where(s => s.Value == item).ToList();
+                                                // var val = Model.IndustryList.Where(s => s.Value == item).Select(s => s.Value).ToString();
+                                                if (val.Count > 0)
+                                                {
+                                                    <option value="@val[0].Value">@val[0].Text</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thanks-message text-center" id="text-message">
+                            <img src="~/images/tick.jpg" width="100" class="mb-4">
+                            <h3>Profile Updated Successfully!</h3> <span>Your information has been saved!</span>
+                        </div>
+                        <div style="overflow:auto;" id="nextprevious">
+                            <div style="float:right;"> <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button> <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* End *@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="text/javascript">
+        var currentTab = 0;
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+
+            showTab(currentTab);
+
+        });
+
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+        }
+
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+            if (currentTab >= x.length) {
+                //document.getelementbyid("regform").submit();
+                //return false;
+                //alert("sdf");
+                document.getElementById("nextprevious").style.display = "none";
+                document.getElementById("all-steps").style.display = "none";
+                document.getElementById("register").style.display = "none";
+                document.getElementById("text-message").style.display = "block";
+                $("#regForm").submit();
+
+            }
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                //if (y[i].value == "") { y[i].className += " invalid"; valid = false; }
+            } if (valid) { document.getElementsByClassName("step")[currentTab].className += " finish"; } return valid;
+        }
+        function fixStepIndicator(n) { var i, x = document.getElementsByClassName("step"); for (i = 0; i < x.length; i++) { x[i].className = x[i].className.replace(" active", ""); } x[n].className += " active"; }
+    </script>
+    <script type="text/javascript">
+
+        $("#ddlIndustryList").on('change', function () {
+            var value = $("#ddlIndustryList :selected").val();
+            var text = $("#ddlIndustryList :selected").text();
+            if (value != '') {
+                if (!$("#lstIndustryList option[value='" + value + "']").length) {
+                    var listBox = $("#lstIndustryList");
+                    var option = $("<option />").val(value).html(text);
+                    listBox.append(option);
+                }
+            }
+            return false;
+        });
+        $("#lstIndustryList").on('click', function () {
+            $("#lstIndustryList option:selected").remove();
+        });
+
+        //$("#ddlNationalityList").on('change', function () {
+        //    var value = $("#ddlNationalityList :selected").val();
+        //    if (value != '') {
+        //        if (!$("#lstNationalityList option[value='" + value + "']").length) {
+        //            var listBox = $("#lstNationalityList");
+        //            var option = $("<option />").val(value).html(value);
+        //            listBox.append(option);
+        //        }
+        //    }
+        //    return false;
+        //});
+        //$("#lstNationalityList").on('click', function () {
+        //    $("#lstNationalityList option:selected").remove();
+        //});
+
+        $("#ddlLanguageList").on('change', function () {
+            var value = $("#ddlLanguageList :selected").val();
+            if (value != '') {
+                if (!$("#lstLanguageList option[value='" + value + "']").length) {
+                    var listBox = $("#lstLanguageList");
+                    var option = $("<option />").val(value).html(value);
+                    listBox.append(option);
+                }
+            }
+            return false;
+        });
+        $("#lstLanguageList").on('click', function () {
+            $("#lstLanguageList option:selected").remove();
+        });
+
+        $('#regForm').on('submit', function () {
+            //declaration
+            var language = new Array();
+            var nationality = new Array();
+            var industry = new Array();
+
+            //assigning the selected values to array
+            $('#lstLanguageList option').each(function () {
+                language.push(this.value);
+            });
+
+            //$('#lstNationalityList option').each(function () {
+            //    nationality.push(this.value);
+            //});
+
+            $('#lstIndustryList option').each(function () {
+                industry.push(this.value);
+            });
+
+            //assigning the array of values to hidden controller with the seperation of comma[,].
+            if (language.length > 0) {
+                $('#languagevalues').val(language.join(","));
+            } else {
+                $('#languagevalues').val("");
+            }
+            if (nationality.length > 0) {
+                $('#nationalityvalues').val(nationality.join(","));
+            } else {
+                $('#nationalityvalues').val("");
+            }
+            if (industry.length > 0) {
+                $('#industryvalues').val(industry.join(","));
+            } else {
+                $('#industryvalues').val("");
+            }
+        });
+
+
+
+        $('#uploadBox').on('change', function () {
+            if (typeof (FileReader) != "undefined") {
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                $($(this)[0].files).each(function () {
+                    var file = $(this);
+                    if (!regex.test(file[0].name.toLowerCase())) {
+                        alert(file[0].name + " is not a valid image file.");
+                        file[0].name = "";
+                        return false;
+                    }
+                });
+            }
+            else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        });
+
+    </script>
+}

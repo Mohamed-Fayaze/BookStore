@@ -1,0 +1,94 @@
+﻿@model BulkyBook.Models.ViewModels.ReviewRatingVM
+    <link href="~/css/FeatureRating.css" rel="stylesheet" />
+    <link href="~/css/starRating.css" rel="stylesheet" />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Upsert" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="ReviewRating.Id" type="hidden" />
+                <input asp-for="ReviewRating.BussinessId" type="hidden" />
+                <input asp-for="ReviewRating.OtherId" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="ReviewRating.OverallRating" class="control-label"></label>
+                    <div class="rating">
+                        <input type="radio" asp-for="ReviewRating.OverallRating" name="ReviewRating.OverallRating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="ReviewRating.OverallRating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="ReviewRating.OverallRating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="ReviewRating.OverallRating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="ReviewRating.OverallRating" value="1" id="1"><label for="1">☆</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReviewRating.Service" class="control-label"></label>
+                    <div class="rating">
+                        <input type="radio" asp-for="ReviewRating.Service" name="ReviewRating.Service" value="5" id="5.1"><label for="5.1">☆</label> <input type="radio" name="ReviewRating.Service" value="4" id="4.1"><label for="4.1">☆</label> <input type="radio" name="ReviewRating.Service" value="3" id="3.1"><label for="3.1">☆</label> <input type="radio" name="ReviewRating.Service" value="2" id="2.1"><label for="2.1">☆</label> <input type="radio" name="ReviewRating.Service" value="1" id="1.1"><label for="1.1">☆</label>
+                    </div>
+                    <span asp-validation-for="ReviewRating.Service" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReviewRating.Valueformoney" class="control-label"></label>
+                    <div class="rating">
+                        <input type="radio" asp-for="ReviewRating.Valueformoney" name="ReviewRating.Valueformoney" value="5" id="5.2"><label for="5.2">☆</label> <input type="radio" name="ReviewRating.Valueformoney" value="4" id="4.2"><label for="4.2">☆</label> <input type="radio" name="ReviewRating.Valueformoney" value="3" id="3.2"><label for="3.2">☆</label> <input type="radio" name="ReviewRating.Valueformoney" value="2" id="2.2"><label for="2.2">☆</label> <input type="radio" name="ReviewRating.Valueformoney" value="1" id="1.2"><label for="1.2">☆</label>
+                    </div>
+                    <span asp-validation-for="ReviewRating.Valueformoney" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @*@Html.DropDownListFor(m => m.ReviewRating.OtherId, Model.OtherList, "-Select a OtherRating", new { @class = "form-control" })*@
+                    <label asp-for="ReviewRating.OtherId" class="control-label">@Model.Other.Name</label>
+                    <div class="rating">
+                        <input type="radio" asp-for="ReviewRating.OtherRating" name="ReviewRating.OtherRating" value="5" id="5.3"><label for="5.3">☆</label> <input type="radio" name="ReviewRating.OtherRating" value="4" id="4.3"><label for="4.3">☆</label> <input type="radio" name="ReviewRating.OtherRating" value="3" id="3.3"><label for="3.3">☆</label> <input type="radio" name="ReviewRating.OtherRating" value="2" id="2.3"><label for="2.3">☆</label> <input type="radio" name="ReviewRating.OtherRating" value="1" id="1.3"><label for="1.3">☆</label>
+                    </div>
+                    <span asp-validation-for="ReviewRating.OtherId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReviewRating.Title" class="control-label"></label>
+                    <input asp-for="ReviewRating.Title" class="form-control" />
+                    <span asp-validation-for="ReviewRating.Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ReviewRating.Description" class="control-label"></label>
+                    <textarea asp-for="ReviewRating.Description" class="form-control" rows="5" style="width:400px"></textarea>
+                    <span asp-validation-for="ReviewRating.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @*<label asp-for="review.imageupload" class="control-label"></label>*@
+                    <input asp-for="ReviewRating.Image" id="File" type="file" />
+                    <span asp-validation-for="ReviewRating.Image" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReviewRating.Recommendation" class="control-label"></label>
+                    <input asp-for="ReviewRating.Recommendation" class="custom-checkbox" />
+                    <span asp-validation-for="ReviewRating.Recommendation" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4">
+                        @if (Model.ReviewRating.Id != 0)
+                        {
+                            <partial name="_EditAndBackToListButton" model="Model.ReviewRating.Id" />
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
+                                </div>
+                                <div class="col">
+                                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+        <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
+
+
+    }

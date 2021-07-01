@@ -33,13 +33,13 @@ namespace BulkyBook.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            IEnumerable<Category> CatList = await _unitOfWork.Category.GetAllAsync();
+            IEnumerable<BulkyBook.Models.Category> CatList = await _unitOfWork.Category.GetAllAsync();
             ProductVM productVM = new ProductVM()
             {
                 Product=new Product(),
                 CategoryList = CatList.Select(i=> new SelectListItem { 
-                    Text = i.Name,
-                    Value = i.Id.ToString()
+                    Text = i.CategoryName,
+                    Value = i.CategoryId.ToString()
                 }),
                 CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
                 {
@@ -116,11 +116,11 @@ namespace BulkyBook.Areas.Admin.Controllers
             }
             else
             {
-                IEnumerable<Category> CatList = await _unitOfWork.Category.GetAllAsync();
+                IEnumerable<BulkyBook.Models.Category> CatList = await _unitOfWork.Category.GetAllAsync();
                 productVM.CategoryList = CatList.Select(i => new SelectListItem
                 {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
+                    Text = i.CategoryName,
+                    Value = i.CategoryId.ToString()
                 });
                 productVM.CoverTypeList = _unitOfWork.CoverType.GetAll().Select(i => new SelectListItem
                 {

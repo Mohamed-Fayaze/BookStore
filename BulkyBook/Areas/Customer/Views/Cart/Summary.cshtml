@@ -115,7 +115,7 @@
                             @{
                                 var OrderTotalForStripe = Model.OrderHeader.OrderTotal * 100;
                             }
-                            @if (Model.OrderHeader.ApplicationUser.Company == null ||
+                            @*@if (Model.OrderHeader.ApplicationUser.Company == null ||
                            !Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
                             {
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -136,7 +136,7 @@
                             else
                             {
                                 <button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
-                            }
+                            }*@
                         </div>
                     </div>
                 </div>

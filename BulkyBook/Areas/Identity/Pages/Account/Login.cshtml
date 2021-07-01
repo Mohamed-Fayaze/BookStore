@@ -4,69 +4,396 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/assets/css/default.css" rel="stylesheet" />
+<link href="~/assets/css/fontawesome.min.css" rel="stylesheet" />
+<link href="~/assets/css/ion.rangeSlider.min.css" rel="stylesheet" />
+<link href="~/assets/css/magnific-popup.css" rel="stylesheet" />
+<link href="~/assets/css/nice-select.css" rel="stylesheet" />
+<link href="~/assets/css/slick.css" rel="stylesheet" />
+<link href="~/assets/css/style.css" rel="stylesheet" />
+<link href="~/assets/css/loginstylee.css" rel="stylesheet" />
+<link href="~/assets/css/intlcss.css" rel="stylesheet" />
+<style>
+    .iti-flag {
+        background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/10.0.2/img/flags.png");
+    }
+</style>
+<div>
+    <div class="row">
+        <div class="col-1">
+            <a asp-area="Customer" asp-controller="Home" asp-action="City">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" color="red" style="margin-top:30px;margin-left:330px;" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+            </a>
 
-    <div id="logreg-forms">
+        </div>
+        <div class="col-6">
+            <p style="font-size:40px;font-weight:500;color:orangered;margin-left:270px;margin-top:40px">SignIn On Kubri</p>
+        </div>
+    </div>
 
-        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-            <h1 class="h3 mb-3 font-weight-normal text-primary" style="text-align:center;">Sign In</h1>
-            <div class="social-login pb-0 mb-0">
-                @foreach (var provider in Model.ExternalLogins)
-                {
-                    @if (provider.Name.ToLower().Contains("facebook"))
-                    {
-                        <button type="submit" class="btn btn-block facebook-btn form-control"
-                                name="provider" value="@provider.Name"
-                                title="Log in using your @provider.DisplayName account">
-                            <i class="fab fa-facebook-square"></i> @provider.DisplayName
-                        </button>
-                    }
-                    else
-                    {
-                        @if (provider.Name.ToLower().Contains("google"))
-                        {
-                            <button type="submit" class="btn btn-block google-btn form-control"
-                                    name="provider" value="@provider.Name"
-                                    title="Log in using your @provider.DisplayName account">
-                                <i class="fab fa-google"></i> @provider.DisplayName
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="submit" class="btn btn-primary" name="provider"
-                                    value="@provider.Name"
-                                    title="Log in using your @provider.DisplayName account">
-                                @provider.DisplayName
-                            </button>
-                        }
-                    }
 
-                }
+    <br />
+</div>
+
+
+<div class="container ">
+    <div class="frame">
+        <div class="nav">
+            <table class="links">
+                <tr class="signin-active"><a style="font-weight:500" class="btn">Login with OTP</a></tr>
+                <tr class="signup-inactive"><a style="font-weight:500" class="btn">Login with Email</a></tr>
+            </table>
+        </div>
+        <div ng-app ng-init="checked = false">
+
+            <form class="form-signin" id="account" method="post">
+                <div style="margin-top:-50px" class="sign_form_wrapper">
+                    <div class="sign_title">
+                        <h5 class="title">Sign In With Mobile</h5>
+                    </div>
+
+                    <div class="single_form">
+                        <div class="row">
+                            <div class="col-6">
+                                <input style="margin-left:50px;width:220px" asp-for="Mobile.PhoneNumber" id="mobileNumber">
+                                @*<i class="fal fa-phone"></i>*@
+                                <span asp-validation-for="Mobile.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" style="margin-top:0px;margin-left:90px;width:115px;" id="sendotpbtn" class="main-btn" value="Sendotp" name="submit" asp-page-handler="Verify" data-toggle="modal" data-target=".bd-example-modal-lg">Send OTP</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="single_form">
+
+                        <input style="margin:-80px 0px 0px 50px;width:220px" id="otpinp" asp-for="Mobile.Code">
+                        <i  style="margin:-10px 0px 0px 50px;" class="fal fa-code-commit"></i>
+
+
+                        <button style="margin-top:30px;margin-left:50px" value="Verifyotp" name="submit" id="otpbtn" class="main-btn" asp-page-handler="Verify">Proceed to Login</button>
+
+
+                    </div>
+                    <a style="margin-top:30px;margin-left:50px;color:forestgreen" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><i class="fas fa-user-plus"></i> Register as a new user</a>
+                    <div class="single_form d-sm-flex justify-content-between">
+                        @*<div class="sign_checkbox">
+                <input type="checkbox" id="checkbox">
+                <label for="checkbox"></label>
+                <span>Keep me logged in</span>
+            </div>*@
+                        @*<div class="sign_forgot">
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot Password?</a>
+            </div>*@
+                    </div>
+
+                    @*<div class="single_form">
+            <button type="submit" asp-page-handler="Mobile" id="phonesigninbtn" class="main-btn">Sign In</button>
+        </div>*@
+
+                    @*<a id="forgot-password" asp-page="./ForgotPassword" class="pb-2 text-info">Forgot your password?</a>*@
+
+                    @*<button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link text-info"
+                style="padding:0px;margin:0px;border:0px">
+            Resend email confirmation
+        </button>*@
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    @*<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><i class="fas fa-user-plus"></i> Register as a new user</a>*@
+                </div>
+            </form>
+
+            <form class="form-signup" id="account" method="post">
+                <div style="margin-top:-50px" class="sign_form_wrapper">
+                    <div class="sign_title">
+                        <h5 class="title">Sign In With Email</h5>
+                    </div>
+
+                    <div class="single_form">
+                        <input asp-for="Input.Email" id="emailinp" placeholder="Email...">
+                        <i class="fal fa-user"></i>
+                    </div>
+
+                    <div class="single_form">
+                        <input asp-for="Input.Password" id="passwordinp" placeholder="Password..." type="password">
+                        <i class="fal fa-key"></i>
+                    </div>
+                    <div class="single_form d-sm-flex justify-content-between">
+                        @*<div class="sign_checkbox">
+                        <input type="checkbox" id="checkbox">
+                        <label for="checkbox"></label>
+                        <span>Keep me logged in</span>
+                    </div>*@
+                        <div class="sign_forgot">
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot Password?</a>
+                        </div>
+                    </div>
+                    @*<button type="submit" class="btn btn-success btn-block"><i class="fas fa-sign-in-alt"></i> Sign in</button>*@
+                    <div class="single_form">
+                        <button type="submit" id="signinbtn" class="main-btn">Sign In</button>
+                    </div>
+
+                    @*<a id="forgot-password" asp-page="./ForgotPassword" class="pb-2 text-info">Forgot your password?</a>*@
+
+                    @*<button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link text-info"
+                        style="padding:0px;margin:0px;border:0px">
+                    Resend email confirmation
+                </button>*@
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <br />
+                    <a style="margin-top:10px;margin-left:10px;color:forestgreen;font-size:16px" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"><i class="fas fa-user-plus"></i> Register as a new user</a>
+                </div>
+            </form>
+
+
+
+
+            <div class="success">
+                <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" id="check" ng-class="checked ? 'checked' : ''">
+                    <path fill="#ffffff" d="M40.61,23.03L26.67,36.97L13.495,23.788c-1.146-1.147-1.359-2.936-0.504-4.314 c3.894-6.28,11.169-10.243,19.283-9.348c9.258,1.021,16.694,8.542,17.622,17.81c1.232,12.295-8.683,22.607-20.849,22.042 c-9.9-0.46-18.128-8.344-18.972-18.218c-0.292-3.416,0.276-6.673,1.51-9.578" />
+                    <div class="successtext">
+                        <p> New User registered, Kindly check your email for confirmation.</p>
+                    </div>
             </div>
+        </div>
+        <div class="forgot"> <a href="#">Forgot your password?</a> </div>
+        <div>
+            <div class="cover-photo"></div>
+            <div class="profile-photo"></div>
+            <h1 class="welcome">Welcome,User</h1> <a class="btn-goback" value="Refresh" onClick="history.go()">Go back</a>
+        </div>
+    </div> <a id="refresh" value="Refresh" onClick="history.go()">
+        <svg class="refreshicon" version="1.1" id="Capa_1" x="0px" y="0px" width="25px" height="25px" viewBox="0 0 322.447 322.447" style="enable-background:new 0 0 322.447 322.447;" xml:space="preserve">
+        <path d="M321.832,230.327c-2.133-6.565-9.184-10.154-15.75-8.025l-16.254,5.281C299.785,206.991,305,184.347,305,161.224 c0-84.089-68.41-152.5-152.5-152.5C68.411,8.724,0,77.135,0,161.224s68.411,152.5,152.5,152.5c6.903,0,12.5-5.597,12.5-12.5 c0-6.902-5.597-12.5-12.5-12.5c-70.304,0-127.5-57.195-127.5-127.5c0-70.304,57.196-127.5,127.5-127.5 c70.305,0,127.5,57.196,127.5,127.5c0,19.372-4.371,38.337-12.723,55.568l-5.553-17.096c-2.133-6.564-9.186-10.156-15.75-8.025 c-6.566,2.134-10.16,9.186-8.027,15.751l14.74,45.368c1.715,5.283,6.615,8.642,11.885,8.642c1.279,0,2.582-0.198,3.865-0.614 l45.369-14.738C320.371,243.946,323.965,236.895,321.832,230.327z" /> </svg>
+    </a>
+</div>
 
-        </form>
-        <form id="account" method="post">
 
-            @if (Model.ExternalLogins?.Count > 0)
-            {
-                <p style="text-align:center"> OR </p>
+
+
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src="~/assets/js/intlTelInputupd.js"></script>
+
+
+<script>
+
+    $("#signinbtn").click(function () {
+
+        var value = $("#emailinp").val();
+        var value1 = $("#passwordinp").val();
+        var mailformat = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (value == '') {
+            alert('Please Fill Email Address');
+            return false;
+        }
+
+
+        if (value == '' || value1 == '') {
+            alert('Please Fill both Email & Password');
+            return false;
+        }
+
+        if (value == '') {
+            alert('Please Fill Password Correctly');
+            return false;
+        }
+
+        if (!value.match(mailformat)) {
+            alert('Invalid Email Address');
+            return false;
+        }
+
+
+
+    });
+
+
+    $("#phonesigninbtn").click(function () {
+
+
+
+
+
+        var value = $("#mobileNumber").val();
+        var value1 = $("#phonepasswordinp").val();
+
+
+        if (value == '') {
+            alert('Please Fill Mobile Number');
+            return false;
+        }
+
+        if (value == '') {
+            alert('Please Fill Password Correctly');
+            return false;
+        }
+
+        if (value.length < 9) {
+            alert('Invalid Mobile Number');
+            return false;
+        }
+
+
+
+
+
+    });
+</script>
+<script>
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        // allowDropdown: false,
+        // autoHideDialCode: false,
+        // autoPlaceholder: "off",
+        // dropdownContainer: document.body,
+        // excludeCountries: ["us"],
+        // formatOnDisplay: false,
+        // geoIpLookup: function(callback) {
+        //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+        //     var countryCode = (resp && resp.country) ? resp.country : "";
+        //     callback(countryCode);
+        //   });
+        // },
+        // hiddenInput: "full_number",
+        // initialCountry: "auto",
+        // localizedCountries: { 'de': 'Deutschland' },
+        // nationalMode: false,
+        // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        // placeholderNumberType: "MOBILE",
+        preferredCountries: ['in', 'sa'],
+        // separateDialCode: true,
+        utilsScript: "/assets/js/utils.js",
+    });
+</script>
+<script src="~/assets/js/utils.js"></script>
+
+<script>
+
+    $("#sendotpbtn").click(function () {
+
+        var value = $("#mobileNumber").val();
+        var value1 = $("#mobileNumber1").val();
+     
+
+        if (value == '') {
+            alert('Please Pick your Country and Fill Number Next to Country Code');
+            return false;
+        }
+
+        if (value == '' || value1 == '') {
+            alert('Please Fill Both Email & Password');
+            return false;
+        }
+
+        if (value.length < 11) {
+            alert('Invalid Mobile Number');
+            return false;
+        }
+
+    });
+
+    $("#otpbtn").click(function () {
+
+      
+        var otpvalue = $("#otpinp").val();
+
+        var value = $("#mobileNumber").val();
+
+
+        if (value == '') {
+            alert('Please Pick your Country and Fill Number Next to Country Code');
+            return false;
+        }
+        if (value.length < 11) {
+            alert('Invalid Mobile Number');
+            return false;
+        }
+
+        if (otpvalue == '') {
+            alert('OTP Field is Empty');
+            return false;
+        }
+        if (otpvalue.length < 6 || otpvalue.length > 6) {
+            alert('Invalid OTP, Please Enter 6 Digits OTP');
+            return false;
+        }
+    });
+
+
+
+</script>
+
+
+
+<script>
+
+
+    var SendOTP = function () {
+
+        $.ajax({
+            url: "/Test/SendOTP",
+            type: "post",
+            success: function (data) {
+                if (data == "success") {
+
+                    alert("OTP sent successfully");
+                    window.location = "/Test/EnterOTP";
+                }
+                else {
+                    alert("failed");
+                }
             }
 
-            <input asp-for="Input.Email" placeholder="Email..." type="email" class="mb-1 form-control" />
-            <input asp-for="Input.Password" placeholder="Password..." type="password" class="form-control" />
-            <button type="submit" class="btn btn-success btn-block"><i class="fas fa-sign-in-alt"></i> Sign in</button>
 
-            <a id="forgot-password" asp-page="./ForgotPassword" class="pb-2 text-info">Forgot your password?</a>
+        })
 
-            <button type="submit" asp-page-handler="SendVerificationEmail" class="btn-link text-info"
-                    style="padding:0px;margin:0px;border:0px">
-                Resend email confirmation
-            </button>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"
-               class="btn btn-primary text-white"><i class="fas fa-user-plus"></i> Register as a new user</a>
-        </form>
+    }
 
-    </div>
+</script>
+
+<script>
+    $(function () {
+        $(".btn").click(function () {
+            $(".form-signin").toggleClass("form-signin-left");
+            $(".form-signup").toggleClass("form-signup-left");
+            $(".frame").toggleClass("frame-long");
+            $(".signup-inactive").toggleClass("signup-active");
+            $(".signin-active").toggleClass("signin-inactive");
+            $(".forgot").toggleClass("forgot-left");
+            $(this).removeClass("idle").addClass("active");
+        });
+    });
+
+    $(function () {
+        $(".btn-signup").click(function () {
+            $(".nav").toggleClass("nav-up");
+            $(".form-signup-left").toggleClass("form-signup-down");
+            $(".success").toggleClass("success-left");
+            $(".frame").toggleClass("frame-short");
+        });
+    });
+
+    $(function () {
+        $(".btn-signin").click(function () {
+            $(".btn-animate").toggleClass("btn-animate-grow");
+            $(".welcome").toggleClass("welcome-left");
+            $(".cover-photo").toggleClass("cover-photo-down");
+            $(".frame").toggleClass("frame-short");
+            $(".profile-photo").toggleClass("profile-photo-down");
+            $(".btn-goback").toggleClass("btn-goback-up");
+            $(".forgot").toggleClass("forgot-fade");
+        });
+    });
+</script>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

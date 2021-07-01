@@ -1,0 +1,61 @@
+﻿@model BulkyBook.Models.ViewModels.FAQVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/FAQ.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrapper wrapper-content animated fadeInRight">
+
+                <div class="ibox-content m-b-sm border-bottom">
+                    <div class="text-center p-lg">
+                        <h2>Add your answers</h2>
+                        @*<span>add your question by selecting </span>*@
+                        @*<button title="Create new cluster" class="btn btn-primary btn-sm" asp-action="Upsert"><i class="fa fa-plus"></i> <span class="bold">Add question</span></button> button*@
+                        @*<a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Add your Question</a>
+                        <a class="btn btn-primary" asp-action="Detail"><i class="fas fa-plus"></i> &nbsp; Add your Answer</a>*@
+                    </div>
+                </div>
+
+
+
+
+                @foreach (var item in Model.FAQs)
+                {
+                    <a asp-action="Upsert" asp-route-id="@item.Id"><i class="fas fa-plus" aria-hidde="true"></i>Answer</a>
+                    <button type="button" onclick=Delete("/Admin/FAQ/Delete/@item.Id")><i class="fas fa-trash-alt"></i>Delete</button>
+                    <div class="faq-item">
+                        <button class="accordion">@Html.DisplayFor(modelItem => item.FAQQuestion) </button>
+                        <div class="panel">
+                            <p> @Html.DisplayFor(modelItem => item.FAQAnswer)</p><small><i class="fa fa-clock-o"></i> @Html.DisplayFor(modelItem => item.QuestionOn)</small>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script src="~/js/FAQ.js"></script>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+}

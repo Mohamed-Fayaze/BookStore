@@ -1,0 +1,982 @@
+﻿@model BulkyBook.Models.ViewModels.CategoryVM
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    ViewData["Title"] = "Hospital details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Home/DateTimePicker.css" rel="stylesheet" />
+<link href="~/css/BusinessHour.css" rel="stylesheet" />
+<style type="text/css">
+    body {
+        background: #eee
+    }
+
+    #regForm {
+        background-color: #ffffff;
+        margin: 0px auto;
+        font-family: Raleway;
+        padding: 40px;
+        border-radius: 10px
+    }
+
+    h1 {
+        text-align: center
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        font-family: Raleway;
+        border: 1px solid #aaaaaa
+    }
+
+        input.invalid {
+            background-color: #ffdddd
+        }
+
+    .tab {
+        display: none
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 17px;
+        font-family: Raleway;
+        cursor: pointer
+    }
+
+        button:hover {
+            opacity: 0.8
+        }
+
+    #prevBtn {
+        background-color: #bbbbbb
+    }
+
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5
+    }
+
+        .step.active {
+            opacity: 1
+        }
+
+        .step.finish {
+            background-color: #4CAF50
+        }
+
+    .all-steps {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px
+    }
+
+    .thanks-message {
+        display: none
+    }
+
+    /*Upload images*/
+    .images {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+        .images .img,
+        .images .pic {
+            flex-basis: 31%;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .images .img {
+            width: 112px;
+            height: 93px;
+            background-size: cover;
+            margin-right: 10px;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .images .img:nth-child(3n) {
+                margin-right: 0;
+            }
+
+            .images .img span {
+                display: none;
+                text-transform: capitalize;
+                z-index: 2;
+            }
+
+            .images .img::after {
+                content: '';
+                width: 100%;
+                height: 100%;
+                transition: opacity .1s ease-in;
+                border-radius: 4px;
+                opacity: 0;
+                position: absolute;
+            }
+
+            .images .img:hover::after {
+                display: block;
+                background-color: #000;
+                opacity: .5;
+            }
+
+            .images .img:hover span {
+                display: block;
+                color: #fff;
+            }
+
+        .images .pic {
+            background-color: #F5F7FA;
+            align-self: center;
+            text-align: center;
+            padding: 40px 0;
+            text-transform: uppercase;
+            color: #848EA1;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+    @@media screen and (max-width: 400px) {
+        .images .img,
+        .images .pic {
+            flex-basis: 100%;
+            margin-right: 0;
+        }
+    }
+</style>
+<!-- start -->
+<div class="row">
+
+    <div class="col-md-9">
+        @* start *@
+        <div class="container mt-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <form asp-action="Upsert" method="post" enctype="multipart/form-data" id="regForm">
+                        <span class="col-1">
+                            <a class="btn btn-outline-secondary text-black-50" asp-controller="BusinessProfile" asp-action="MyListing" style="cursor:pointer">&lsaquo; Back to List</a>
+                        </span>
+                        <h2 id="register">
+                            @{
+                                var header = "Business details";
+                                if (Model.Business.Id != 0)
+                                {
+                                    <input asp-for="Business.Id" type="hidden" />
+                                    <input asp-for="Business.Name" type="hidden" />
+                                    <input asp-for="Business.CategoryId" type="hidden" />
+                                    <input asp-for="Business.SubCategoryId" type="hidden" />
+                                    <input asp-for="Business.BusinessTypeId" type="hidden" />
+                                    <input asp-for="Business.YearOfRegistered" type="hidden" />
+                                    <input asp-for="Business.Description" type="hidden" />
+                                    header = "Edit Business Details";
+                                }
+                            }
+                            @header
+                        </h2>
+                        <div class="all-steps" id="all-steps"> <span class="step"></span> <span class="step"></span> <span class="step"></span> <span class="step"></span>  <span class="step"></span>  <span class="step"></span> <span class="step"></span> <span class="step"></span>  </div>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Business Info</h4>
+                                    <div class="form-group">
+                                        <label asp-for="Business.ProfilePhoto" class="control-label"></label>
+                                        <div class="images" id="busspfl">
+                                            <div id="imgpfl">
+                                                <div class="img">
+                                                    <img src="@Model.Business.ProfilePhoto" />
+                                                </div>
+                                            </div>
+                                            <div class="pic">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                        <input asp-for="Business.ProfilePhoto" type="hidden" />
+                                        <input type="file" name="Profile" id="businessprofile" class="form-control" accept="image/*" style="display:none" />
+                                        <span asp-validation-for="Business.Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.Name" class="control-label"></label>
+                                        <input asp-for="Business.Name" class="form-control" />
+                                        <span asp-validation-for="Business.Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.ParentCorporation" class="control-label"></label>
+                                        <input asp-for="Business.ParentCorporation" class="form-control" />
+                                        <span asp-validation-for="Business.ParentCorporation" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.BusinessTypeId" class="control-label"></label>
+                                        @Html.DropDownListFor(m => m.Business.BusinessTypeId, Model.BusinessTypeList, "-Select a Business Type",
+                                            new { @class = "form-control", id = "businesstypeid" })
+                                        <span asp-validation-for="Business.BusinessTypeId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.CategoryId" class="control-label"></label>
+                                        @Html.DropDownListFor(m => m.Business.CategoryId, Model.PrimaryCategoryList, "-Select a Industry Type",
+                                            new { @class = "form-control", id = "categoryid" })
+                                        <span asp-validation-for="Business.CategoryId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.YearOfRegistered" class="control-label"></label>
+                                        <input asp-for="Business.YearOfRegistered" class="form-control" />
+                                        <span asp-validation-for="Business.YearOfRegistered" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Business.Description" class="control-label"></label>
+                                        <textarea asp-for="Business.Description" class="form-control" rows="5"></textarea>
+                                        <span asp-validation-for="Business.Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Amulatory Info</h4>
+
+                                    <div class="form-group">
+                                        <label asp-for="Event.Description" class="control-label"></label>
+                                        <input asp-for="Event.Description" class="form-control">
+                                        <span asp-validation-for="Event.Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Fees" class="control-label"></label>
+                                        <input asp-for="Event.Fees" class="form-control">
+                                        <span asp-validation-for="Event.Fees" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.OnlineBooking" class="control-label"></label>
+                                        <input asp-for="Event.OnlineBooking" class="form-control" />
+                                        <span asp-validation-for="Event.OnlineBooking" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Offer" class="control-label"></label>
+                                        <input asp-for="Event.Offer" class="form-control" />
+                                        <span asp-validation-for="Event.Offer" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.OrganizerName" class="control-label"></label>
+                                        <input asp-for="Event.OrganizerName" class="form-control" />
+                                        <span asp-validation-for="Event.OrganizerName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Paymentmode" class="control-label"></label>
+                                        <input asp-for="Event.Paymentmode" class="form-control" />
+                                        <span asp-validation-for="Event.Paymentmode" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.SubType" class="control-label"></label>
+                                        <input asp-for="Event.SubType" class="form-control" />
+                                        <span asp-validation-for="Event.SubType" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Timing" class="control-label"></label>
+                                        <input asp-for="Event.Timing" class="form-control" />
+                                        <span asp-validation-for="Event.Timing" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Totalmembers" class="control-label"></label>
+                                        <input asp-for="Event.Totalmembers" class="form-control" />
+                                        <span asp-validation-for="Event.Totalmembers" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Event.Type" class="control-label"></label>
+                                        <input asp-for="Event.Type" class="form-control" />
+                                        <span asp-validation-for="Event.Type" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Hours of Operation</h4>
+                                    @*<div class="form-group row">
+                                        <div class="form-group">
+                                            <label class="control-label">Monday : </label>
+                                        </div>
+                                        <div class="form-group">
+
+                                                    <input asp-for="BusinessHour.MondayFrom" class="form-control  " />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label"> To : </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input asp-for="BusinessHour.MondayTo" class="form-control" />
+                                                </div>
+                                            </div>*@
+
+
+
+                                    <div class="">
+                                        <div class="row">
+                                            <div class="row px-3" id="businesshours">
+                                                <div class="mob">
+                                                    <button class="ml-1" type="button" data-toggle="dropdown">
+                                                        Mon-Sun
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <input id="Mondaychk" type="checkbox" />Monday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Tuesdaychk" type="checkbox" />Tuesday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Wednesdaychk" type="checkbox" />Wednesday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Thrusdaychk" type="checkbox" />Thrusday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Fridaychk" type="checkbox" />Friday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Saturdaychk" type="checkbox" />Saturday
+                                                        </li>
+                                                        <li>
+                                                            <input id="Sundaychk" type="checkbox" />Sunday
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="mob"> <label class="text-grey">From</label> <input id="from" class="ml-1" type="time" name="from"> </div>
+                                                <div class="mob"> <label class="text-grey">To</label> <input id="to" class="ml-1" type="time" name="to"> </div>
+                                                @*<div class="cancel fa fa-times text-danger"></div>*@
+                                            </div>
+                                        </div>
+                                        @*<div class="row px-3 mt-3">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-10">
+                                                    <div class="row px-3">
+                                                        <div class="fa fa-plus-circle text-success add"></div>
+                                                        <p class="text-success ml-3 add">Add</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row px-3 mt-3 justify-content-center"> <button class="btn exit mr-2">Cancel</button> <button class="btn btn-success ml-2">Done</button> </div>*@
+                                    </div>
+                                    @if (Model.BusinessHour.Id != 0)
+                                    {
+                                        <input asp-for="BusinessHour.Id" class="form-control" hidden />
+                                    }
+                                    <input id="Mondayfrom" asp-for="BusinessHour.MondayFrom" class="form-control  " hidden />
+                                    <input id="Mondayto" asp-for="BusinessHour.MondayTo" class="form-control" hidden />
+                                    <input id="Tuesdayfrom" asp-for="BusinessHour.TuesdayFrom" class="form-control" hidden />
+                                    <input id="Tuesdayto" asp-for="BusinessHour.TuesdayTo" class="form-control" hidden />
+                                    <input id="Wednesdayfrom" asp-for="BusinessHour.WednesdayFrom" class="form-control" hidden />
+                                    <input id="Wednesdayto" asp-for="BusinessHour.WednesdayTo" class="form-control" hidden />
+                                    <input id="Thrusdayfrom" asp-for="BusinessHour.ThrusdayFrom" class="form-control" hidden />
+                                    <input id="Thrusdayto" asp-for="BusinessHour.ThrusdayTo" class="form-control" hidden />
+                                    <input id="Fridayfrom" asp-for="BusinessHour.FridayFrom" class="form-control" hidden />
+                                    <input id="Fridayto" asp-for="BusinessHour.FridayTo" class="form-control" hidden />
+                                    <input id="Saturdayfrom" asp-for="BusinessHour.SaturdayFrom" class="form-control" hidden />
+                                    <input id="Saturdayto" asp-for="BusinessHour.SaturdayTo" class="form-control" hidden />
+                                    <input id="Sundayfrom" asp-for="BusinessHour.SundayFrom" class="form-control" hidden />
+                                    <input id="Sundayto" asp-for="BusinessHour.SundayTo" class="form-control" hidden />
+                                    @*<div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Tuesday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.TuesdayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.TuesdayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Wednesday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.WednesdayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.WednesdayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Thrusday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.ThrusdayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.ThrusdayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Friday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.FridayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.FridayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Saturday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.SaturdayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.SaturdayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="form-group">
+                                                <label class="control-label">Sunday : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.SundayFrom" class="form-control" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label"> To : </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="BusinessHour.SundayTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                                <label asp-for="BusinessHour.IsDualTimings" class="control-label"></label>
+                                                <input type="checkbox" asp-for="BusinessHour.IsDualTimings" />
+                                            </div*@
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Payment Modes</h4>
+                                    <input id="paymentmodevalue" type="hidden" />
+                                    @foreach (var item in Model.PaymentModeList)
+                                    {
+                                        <div class="form-group row">
+                                            <div class="col-5">@item.Text</div>
+                                            <div class="col-2" id="paymentmode">
+                                                @if (Model.BusinessPaymentModes.Any(s => s.PaymentModeId == Convert.ToInt32(item.Value)))
+                                                {
+                                                    <input type="checkbox" name="paymentMode" id="@item.Value" value="@item.Value" style="zoom:1" class="form-control" checked>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" name="paymentMode" id="@item.Value" value="@item.Value" style="zoom:1" class="form-control">
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Services</h4>
+                                    <input id="servicesvalue" type="hidden" />
+                                    @*@foreach (var item in Model.ServicesList)
+                                        {
+                                            <div class="form-group row">
+                                                <div class="col-5">@item.Text</div>
+                                                <div class="col-2" id="service">
+                                                    @if (Model.BusinessServices.Any(s => s.ServicesId == Convert.ToInt32(item.Value)))
+                                                    {
+                                                        <input type="checkbox" name="service" id="@item.Value" value="@item.Value" style="zoom:1" class="form-control" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="service" id="@item.Value" value="@item.Value" style="zoom:1" class="form-control">
+                                                    }
+                                                </div>
+                                            </div>
+                                        }*@
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Business Image</h4>
+                                    <div class="form-group">
+                                        <div class="images" id="bussimg">
+                                            <div>
+                                                @if (Model.Business.Id != 0)
+                                                {
+                                                    @foreach (var item in Model.BusinessImage)
+                                                    {
+                                                        <div class="img">
+                                                            <a id="bussimgdel" onclick=Delete("/Customer/BusinessProfile/DeleteImages/@item.Id")><img src="@item.Image" /></a>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            <div id="imgs"></div>
+                                            <div class="pic">
+                                                <i class="fa fa-plus"></i>
+                                            </div>
+                                        </div>
+                                        @*<input type="file" name="businessImages" id="uploadBox" class="form-control" multiple />*@<input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><!--<input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple /><input type="file" name="businessImages" id="uploadBox" class="form-control" multiple />-->
+                                        <input id="businessimagevalue" type="hidden" />
+                                        <input name="businessimage" id="businessimage" type="file" multiple="multiple" accept="image/*" style="display:none" />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <div class="row">
+                                <div class="col">
+                                    <h4>Business Keywords</h4>
+                                    <div class="form-group">
+                                        <input asp-for="BusinessKeyword.Description" class="form-control" />
+                                        <span asp-validation-for="BusinessKeyword.Description" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thanks-message text-center" id="text-message">
+                            <img src="~/images/tick.jpg" width="100" class="mb-4">
+                            @if (Model.Business.Id == 0)
+                            {<h3>Business details Added Successfully!</h3> }
+                            else
+                            {<h3>Business details Updated Successfully!</h3>}
+                            <span>Your information has been saved!</span>
+                        </div>
+                        <div style="overflow:auto;" id="nextprevious">
+                            <div style="float:right;" id="btnrowdiv"> <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button> <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End-->
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/Data/company.js"></script>
+    <script type="text/javascript">
+    var currentTab = 0;
+    document.addEventListener("DOMContentLoaded", function (event) {
+
+
+        showTab(currentTab);
+
+    });
+
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm()) return false;
+        x[currentTab].style.display = "none";
+        currentTab = currentTab + n;
+        if (currentTab == 0) {
+            var skipbtn = $('#btnrowdiv .skip');
+            skipbtn.remove();
+        }
+        if (currentTab == 1) {
+            var skipbtn = $('#btnrowdiv .skip');
+            skipbtn.remove();
+            var div = $('#btnrowdiv');
+            div.append(' <button type="button" id="nextBtn" onclick="nextPrev(1)" class="skip">Skip</button>');
+        }
+        if (currentTab >= x.length) {
+
+            $("#regForm").submit(); // Submit the form
+
+            document.getElementById("nextprevious").style.display = "none";
+            document.getElementById("all-steps").style.display = "none";
+            document.getElementById("register").style.display = "none";
+            document.getElementById("text-message").style.display = "block";
+
+        }
+        showTab(currentTab);
+    }
+
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            if (currentTab == 0) {
+                var businesstype = $("#businesstypeid :selected").val();
+                var category = $("#categoryid :selected").val();
+                if (businesstype == "") { $("#businesstypeid").className += " invalid"; valid = false; }
+                if (category == "") { $("#categoryid").className += " invalid"; valid = false; }
+
+                for (i = 0; i < y.length; i++) {
+                    if (y[i].name == "Business.Name" && y[i].value == "") { y[i].className += " invalid"; valid = false; }
+                }
+            }
+            //for (i = 0; i < y.length; i++) {
+            //if (y[i].value == "") { y[i].className += " invalid"; valid = false; }
+            //}
+            if (valid) { document.getElementsByClassName("step")[currentTab].className += " finish"; } return valid;
+        }
+        function fixStepIndicator(n) { var i, x = document.getElementsByClassName("step"); for (i = 0; i < x.length; i++) { x[i].className = x[i].className.replace(" active", ""); } x[n].className += " active"; }
+
+        //delete image
+        $('.deleteItem').click(function (e) {
+           e.preventDefault();
+           var $ctrl = $(this);
+           if (confirm('Do you really want to delete this file?')) {
+               $.ajax({
+                   url: '@Url.Action("DeleteFile")',
+                   type: 'POST',
+                   data: { id: $(this).data('id') }
+               }).done(function (data) {
+                   if (data.Result == "OK") {
+                       $ctrl.closest('li').remove();
+                   }
+                   else if (data.Result.Message) {
+                       alert(data.Result.Message);
+                   }
+               }).fail(function () {
+                   alert("There is something wrong. Please try again.");
+               })
+
+           }
+        });
+        //Add image
+        uploadcertificate()
+        function uploadcertificate() {
+            var button = $('#cert .pic')
+            var uploader = $('#Certificate')
+            //<input type="file" accept="image/*" />
+            var images = $('#imgcert')
+
+            button.on('click', function () {
+                uploader.click()
+            })
+
+            uploader.on('change', function () {
+                if ($(this)[0].files.length > 5) {
+                    alert("You can select only 5 certificates");
+                }
+                else {
+                    if (typeof (FileReader) != "undefined") {
+                        images.html("");
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                        $($(this)[0].files).each(function () {
+                            var file = $(this);
+                            if (regex.test(file[0].name.toLowerCase())) {
+                                var reader = new FileReader()
+                                reader.onload = function (event) {
+                                    images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="' + event.target.result + '"></div>')
+                                }
+                                reader.readAsDataURL(file[0]);
+                            } else {
+                                alert(file[0].name + " is not a valid image file.");
+                                images.html("");
+                                return false;
+                            }
+                        });
+                    }
+                    else {
+                        alert("This browser does not support HTML5 FileReader.");
+                    }
+                }
+            })
+            //var uploadedcert = $('#upcert');
+            //uploadedcert.on('click', '.img', function () {
+            //    $(this).remove()
+            //})
+        }
+        uploadbussimages()
+        function uploadbussimages() {
+            var button = $('#bussimg .pic')
+            var uploader = $('#businessimage')
+            //<input type="file" accept="image/*" />
+            var images = $('#imgs')
+
+            button.on('click', function () {
+                uploader.click()
+            })
+
+            uploader.on('change', function () {
+                if ($(this)[0].files.length > 7) {
+                    alert("You can select only 7 images");
+                }
+                else {
+                    if (typeof (FileReader) != "undefined") {
+                        images.html("");
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                        $($(this)[0].files).each(function () {
+                            var file = $(this);
+                            if (regex.test(file[0].name.toLowerCase())) {
+                                var reader = new FileReader()
+                                reader.onload = function (event) {
+                                    images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="' + event.target.result + '"></div>')
+                                }
+                                reader.readAsDataURL(file[0]);
+                            } else {
+                                alert(file[0].name + " is not a valid image file.");
+                                images.html("");
+                                return false;
+                            }
+                        });
+                    }
+                    else {
+                        alert("This browser does not support HTML5 FileReader.");
+                    }
+                }
+            })
+
+            //images.on('click', '.img', function () {
+            //    $(this).remove()
+            //})
+
+        }
+        uploadprofile()
+        function uploadprofile() {
+            var button = $('#busspfl .pic')
+            var uploader = $('#businessprofile')
+            //<input type="file" accept="image/*" />
+            var images = $('#imgpfl')
+
+            button.on('click', function () {
+                uploader.click()
+            })
+
+            uploader.on('change', function () {
+                if (typeof (FileReader) != "undefined") {
+                    images.html("");
+                    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                    $($(this)[0].files).each(function () {
+                        var file = $(this);
+                        if (regex.test(file[0].name.toLowerCase())) {
+                            var reader = new FileReader()
+                            reader.onload = function (event) {
+                                images.prepend('<div class="img" style="background-image: url(\'' + event.target.result + '\');" rel="' + event.target.result + '"></div>')
+                            }
+                            reader.readAsDataURL(file[0]);
+                        } else {
+                            alert(file[0].name + " is not a valid image file.");
+                            images.html("");
+                            return false;
+                        }
+                    });
+                }
+                else {
+                    alert("This browser does not support HTML5 FileReader.");
+                }
+
+
+
+            })
+        }
+
+        //Validate the image
+        $("#certificate").on("change", function () {
+            if ($("#certificate")[0].files.length > 5) {
+                alert("You can select only 5 images");
+            } else {
+                $("#imageUploadForm").submit();
+            }
+        });
+
+        $("#image").on("change", function () {
+            if ($("#image")[0].files.length > 7) {
+                alert("You can select only 7 images");
+            } else {
+                $("#imageUploadForm").submit();
+            }
+        });
+
+        //get multiple checked values
+      $("#regForm").on("submit", function () {
+                //Create an Array.
+          var service = new Array();
+          var payment = new Array();
+
+                //Reference the CheckBoxes and insert the checked CheckBox value in Array.
+          $("#service input[type=checkbox]:checked").each(function () {
+              service.push(this.value);
+          });
+          $("#paymentmode input[type=checkbox]:checked").each(function () {
+              payment.push(this.value);
+          });
+
+          //Display the selected CheckBox values.
+          if (service.length > 0) {
+              $('#servicesvalues').value = service.join(",");
+          } else {
+              $('#servicesvalues').value = "";
+          }
+
+
+        if (payment.length > 0) {
+            $('#paymentmodevalue').value = payment.join(",");
+                } else {
+            $('#paymentmodevalue').value = "";
+          }
+
+          //business hours
+          var businesshourdiv = $('#businesshours');
+          var fromtime = $('#from').val();
+          var totime = $('#to').val();
+          var Mondaycnt = 0;
+          var Tuesdaycnt = 0;
+          var Wednesdaycnt = 0;
+          var Thrusdaycnt = 0;
+          var Fridaycnt = 0;
+          var Saturdaycnt = 0;
+          var Sundaycnt = 0;
+          if ($('#Mondaychk').prop("checked") == true) {
+              $('#Mondayfrom').val(fromtime);
+              $('#Mondayto').val(totime);
+              Mondaycnt = 1;
+          }
+          if ($('#Tuesdaychk').prop("checked") == true) {
+              $('#Tuesdayfrom').val(fromtime);
+              $('#Tuesdayto').val(totime);
+              Tuesdaycnt = 1;
+          }
+          if ($('#Wednesdaychk').prop("checked") == true) {
+              $('#Wednesdayfrom').val(fromtime);
+              $('#Wednesdayto').val(totime);
+              Wednesdaycnt = 1;
+          }
+          if ($('#Thrusdaychk').prop("checked") == true) {
+              $('#Thrusdayfrom').val(fromtime);
+              $('#Thrusdayto').val(totime);
+              Thrusdaycnt = 1;
+          }
+          if ($('#Fridaychk').prop("checked") == true) {
+              $('#Fridayfrom').val(fromtime);
+              $('#Fridayto').val(totime);
+              Fridaycnt = 1;
+          }
+          if ($('#Saturdaychk').prop("checked") == true) {
+              $('#Saturdayfrom').val(fromtime);
+              $('#Saturdayto').val(totime);
+              Saturdaycnt = 1;
+          }
+          if ($('#Sundaychk').prop("checked") == true) {
+              $('#Sundayfrom').val(fromtime);
+              $('#Sundayto').val(totime);
+              Sundaycnt = 1;
+          }
+
+
+          if (Mondaycnt == 0) {
+              $('#Mondayfrom').val('');
+              $('#Mondayto').val('');
+          }
+          if (Tuesdaycnt == 0) {
+              $('#Tuesdayfrom').val('');
+              $('#Tuesdayto').val('');
+          }
+          if (Wednesdaycnt == 0) {
+              $('#Wednesdayfrom').val('');
+              $('#Wednesdayto').val('');
+          }
+          if (Thrusdaycnt == 0) {
+              $('#Thrusdayfrom').val('');
+              $('#Thrusdayto').val('');
+          }
+          if (Fridaycnt == 0) {
+              $('#Fridayfrom').val('');
+              $('#Fridayto').val('');
+          }
+          if (Saturdaycnt == 0) {
+              $('#Saturdayfrom').val('');
+              $('#Saturdayto').val('');
+          }
+          if (Sundaycnt == 0) {
+              $('#Sundayfrom').val('');
+              $('#Sundayto').val('');
+          }
+          //end
+      });
+
+        deletecertificate()
+        function deletecertificate() {
+            var button = $('#cert .img');
+            var lnktag = $('#certdel');
+            button.on('click', function () {
+                lnktag.click();
+            });
+        };
+
+        deletebussimg()
+        function deletebussimg() {
+            var button = $('#bussimg .img');
+            var lnktag = $('#bussimgdel');
+            button.on('click', function () {
+                lnktag.click();
+            });
+        };
+
+    </script>
+    <script src="~/js/Data/DateTimePicker.js" type="text/javascript"></script>
+    <script src="~/js/BusinessHour.js"></script>
+}

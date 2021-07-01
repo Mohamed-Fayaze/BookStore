@@ -1,0 +1,38 @@
+﻿
+<div class="container">
+    
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Select Category</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-submenu">
+                    <a asp-controller="healthcare" asp-action="upsert">HealthCare</a>
+                    @*<ul class="dropdown-menu">
+                        <li><a asp-controller="Hospital" asp-action="BusinessInfoUpsert" >Hospital</a></li>
+                        <li><a asp-controller="Ambulatory" asp-action="BusinessInfoUpsert" >Ambulatory health care services</a></li>
+                        <li><a asp-controller="Nuring" asp-action="BusinessInfoUpsert" >Nursing & Residential Care</a></li>
+                        <li><a asp-controller="TestingLab" asp-action="BusinessInfoUpsert" >Testing Labs</a></li>
+                        <li><a asp-controller="MedicalPractitioner" asp-action="BusinessInfoUpsert" >Medical Practitioners & Healthcare Professionals</a></li>
+                        <li><a asp-controller="MedicalDeviceVendor" asp-action="BusinessInfoUpsert" >Medical devices, equipment, and hospital supplies manufacturers</a></li>
+                        <li><a asp-controller="MedicalInsurance" asp-action="BusinessInfoUpsert" >Medical insurance and medical services</a></li>
+                        <li><a asp-controller="Pharmaceutical" asp-action="BusinessInfoUpsert" >Pharmaceuticals</a></li>
+                    </ul>*@
+                </li>
+                <li><a asp-controller="Automobile" asp-action="BusinessInfoUpsert" >Automobiles</a></li>
+                <li><a asp-controller="Restaurant" asp-action="BusinessInfoUpsert" >Restaurant</a></li>
+                <li><a asp-controller="Hotel" asp-action="BusinessInfoUpsert" >Hotels</a></li>
+                <li><a asp-controller="Fitness" asp-action="BusinessInfoUpsert" >Fitness</a></li>
+                <li class="dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Events</span><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a asp-controller="EventOrganizer" asp-action="BusinessInfoUpsert" >Event Organizer</a></li>
+                        <li><a asp-controller="ScheduleEvent" asp-action="BusinessInfoUpsert" >Schedule an Event</a></li>
+                    </ul>
+                </li>
+                <li><a asp-controller="TechnicalService" asp-action="BusinessInfoUpsert" >Technical Services</a></li>
+                <li><a asp-controller="Professional" asp-action="BusinessInfoUpsert" >Professional Assistance</a></li>
+                <li><a asp-controller="Retail" asp-action="BusinessInfoUpsert" >Retail Shop</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>

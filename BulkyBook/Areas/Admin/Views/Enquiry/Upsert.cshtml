@@ -1,0 +1,47 @@
+﻿@model BulkyBook.Models.Enquiry
+
+
+
+<div class="col-lg-9 col-md-12 col-xs-12 royal-add-property-area section_100 pl-0 user-dash2 bg-white">
+    <div class="single-add-property">
+        <h3>Enquiry</h3>
+        <div class="property-form-group">
+            <form method="post" asp-controller="Enquiry" asp-action="Upsert">
+                <input type="hidden" asp-for="BusinessId" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" style="width:100px" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="5" style="width:400px"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="col-md-12 pb-3">
+                            <div class="checkboxes float-left">
+                                <div class="filter-tags-wrap">
+                                    <input id="check-a" asp-for="Business.IsVerified" type="checkbox">
+                                    <label for="check-a">Verify</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="prperty-submit-button">
+                            <button type="submit">Submit </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

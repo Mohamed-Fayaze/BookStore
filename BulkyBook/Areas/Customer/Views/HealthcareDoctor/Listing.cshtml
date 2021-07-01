@@ -1,0 +1,393 @@
+﻿@model BulkyBook.Models.ViewModels.HealthcareListVM
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor's Listings</title>
+    <link rel="icon" href="~/MedicalDoctor/images/icon.png">
+
+    <!-- wow animation style -->
+    <!-- <link rel="stylesheet" href="./css/animate.css"> -->
+    <!-- owl-carousel -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/MedicalDoctor/css/owl.theme.default.min.css">
+
+    <!-- fancybox 3 css -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/jquery.fancybox.min.css">
+
+    <!-- bootstrap style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/bootstrap.min.css">`
+
+    <!-- template style -->
+    <link rel="stylesheet" href="~/MedicalDoctor/css/main.css">
+
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+
+<body>
+
+    <!-- Start of .preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <h6 class="preloader-text">Kubri</h6>
+    </div>
+    <!-- End of .preloader -->
+    <!------------------------------------------------------------------------>
+
+    <div class="page">
+
+
+
+        <!-- Start of .header-bottom-4 -->
+        <header class="header-bottom-4">
+            <img src="~/MedicalDoctor/images/banner/Banner0.4.jpg">
+            <div class="header-bottom-4__bg">
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/banner/banner-shape.png">
+                </div>
+            </div>
+            <div class="container">
+                <h1 class="section-title">Doctors</h1>
+                @*<ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">Our Cases</a></li>
+                        <li class="breadcrumb-item active">Details</li>
+                    </ol>*@
+            </div>
+        </header>
+        <!-- End of .header-bottom-4 -->
+        <!-- Start of .case -->
+        <section class="case main-blog">
+            <div class="main-blog__bg">
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/form-shape.png">
+                </div>
+                <div class="icon">
+                    <img src="~/MedicalDoctor/images/png-shapes/specialists__left-bottom-shape.png">
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="col-lg-2">
+                    <form method="get" asp-controller="HealthcareDoctor" asp-action="Listing">
+
+                        <div class="row" style="margin-top:10px">
+                            <div class="rld-single-select ml-22">
+                                <select class="select single-select" name="filter.Speciality" multiple>
+                                    <option value="">Select Speciality</option>
+                                    @foreach (var item in Model.SpecialityList)
+                                    {
+                                        var value = ViewData["speciality"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        if (value.Count() > 0 && Array.Exists(value, s => s == item.Id.ToString()))
+                                        {
+                        <option value="@item.Id" selected>@item.SpecialityName</option> }
+                                        else
+                                        {
+                        <option value="@item.Id">@item.SpecialityName</option>}
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:10px">
+
+                            <div style="width:170px" class="rld-single-select ml-22">
+                                <select class="select single-select" name="filter.Nationality" multiple>
+                                    <option value="">Select Nationality</option>
+                                    @foreach (var item in Model.NationalityList)
+                                    {
+                                        var value = ViewData["nationality"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        if (value.Count() > 0 && Array.Exists(value, s => s == item.Id.ToString()))
+                                        {
+                        <option value="@item.Id" selected>@item.Name</option>
+ }
+                    else
+                    {
+            <option value="@item.Id">@item.Name</option>
+}
+    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+
+                            <div style="width:170px" class="rld-single-select ml-22">
+                                <select class="select single-select" name="filter.Language" multiple>
+                                    <option value="">Select Language</option>
+                                    @foreach (var item in Model.LanguageList)
+                                    {
+                                        var value = ViewData["language"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        if (value.Count() > 0 && Array.Exists(value, s => s == item.Id.ToString()))
+                                        {
+                        <option value="@item.Id" selected>@item.Name</option>
+ }
+                    else
+                    {
+            <option value="@item.Id">@item.Name</option>
+}
+    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+
+                            <div style="width:170px" class="rld-single-select ml-22">
+                                <select class="select single-select" name="filter.Gender" multiple>
+                                    <option value="">Select Gender</option>
+                                    @foreach (var item in Model.GenderList)
+                                    {
+                                        var value = ViewData["gender"].ToString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        if (value.Count() > 0 && Array.Exists(value, s => s == item.Value.ToString()))
+                                        {
+                        <option value="@item.Value" selected>@item.Text</option>
+ }
+                    else
+                    {
+            <option value="@item.Value">@item.Text</option>
+}
+    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:10px">
+                            <div class="col-xl-2 col-lg-2 col-md-4 pl-0">
+                                <button class="btn btn-primary">Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="listing-search col-lg-10">
+
+                    <form class="row no-gutters" method="get" asp-controller="HealthcareDoctor" asp-action="Listing">
+
+                        <input name="searchstring" type="hidden" value="@ViewData["search"]" />
+                        <input name="locationstring" type="hidden" value="@ViewData["location"]" />
+                        <input name="searchcategoryid" type="hidden" value="@ViewData["category"]" />
+                        <div class="col-md-4 col-3">
+                            <div class="keywords">
+                                <input class="listing-form first" type="text" placeholder="Keywords..." id="search" name="search">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-2">
+                            <div class="listing-form second">
+                                <select class="select single-select" name="filter.StateId">
+                                    <option value="">All Location</option>
+                                    @foreach (var item in Model.StateList)
+                                    {
+                                        if (ViewBag.state == item.Id)
+                                        {
+                                            <option value="@item.Id" selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-3">
+                            <div class="listing-form">
+                                <select class="select single-select" name="filter.Speciality">
+                                    <option value="">All Specialist</option>
+                                    @foreach (var item in Model.SpecialityList)
+                                    {
+                                        if (ViewBag.specialistId == item.Id)
+                                        {
+                                            <option value="@item.Id" selected>@item.SpecialityName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.SpecialityName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-2">
+                            <button type="submit" class="listing-bottom background-dark box-shadow">Search Now</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- filter control btns -->
+                @*<div class="case__controls">
+            <ul class="case__controls-lists">
+                <li class="case__controls-item active" data-filter="*">All Cases</li>
+                <li class="case__controls-item" data-filter=".filterDental">Dental</li>
+                <li class="case__controls-item" data-filter=".filterPlasticSurgery">Plastic Surgery</li>
+                <li class="case__controls-item" data-filter=".filterBreast">Breast</li>
+                <li class="case__controls-item" data-filter=".filterFatReduction">Fat Reduction</li>
+                <li class="case__controls-item" data-filter=".filterBodyLifts">Body Lifts</li>
+                <li class="case__controls-item" data-filter=".filterFaceNeck">Face & Neck</li>
+            </ul>
+        </div>*@
+
+                <div class="case__cards filterContainer">
+                    @foreach (var item in Model.HealthcareDoctors)
+                    {
+            <a asp-controller="HealthcareDoctor" asp-action="Detail" asp-route-Id="@item.Id" class="case__cards-item filterDental">
+                <div class="img">
+                    <span class="h-line"></span>
+                    <span class="v-line"></span>
+                    @if (item.Image != null)
+                    {
+            <img src="@item.Image" alt="Doctor's image" style="width:18rem"> }
+        else
+        {
+
+            <img src="~/MedicalDoctor/images/dummyprofile/maleprofile.jpg" alt="">}
+                </div>
+                <h1 class="name">@item.Name</h1>
+                @*<p class="profession">@item.Qualification.Description</p>*@
+                <p class="profession">@item.Nationality</p>
+                <span class="category">@item.Speciality</span>
+            </a>}
+                </div>
+                @if (Model.PagingInfo.TotalItem > 0)
+                {
+            <ul class="my-pagination">
+                @if (Model.PagingInfo.CurrentPage == 1 || Model.PagingInfo.TotalPage == 1)
+                {
+            <li class="disabled">
+                <span class="fa fa-angle-left"></span>
+            </li> }
+                            else
+                            {
+            <li>
+                <a asp-action="Index" asp-route-ListingPage="@(Model.PagingInfo.CurrentPage - 1)"><span class="fa fa-angle-left"></span></a>
+            </li>}
+                @for (var val = 1; val <= Model.PagingInfo.TotalPage; val++)
+                {
+
+                    if (val == Model.PagingInfo.CurrentPage)
+                    {
+            <li class="active">
+                <a asp-action="Index" asp-route-ListingPage="@val">@val <span class="sr-only">(current)</span></a>
+            </li>
+ }
+        else
+        {
+            <li><a class="page-link" asp-action="Index" asp-route-ListingPage="@val">@val</a></li>
+}
+
+    }
+                @if (Model.PagingInfo.TotalPage == 1 || Model.PagingInfo.TotalPage == Model.PagingInfo.CurrentPage)
+                {
+            <li class="disabled">
+                <span class="fa fa-angle-right"></span>
+            </li> }
+                            else
+                            {
+            <li>
+                <a class="page-link" asp-action="Index" asp-route-ListingPage="@(Model.PagingInfo.CurrentPage + 1)"><span class="fa fa-angle-right"></span></a>
+            </li>}
+            </ul>}
+            </div>
+        </section>
+        <!-- End of .case -->
+    </div>
+
+    <!------------------------------------------------------------------------>
+    <!-- scroll top - to top page -->
+    <div class="to-top" id="scrollUp"><i class="fa fa-angle-up"></i></div>
+
+    <!-- search box -->
+    <div class="searchBox">
+        <span class="searchBox-close">&times;</span>
+        <form>
+            <input type="search" placeholder="Write Search Keyword & Press Enter">
+            <button type="submit">
+                <svg width="24.71" height="25.687" viewBox="0 0 24.71 24.687">
+                    <path id="search.svg" class="cls-2"
+                          d="M1144.4,440.468l8.19,8.178-3.47,3.467-8.19-8.178,1.18-1.177-1.38-1.385a7.878,7.878,0,1,1,1.11-1.11l1.38,1.383Zm-2.36-5.172a6.29,6.29,0,1,0-6.29,6.282A6.293,6.293,0,0,0,1142.04,435.3Zm8.33,13.35-3.61-3.6-1.24,1.245,3.6,3.6Zm-5.97-3.465,1.25-1.246-1.25-1.245-1.24,1.245Zm-11.79-9.885h-1.57a4.715,4.715,0,0,1,4.71-4.712v1.57A3.146,3.146,0,0,0,1132.61,435.3Z"
+                          transform="translate(-1127.88 -427.438)" />
+                </svg>
+                search
+            </button>
+        </form>
+    </div>
+
+    <!-- Popup Form -->
+    <div class="popup-form">
+        <div class="inner-block">
+            <span class="popup-form-close" id="popup-form-close">&times;</span>
+            <div class="img">
+                <img src="~/MedicalDoctor/images/jpg/popup-form.jpg">
+            </div>
+            <form>
+                <h1 class="section-title">make an appointment</h1>
+                <div class="input-box">
+                    <label for="popup-name">Name *</label>
+                    <input type="text" id="popup-name" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-email">Email *</label>
+                    <input type="text" id="popup-email" required>
+                </div>
+
+                <div class="input-box">
+                    <label for="popup-phone">Phone *</label>
+                    <input type="tel" id="popup-phone" required>
+                </div>
+
+                <div class="select-box">
+                    <i class="fa fa-angle-down"></i>
+                    <select>
+                        <option selected>Department</option>
+                        <option selected>Department2</option>
+                        <option selected>Department3</option>
+                        <option selected>Department4</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-2_pink">send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts + Jquery plagins -->
+    <!-- .preloader  -->
+    <script src="~/MedicalDoctor/js/my-preloader.js"></script>
+
+    <!-- jQuery -->
+    <script src="~/MedicalDoctor/js/jQuery-3.4.1.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="~/MedicalDoctor/js/bootstrap.min.js"></script>
+
+    <!-- wow js animation -->
+    <!-- <script src="./js/wow.min.js"></script> -->
+    <!-- owl-carousel js -->
+    <script src="~/MedicalDoctor/js/owl.carousel.min.js"></script>
+    <script src="~/MedicalDoctor/js/carousel.js"></script>
+
+    <!-- fancybox 3 js -->
+    <script src="~/MedicalDoctor/js/jquery.fancybox.js"></script>
+
+    <!-- Counter up -->
+    <script src="~/MedicalDoctor/js/jquery.waypoints.min.js"></script>
+    <script src="~/MedicalDoctor/js/jquery.countup.min.js"></script>
+
+    <!-- isotope filter card -->
+    <script src="~/MedicalDoctor/js/isotope.pkgd.min.js"></script>
+
+    <!-- customer js -->
+    <script src="~/MedicalDoctor/js/index.js"></script>
+    @section Scripts
+    {
+        <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function () {
+                $("#search").autocomplete({
+                    source: '/Customer/HealthcareDoctor/Search'
+                });
+            });
+        </script>
+    }
+</body>
+
+</html>

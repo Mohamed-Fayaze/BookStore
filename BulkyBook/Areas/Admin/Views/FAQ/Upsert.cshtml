@@ -1,0 +1,63 @@
+﻿
+@model BulkyBook.Models.ViewModels.FAQVM
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Upsert" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="FAQ.Id" type="hidden" />
+            <input asp-for="FAQ.BussinessId" type="hidden" />
+
+            <div class="form-group">
+                <label asp-for="FAQ.FAQQuestion" class="control-label"></label>
+                @if (Model.FAQ.Id != 0)
+                {
+                    <textarea asp-for="FAQ.FAQQuestion" class="form-control" rows="5" style="width:400px" disabled></textarea>
+                }
+                else
+                {
+                    <textarea asp-for="FAQ.FAQQuestion" class="form-control" rows="5" style="width:400px"></textarea>
+                }
+                <span asp-validation-for="FAQ.FAQQuestion" class="text-danger"></span>
+            </div>
+
+            @if (Model.FAQ.Id != 0)
+            {
+                <div class="form-group">
+                    <input type="hidden" asp-for="FAQ.FAQQuestion" />
+
+                    <label asp-for="FAQ.FAQAnswer" class="control-label"></label>
+                    <textarea asp-for="FAQ.FAQAnswer" class="form-control" rows="5" style="width:400px"></textarea>
+                    <span asp-validation-for="FAQ.FAQAnswer" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.FAQ.Id != 0)
+                    {
+                        <partial name="_EditAndBackToListButton" model="Model.FAQ.Id" />
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary form-control">Submit</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}

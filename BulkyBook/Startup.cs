@@ -18,10 +18,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using BulkyBook.Utility;
 using Stripe;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using BulkyBook.DataAccess.Initializer;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyBook
-{
+{ 
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -48,7 +48,6 @@ namespace BulkyBook
             services.Configure<TwilioSettings>(Configuration.GetSection("Twilio"));
             services.AddSingleton<IBrainTreeGate, BrainTreeGate>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
@@ -59,13 +58,13 @@ namespace BulkyBook
             });
             services.AddAuthentication().AddFacebook(options =>
             {
-                options.AppId = "479144716347128";
-                options.AppSecret = "8888cefba55e9cfa06a2b28f0495e533";
+                options.AppId = "282100830107807";
+                options.AppSecret = "750dcc0dd165310ca5c7f8c3b548a985";
             });
             services.AddAuthentication().AddGoogle(options =>
             {
-                options.ClientId = "751413081977-ct8rrlcf8cgt8f42b5evots13mg458lt.apps.googleusercontent.com";
-                options.ClientSecret = "LPRLug47n8OQsYAirUVGofLw";
+                options.ClientId = "57773509954-dth6m4sjn1a8fterfibn2cpjisgjojjk.apps.googleusercontent.com";
+                options.ClientSecret = "gD6pdeFUloYeq4piVHmLjZ6O";
 
             });
             services.AddSession(options =>
@@ -74,10 +73,17 @@ namespace BulkyBook
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddSingleton<IVerification>(new Verification(
+                Configuration.GetSection("Twilio").Get<TwilioSettings>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -98,12 +104,11 @@ namespace BulkyBook
             app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
-            dbInitializer.Initialize();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=Customer}/{controller=Home}/{action=City}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

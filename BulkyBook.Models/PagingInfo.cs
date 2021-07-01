@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace BulkyBook.Models
@@ -12,6 +13,7 @@ namespace BulkyBook.Models
 
         public int CurrentPage { get; set; }
 
+        [MaxLength(300)]
         public string urlParam { get; set; }
         public int TotalPage => (int)Math.Ceiling((decimal)TotalItem / ItemsPerPage);
     }

@@ -2,25 +2,42 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@await Component.InvokeAsync("UserName") </a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link ">Logout</button>
-        </form>
-    </li>
+    <div class="header-user-menu user-menu add">
+        <div class="header-user-name">
+            @await Component.InvokeAsync("UserName")
+        </div>
+
+        <ul>
+            <li><a asp-area="Identity" asp-controller="UserProfile" asp-action="Index">My profile</a></li>
+            <li><a asp-area="Customer" asp-controller="BusinessProfile" asp-action="MyListing">My Listing</a></li>
+            <li><a asp-area="Customer" asp-controller="BusinessProfile" asp-action="Favourite">My Favourites</a></li>
+            <li><a asp-area="Identity" id="change-password" asp-page="/Account/Manage/ChangePassword">Change Password</a></li>
+            <li>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="btn link">Log Out</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link " asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    @*<div class="right-side d-none d-none d-lg-none d-xl-flex sign ml-0">
+
+            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+        <div class="header-user-menu user-menu sign add">
+
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>*@
+
+
+    <a style="margin-top:20px" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <a style="margin-left:10px" asp-area="Identity" asp-page="/Account/Login">Login</a>
+
+
+
 }
-</ul>
+

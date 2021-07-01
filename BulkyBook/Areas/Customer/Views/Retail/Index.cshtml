@@ -1,0 +1,888 @@
+﻿@model BulkyBook.Models.ViewModels.CategoryVM
+@using Humanizer
+<html>
+<head>
+    <style>
+        .mySlides {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    @*<div class="row pb-3 backgroundWhite">
+
+            @foreach (var product in Model)
+            {
+            <div class="col-lg-3 col-md-6">
+                <div class="row p-2">
+                    <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                        <div class="card" style="border:0px;">
+                            <img src="@product.ImageUrl" class="card-img-top rounded" />
+                            <div class="pl-1">
+                                <p class="card-title h5"><b style="color:#2c3e50">@product.Title</b></p>
+                                <p class="card-title text-primary">by <b>@product.Author</b></p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <p>List Price: <strike><b class="">$@product.ListPrice.ToString("0.00")</b></strike></p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <p style="color:maroon">As low as: <b class="">$@product.Price100.ToString("0.00")</b></p>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Details" class="btn btn-primary form-control" asp-route-id="@product.Id">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>*@
+    <!-- START SECTION LISTINGS LIST -->
+    <section class="listings-list popular full featured portfolio blog">
+        <div class="container">
+            <!-- Block heading Start-->
+            <!-- Block heading Start-->
+            <section class="headings-2 pt-0 pb-0">
+                <div class="pro-wrapper">
+                    <div class="detail-wrapper-body">
+                        <div class="listing-title-bar">
+                            <div class="text-heading text-left">
+                                <p><a href="#">Home </a> &nbsp;/&nbsp; <span>Listings</span></p>
+                            </div>
+                            @if (Model.promotionimages != null)
+                            {
+                                foreach (var item in Model.promotionimages)
+                                {
+                                    <a asp-area="Customer" asp-controller="Home" asp-action="Index" asp-route-id="@item.PromotionId" class="services">
+                                        <img class="mySlides" src="@item.Images" style="width:300px" />
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Block heading end -->
+            <!-- Search Form -->
+            <form method="get" asp-controller="Home" asp-action="Index">
+                <div class="col-12 px-0 parallax-searchs">
+                    <div class="banner-search-wrap">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tabs_1">
+                                <div class="rld-main-search">
+                                    <div class="row">
+                                        <div class="rld-single-input">
+                                            <input type="text" placeholder="What are you looking for?" name="searchstring" value="@ViewData["search"]" />
+                                        </div>
+                                        @*<div class="rld-single-select ml-22">
+                                                <select class="select single-select">
+                                                    <option value="1">Location</option>
+                                                    <option value="2">Los Angeles</option>
+                                                    <option value="3">Chicago</option>
+                                                    <option value="3">Philadelphia</option>
+                                                    <option value="3">San Francisco</option>
+                                                    <option value="3">Miami</option>
+                                                    <option value="3">Houston</option>
+                                                </select>
+                                            </div>*@
+                                        <div class="rld-single-input ml-22">
+                                            <input type="text" placeholder="Location" name="locationstring" value="@ViewData["location"]" />
+                                        </div>
+                                        <div class="rld-single-select">
+                                            <select class="select single-select mr-0" name="searchcategoryid">
+                                                <option value="">All Categories</option>
+                                                @foreach (var item in Model.CategoryList)
+                                                {
+                                                    if (ViewBag.category == item.CategoryId)
+                                                    {
+                                                        <option value="@item.CategoryId" selected>@item.CategoryName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.CategoryId">@item.CategoryName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        @*<div class="dropdown-filter"><span>Advanced Search</span></div>*@
+                                        <div class="col-xl-2 col-lg-2 col-md-4 pl-0">
+                                            <input type="submit" value="Search Now" class="btn btn-yellow" />
+                                        </div>
+                                        <!--<div class="explore__form-checkbox-list full-filter">
+                                        <div class="row">
+                                            <div class="col-lg-5 col-md-12 col-sm-12 py-1 pr-30 mr-5 sld">-->
+                                        <!-- Price Fields -->
+                                        <!--<div class="main-search-field-2">-->
+                                        <!-- Area Range -->
+                                        <!--<div class="range-slider">
+                                            <label>60 KM Radius around selected destination</label>
+                                            <div id="area-range" data-min="0" data-max="60" data-unit="KM"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <br>-->
+                                        <!-- Price Range -->
+                                        <!--<div class="range-slider">
+                                                    <label>Price Range</label>
+                                                    <div id="price-range" data-min="0" data-max="600000" data-unit="$"></div>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-12 py-1 pr-30">-->
+                                        <!-- Checkboxes -->
+                                        <!--<div class="checkboxes one-in-row margin-bottom-10 ch-1">
+                                            <input id="check-2" type="checkbox" name="check">
+                                            <label for="check-2">Elevator in building</label>
+                                            <input id="check-3" type="checkbox" name="check">
+                                            <label for="check-3">Friendly workspace</label>
+                                            <input id="check-4" type="checkbox" name="check">
+                                            <label for="check-4">Instant Book</label>
+                                            <input id="check-5" type="checkbox" name="check">
+                                            <label for="check-5">Wireless Internet</label>
+                                            <input id="check-6" type="checkbox" name="check">
+                                            <label for="check-6">Free parking on premises</label>
+                                            <input id="check-7" type="checkbox" name="check">
+                                            <label for="check-7">Free parking on street</label>
+                                            <input id="check-8" type="checkbox" name="check">
+                                            <label for="check-8">Smoking allowed</label>
+                                        </div>-->
+                                        <!-- Checkboxes / End -->
+                                        <!--</div>
+                                        <div class="col-lg-3 col-md-6 col-sm-12 py-1 pr-30">-->
+                                        <!-- Checkboxes -->
+                                        <!--<div class="checkboxes one-in-row margin-bottom-10 ch-2">
+                                            <input id="check-9" type="checkbox" name="check">
+                                            <label for="check-9">WiFi</label>
+                                            <input id="check-10" type="checkbox" name="check">
+                                            <label for="check-10">TV Cable</label>
+                                            <input id="check-11" type="checkbox" name="check">
+                                            <label for="check-11">Dryer</label>
+                                            <input id="check-12" type="checkbox" name="check">
+                                            <label for="check-12">Microwave</label>
+                                            <input id="check-13" type="checkbox" name="check">
+                                            <label for="check-13">Washer</label>
+                                            <input id="check-14" type="checkbox" name="check">
+                                            <label for="check-14">Refrigerator</label>
+                                            <input id="check-15" type="checkbox" name="check">
+                                            <label for="check-15">Outdoor Shower</label>
+                                        </div>-->
+                                        <!-- Checkboxes / End -->
+                                        <!--</div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--/ End Search Form -->
+            <section class="headings-2 pt-0">
+                <div class="pro-wrapper">
+                    <div class="detail-wrapper-body">
+                        <div class="listing-title-bar">
+                            <div class="text-heading text-left">
+                                <p class="font-weight-bold mb-0 mt-3">@*9 Search results*@</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="cod-pad single detail-wrapper mr-2 mt-0 d-flex justify-content-md-end align-items-center">
+                        <div class="input-group border rounded input-group-lg w-auto mr-4">
+                            <label class="input-group-text bg-transparent border-0 text-uppercase letter-spacing-093 pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
+                            <select class="form-control border-0 bg-transparent shadow-none p-0 selectpicker sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01" name="sortby">
+                                <option selected>Popularity</option>
+                                <option value="1">Average rating</option>-->
+                    @*<option value="2">Price(low to high)</option>
+                        <option value="3">Price(high to low)</option>*@
+                    <!--</select>
+                        </div>
+                        <div class="sorting-options">
+                            <a href="#" class="change-view-btn active-view-btn"><i class="fa fa-th-list"></i></a>
+                            <a href="#" class="change-view-btn lde"><i class="fa fa-th-large"></i></a>
+                        </div>
+                    </div>-->
+                </div>
+            </section>
+
+            <div class="row">
+                <div class="col-3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="container">
+                                    <form method="get" asp-controller="Hospital" asp-action="Index">
+                                        <input name="searchstring" type="hidden" value="@ViewData["search"]" />
+                                        <input name="locationstring" type="hidden" value="@ViewData["location"]" />
+                                        <input name="searchcategoryid" type="hidden" value="@ViewData["category"]" />
+                                        @*<div class="row">
+                                            <div style="width:170px" class="rld-single-select ml-22">
+                                                <select class="select single-select" name="filter.Nationality">
+                                                    <option value="">Select Nationality</option>
+                                                    @foreach (var item in Model.LanguageList)
+                                                    {
+                                                        if (ViewBag.Nationality == item.Id)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.LanguageName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.LanguageName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
+                                        @*<div class="row">
+                                            <div style="width:170px" class="rld-single-select ml-22">
+                                                <select class="select single-select" name="filter.PaymentMode">
+                                                    <option value="">Select Online Appointment</option>
+                                                    @foreach (var item in Model.OnlineBooking)
+                                                    {
+                                                        if (ViewBag.OnlineBooking == item.Value)
+                                                        {
+                                                            <option value="@item.Value" selected>@item.Text</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Value">@item.Text</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
+                                        @*<div class="row">
+            <div style="width:170px" class="rld-single-select ml-22">
+                <select class="select single-select" name="filter.PaymentMode">
+                    <option value="">Select Payment Mode</option>
+                    @foreach (var item in Model.PaymentModeList)
+                    {
+                        if (ViewBag.PaymentMode == item.Id)
+                        {
+                            <option value="@item.Id" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>*@
+                                        @*<div class="row">
+                                            <div style="width:170px" class="rld-single-select ml-22">
+                                                <select class="select single-select" name="filter.DepartmentId">
+                                                    <option value="">Select Departments</option>
+                                                    @foreach (var item in Model.DepartmentList)
+                                                    {
+                                                        if (ViewBag.department == item.Id)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.DepartmentName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.DepartmentName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
+
+                                        @*<div class="row" style="margin-top:10px">
+
+                                            <div style="width:170px" class="rld-single-select ml-22">
+                                                <select class="select single-select" name="filter.SpecialityId">
+                                                    <option value="">Select Speciality</option>
+                                                    @foreach (var item in Model.SpecialityList)
+                                                    {
+                                                        if (ViewBag.speciality == item.Id)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.SpecialityName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.SpecialityName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
+
+                                        @*<div class="row" style="margin-top:10px">
+
+                                            <div style="width:170px" class="rld-single-select ml-22">
+                                                <select class="select single-select" name="filter.Facility">
+                                                    <option value="">Select Facility</option>
+                                                    @foreach (var item in Model.FacilityList)
+                                                    {
+                                                        if (ViewBag.facility == item.Id)
+                                                        {
+                                                            <option value="@item.Id" selected>@item.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
+
+
+                                        @*<div class="row" style="margin-top:10px">
+
+            <div style="width:170px" class="rld-single-select">
+
+                <p style="font-weight:bold">Facility</p>
+                @foreach (var item in Model.FacilityList)
+                {
+                    @if (ViewBag.facility != null && Model.FacilityList.Any(s => s.Name.Contains(ViewBag.facility)))
+                    {
+                        <input type="checkbox" name="filter.Facility" id="@item.Name" value="@item.Name" style="zoom:1" class="form-control" checked>@item.Name
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="filter.Facility" id="@item.Name" value="@item.Name" style="zoom:1" class="form-control">@item.Name
+                    }
+                }
+            </div>
+        </div>*@
+                                        <div class="row" style="margin-top:10px">
+                                            <div class="col-xl-2 col-lg-2 col-md-4 pl-0">
+                                                <button class="btn btn-primary">Filter</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-9">
+                    <div class="row featured portfolio-items">
+                        @foreach (var business in Model.BusinessList)
+                        {
+                            <div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0">
+                                <div class="project-single mb-0 bb-0">
+                                    <div class="project-inner project-head">
+                                        <div class="homes">
+                                            <!-- homes img -->
+                                            <a asp-area="Customer" asp-action="DetailLive" asp-controller="Home" asp-route-id="@business.Id" class="homes-img hover-effect">
+                                                @* <div class="homes-tag button alt featured f1">Fetured</div>*@
+                                                <div class="homes-tag button sale rent">
+                                                    <span asp-area="Customer" asp-action="AddFavourite" asp-controller="Home" asp-route-businessid="@business.Id" style="color:red"> <i class="far fa-heart fa-2x"></i></span>
+                                                    @*<p>163</p>*@
+                                                </div>
+                                                @*<div class="homes-price">
+                                                        <ul class="starts text-left mb-0">
+                                                            <li class="mb-0">
+                                                                <i class="fa fa-star"></i>
+                                                            </li>
+                                                            <li class="mb-0">
+                                                                <i class="fa fa-star"></i>
+                                                            </li>
+                                                            <li class="mb-0">
+                                                                <i class="fa fa-star"></i>
+                                                            </li>
+                                                            <li class="mb-0">
+                                                                <i class="fa fa-star"></i>
+                                                            </li>
+                                                            <li class="mb-0">
+                                                                <i class="fa fa-star"></i>
+                                                            </li>
+                                                            <li class="ml-1">( 6 Reviews )</li>
+                                                        </ul>
+                                                    </div>*@
+                                                <img src="@business.ProfilePhoto" alt="home-1" class="img-responsive">
+                                                <div class="overlay"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- homes content -->
+                            <div class="col-lg-8 col-md-12 homes-content pb-0 mb-44">
+                                <!-- homes address -->
+                                <div class="enty">
+                                    <a asp-area="Customer" asp-action="DetailLive" asp-controller="Home" asp-route-id="@business.Id"><h3 class="mb-4">@business.Name</h3></a>
+                                    @*<ul class="homes-list clearfix">*@
+
+                                    @*@foreach (var address in Model.addressTable.Where(s => s.BusinessId == business.Id))
+                                        {
+                                            @if (address.BusinessId != null)
+                                            {
+                                                <li>
+                                                    <i class="fa fa-map-marker"></i>
+                                                    <span>@address.HouseNo,&nbsp;  @address.AddressField,&nbsp; @address.AreaStreet,&nbsp; @address.CityTown,&nbsp; @address.StateProvinceRegion,&nbsp; @address.Country,&nbsp; @address.Pincode</span>
+                                                </li>
+
+                                            }
+
+                                        }
+
+
+                                        @foreach (var mobile in Model.mobileTable.Where(s => s.Address.BusinessId == business.Id))
+                                        {
+                                            <li>
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                                <span>@mobile.MobileNo</span>
+                                            </li>
+                                        }*@
+
+                                    @*@if (business.ApplicationUser != null)
+                                        {
+                                            <span>Call Us @business.ApplicationUser.PhoneNumber</span>
+                                        }*@
+
+                                    @*<li>
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                            <span>Posted @business.CreatedOn.Humanize()</span>
+                                        </li>*@
+                                    @*</ul>*@
+                                </div>
+                                <!-- Price -->
+                                <div class="price-properties">
+                                    <ul class="starts text-left mb-0">
+                                        <li class="mt-3"><img src="images/icons/2.png" width="20" class="mr-2" alt=""> @business.Category.CategoryName</li>
+                                    </ul>
+                                    @*<div class="fr-grid-thumb">
+                                            <a href="candidate-profile.html">
+                                                <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                                @if (business.ApplicationUser != null)
+                                                {
+                                                    <img src="@business.ApplicationUser.ProfilePhoto" class="img-fluid mx-auto" alt="" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/images/dummyprofile/maleprofile.jpg" />
+                                                }
+                                            </a>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div style="height:5px;width:100%"></div>
+                        }
+
+                        <!--<div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0 my-44 ft">
+                        <div class="project-single mb-0 bb-0">
+                            <div class="project-inner project-head">
+                                <div class="homes">-->
+                        <!-- homes img -->
+                        <!--<a href="listing-details.html" class="homes-img hover-effect">
+                                            <div class="homes-tag button alt featured f2">Popular</div>
+                                            <div class="homes-tag button sale rent">
+                                                <i class="fa fa-heart-o"></i>
+                                                <p>202</p>
+                                            </div>
+                                            <div class="homes-price">
+                                                <ul class="starts text-left mb-0">
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star-half"></i>
+                                                    </li>
+                                                    <li class="ml-1">( 3 Reviews )</li>
+                                                </ul>
+                                            </div>
+                                            <img src="images/popular-listings/2.jpeg" alt="home-1" class="img-responsive">
+                                            <div class="overlay"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- homes content -->
+                        <!--<div class="col-lg-8 col-md-12 homes-content pb-0 my-44 ft mb-44">-->
+                        <!-- homes address -->
+                        <!--<div class="enty">
+                            <a href="listing-details.html"><h3 class="mb-4">Gym in Miami</h3></a>
+                            <ul class="homes-list clearfix">
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Miami City. U.S.A</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>Call Us (+329) 336-7654</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <span>Posted 2 Days ago</span>
+                                </li>
+                            </ul>
+                        </div>-->
+                        <!-- Price -->
+                        <!--<div class="price-properties">
+                                <ul class="starts text-left mb-0">
+                                    <li class="mt-3"><img src="images/icons/3.png" width="20" class="mr-2" alt=""> Gym</li>
+                                </ul>
+                                <div class="fr-grid-thumb">
+                                    <a href="candidate-profile.html">
+                                        <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                        <img src="images/freelancers/free-2.jpg" class="img-fluid mx-auto" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0">
+                            <div class="project-single mb-0 bb-0">
+                                <div class="homes">-->
+                        <!-- homes img -->
+                        <!--<a href="listing-details.html" class="homes-img hover-effect">
+                                        <div class="homes-tag button alt featured f1">Fetured</div>
+                                        <div class="homes-tag button sale rent">
+                                            <i class="fa fa-heart-o"></i>
+                                            <p>163</p>
+                                        </div>
+                                        <div class="homes-price">
+                                            <ul class="starts text-left mb-0">
+                                                <li class="mb-0">
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li class="mb-0">
+                                                    <i class="fa fa-star"></i>
+                                                </li>
+                                                <li class="ml-1">( 6 Reviews )</li>
+                                            </ul>
+                                        </div>
+                                        <img src="images/popular-listings/3.jpeg" alt="home-1" class="img-responsive">
+                                        <div class="overlay"></div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- homes content -->
+                        <!--<div class="col-lg-8 col-md-12 homes-content pb-0 mb-44">-->
+                        <!-- homes address -->
+                        <!--<div class="enty">
+                            <a href="listing-details.html"><h3 class="mb-4">Cafe in Boston</h3></a>
+                            <ul class="homes-list clearfix">
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Boston City. U.S.A</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>Call Us (+329) 336-7654</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <span>Posted 2 Days ago</span>
+                                </li>
+                            </ul>
+                        </div>-->
+                        <!-- Price -->
+                        <!--<div class="price-properties">
+                                <ul class="starts text-left mb-0">
+                                    <li class="mt-3"><img src="images/icons/4.png" width="20" class="mr-2" alt=""> Cafe</li>
+                                </ul>
+                                <div class="fr-grid-thumb">
+                                    <a href="candidate-profile.html">
+                                        <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                        <img src="images/freelancers/free-3.jpg" class="img-fluid mx-auto" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0 my-44 ft">
+                            <div class="project-single mb-0 bb-0">
+                                <div class="project-inner project-head">
+                                    <div class="homes">-->
+                        <!-- homes img -->
+                        <!--<a href="listing-details.html" class="homes-img hover-effect">
+                                            <div class="homes-tag button alt featured f2">Popular</div>
+                                            <div class="homes-tag button sale rent">
+                                                <i class="fa fa-heart-o"></i>
+                                                <p>163</p>
+                                            </div>
+                                            <div class="homes-price">
+                                                <ul class="starts text-left mb-0">
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="ml-1">( 6 Reviews )</li>
+                                                </ul>
+                                            </div>
+                                            <img src="images/popular-listings/4.jpg" alt="home-1" class="img-responsive">
+                                            <div class="overlay"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- homes content -->
+                        <!--<div class="col-lg-8 col-md-12 homes-content pb-0 my-44 ft mb-44">-->
+                        <!-- homes address -->
+                        <!--<div class="enty">
+                            <a href="listing-details.html"><h3 class="mb-4">Rent a Car in Texas</h3></a>
+                            <ul class="homes-list clearfix">
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Houston City. U.S.A</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>Call Us (+329) 336-7654</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <span>Posted 2 Days ago</span>
+                                </li>
+                            </ul>
+                        </div>-->
+                        <!-- Price -->
+                        <!--<div class="price-properties">
+                                <ul class="starts text-left mb-0">
+                                    <li class="mt-3"><img src="images/icons/7.png" width="20" class="mr-2" alt=""> Rent a Car</li>
+                                </ul>
+                                <div class="fr-grid-thumb">
+                                    <a href="candidate-profile.html">
+                                        <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                        <img src="images/freelancers/free-4.jpg" class="img-fluid mx-auto" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0">
+                            <div class="project-single mb-0 bb-0">
+                                <div class="project-inner project-head">
+                                    <div class="homes">-->
+                        <!-- homes img -->
+                        <!--<a href="listing-details.html" class="homes-img hover-effect">
+                                            <div class="homes-tag button alt featured f1">Fetured</div>
+                                            <div class="homes-tag button sale rent">
+                                                <i class="fa fa-heart-o"></i>
+                                                <p>163</p>
+                                            </div>
+                                            <div class="homes-price">
+                                                <ul class="starts text-left mb-0">
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="ml-1">( 6 Reviews )</li>
+                                                </ul>
+                                            </div>
+                                            <img src="images/popular-listings/5.jpeg" alt="home-1" class="img-responsive">
+                                            <div class="overlay"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- homes content -->
+                        <!--<div class="col-lg-8 col-md-12 homes-content pb-0 mb-44">-->
+                        <!-- homes address -->
+                        <!--<div class="enty">
+                            <a href="listing-details.html"><h3 class="mb-4">Hotel in Punta Cana</h3></a>
+                            <ul class="homes-list clearfix">
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Dominican Republic</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>Call Us (+329) 336-7654</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <span>Posted 2 Days ago</span>
+                                </li>
+                            </ul>
+                        </div>-->
+                        <!-- Price -->
+                        <!--<div class="price-properties">
+                                <ul class="starts text-left mb-0">
+                                    <li class="mt-3"><img src="images/icons/1.png" width="20" class="mr-2" alt=""> Hotel</li>
+                                </ul>
+                                <div class="fr-grid-thumb">
+                                    <a href="candidate-profile.html">
+                                        <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                        <img src="images/freelancers/free-5.jpg" class="img-fluid mx-auto" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-lg-4 col-md-12 col-xs-12 landscapes sale pr-0 pb-0 my-44 ft">
+                            <div class="project-single mb-0 bb-0">
+                                <div class="project-inner project-head">
+                                    <div class="homes">-->
+                        <!-- homes img -->
+                        <!--<a href="listing-details.html" class="homes-img hover-effect">
+                                            <div class="homes-tag button alt featured f2">Popular</div>
+                                            <div class="homes-tag button sale rent">
+                                                <i class="fa fa-heart-o"></i>
+                                                <p>163</p>
+                                            </div>
+                                            <div class="homes-price">
+                                                <ul class="starts text-left mb-0">
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="mb-0">
+                                                        <i class="fa fa-star"></i>
+                                                    </li>
+                                                    <li class="ml-1">( 6 Reviews )</li>
+                                                </ul>
+                                            </div>
+                                            <img src="images/popular-listings/7.jpeg" alt="home-1" class="img-responsive">
+                                            <div class="overlay"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        <!-- homes content -->
+                        <!--<div class="col-lg-8 col-md-12 homes-content pb-0 my-44 ft mb-44">-->
+                        <!-- homes address -->
+                        <!--<div class="enty">
+                            <a href="listing-details.html"><h3 class="mb-4">Store in Los Angeles</h3></a>
+                            <ul class="homes-list clearfix">
+                                <li>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>Los Angeles. U.S.A</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>Call Us (+329) 336-7654</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    <span>Posted 2 Days ago</span>
+                                </li>
+                            </ul>
+                        </div>-->
+                        <!-- Price -->
+                        <!--<div class="price-properties">
+                                <ul class="starts text-left mb-0">
+                                    <li class="mt-3"><img src="images/icons/8.png" width="20" class="mr-2" alt=""> Store</li>
+                                </ul>
+                                <div class="fr-grid-thumb">
+                                    <a href="candidate-profile.html">
+                                        <div class="overall-rate"><i class="fas fa-check"></i></div>
+                                        <img src="images/freelancers/free-6.jpg" class="img-fluid mx-auto" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            @if (Model.PagingInfo.TotalItem > 0)
+            {
+                <nav aria-label="..." class="pt-3">
+                    <ul class="pagination mt-0">
+                        @if (Model.PagingInfo.CurrentPage == 1 || Model.PagingInfo.TotalPage == 1)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Previous</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="Index" asp-route-businessPage="@(Model.PagingInfo.CurrentPage - 1)">Previous</a>
+                            </li>
+                        }
+                        @for (var val = 1; val <= Model.PagingInfo.TotalPage; val++)
+                        {
+
+                            if (val == Model.PagingInfo.CurrentPage)
+                            {
+                                <li class="page-item active">
+                                    <a class="page-link" asp-action="Index" asp-route-businessPage="@val">@val <span class="sr-only">(current)</span></a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" asp-action="Index" asp-route-businessPage="@val">@val</a></li>
+                            }
+
+                        }
+                        @if (Model.PagingInfo.TotalPage == 1 || Model.PagingInfo.TotalPage == Model.PagingInfo.CurrentPage)
+                        {
+                            <li class="page-item disabled">
+                                <a class="page-link">Next</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-action="Index" asp-route-businessPage="@(Model.PagingInfo.CurrentPage + 1)">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+        @section Scripts{
+
+            <script src="~/js/Data/PromoImage.js"></script>
+        }
+
+    </section>
+</body>
+</html>
+<!-- END SECTION LISTINGS LIST -->

@@ -1,0 +1,331 @@
+﻿
+
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<link href="~/css/StyleSheet.css" rel="stylesheet" />
+<link href="~/css/icon.css" rel="stylesheet" />
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+@*<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>*@
+@*<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+<script src="~/js/icon.js"></script>
+<script src="~/js/filter.js"></script>
+<script src="~/js/script.js"></script>
+<script src="https://kit.fontawesome.com/e19c476714.js"></script>
+
+
+<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+
+<!------ Include the above in your HEAD tag ---------->
+<Body background="https://1.bp.blogspot.com/-sTxAHAxirGM/WVbAe2098nI/AAAAAAABENs/_I5sYMYgLOUzaIE7FfF4qdGX-hoAkq9SgCLcBGAs/s1600/Blog_20170624_113552.jpg">
+    <!--<div class="navbar navbar-expand-md navbar-dark bg-dark mb-4" role="navigation">
+        <a class="navbar-brand" href="#">KUBRI</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="btn btn-outline-success my-2 my-sm-0" asp-action="login"><i class="fas fa-user-plus"></i>   LOGIN/SIGNUP</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-success my-2 my-sm-0" asp-action="second">Search LISTING</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+
+                    <span class="mr-md-auto text-white-50">LANGUAGES</span>
+                    <select class="mr-2 form-control">
+                        <option>ENGLISH</option>
+                        <option>TAMIL</option>
+                        <option>URDU</option>
+                        <option>GULF ARABIC</option>
+                    </select>
+                </li>
+
+
+
+            </ul>
+            <!--<form method="get" asp-action="second">
+                <p>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" name="searching" value="@ViewData["searchval"]" aria-label="Search" />
+                    <input type="submit" value="search" class="btn btn-primary" />
+                    <a asp-action="second">List All Services</a>
+                </p>-->
+            <!--@*<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*@-->
+            <!--<!--</form>-->
+            <!--<form method="get" asp-action="view">
+            <p>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" value="@ViewData["searchval"]" aria-label="Search"/>
+            <input type="submit" value="search" class="btn btn-primary"/>
+            <a asp-action="view">List All Categories</a>
+                </p>-->
+            <!--@*<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>*@-->
+            <!--</form>-->
+        <!--</div>
+    </div>-->
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <br>
+                <h5>TOP CATEGORIES</h5>
+            </div>
+            <div class="col-lg-12 no-pad scroller">
+                <div class="left-btn-scroller left-scroll ">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="right-btn-scroller right-scroll ">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="col-lg-12 no-pad btn-header-links padding-align top-adjust" id="scroll-div">
+
+                    @*@foreach (var item in Model.primaryCategories)
+                            {
+
+                        <button class="btn btn-danger btn-pin btn-bg1"> @Html.DisplayFor(modelItem => item.CategoryName)</button>
+                        }*@
+
+
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-briefcase-medical"></i>&nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-utensils"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-cogs"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-hotel"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-shopping-cart"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-car-side"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-skating"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-calendar-alt"></i> &nbsp;</button>
+                    <button class="btn btn-danger btn-pin btn-bg1"><i class="fas fa-user-tie"></i> &nbsp;</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <td>
+
+                <div class="wrapper">
+                    <nav>
+                        <ul class="menu-area">
+                            @*<li>
+                                    @foreach (var item in Model.primaryCategories)
+                                    {
+
+                                <button class="btn btn-danger btn-pin btn-bg1" id="btn1"> @Html.DisplayFor(modelItem => item.CategoryName)</button><br />}
+                                </li>*@
+                            <li>
+                                <a href="#"><strong><i class="fas fa-briefcase-medical"></i> &nbsp;HEALTH CARE</strong></a>
+                                <ul>
+                                    <li><a href="#"> Clinic</a></li>
+                                    <li><a href="#">Medical Laboratories</a></li>
+                                    <li><a href="#">Pharmacies</a></li>
+                                    <li><a href="#">Medical Supplies</a></li>
+                                    <li><a href="#">Physiotheraphy center</a></li>
+                                    <li><a href="#">Rehabilitation Center</a></li>
+                                    <li><a href="#">Optical stores</a></li>
+                                    <li><a href="#">Dental Clinics</a></li>
+                                    <li>
+                                        <a href="#">PRIVATE HOSPITALS</a>
+                                        <ul>
+                                            <li><a href="#">DIABETIC HOSPITALS</a></li>
+                                            <li><a href="#">CARDIAC HOSPITALS</a></li>
+                                            <li><a href="#">EYE HOSPITALS</a></li>
+                                            <li><a href="#">ENT HOSPITALS</a></li>
+                                            <li><a href="#">METERNOTY HOSPITALS</a></li>
+                                            <li><a href="#">VETENARY HOSPITALS</a></li>
+                                            <li><a href="#">DENTAL HOSPITALS</a></li>
+                                            <li><a href="#">AYURVEDIC HOSPITALS</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">GOVERNMENT HOSPITALS</a>
+                                        <ul>
+                                            <li><a href="#">DIABETIC HOSPITALS</a></li>
+                                            <li><a href="#">CARDIAC HOSPITALS</a></li>
+                                            <li><a href="#">EYE HOSPITALS</a></li>
+                                            <li><a href="#">ENT HOSPITALS</a></li>
+                                            <li><a href="#">METERNOTY HOSPITALS</a></li>
+                                            <li><a href="#">VETENARY HOSPITALS</a></li>
+                                            <li><a href="#">DENTAL HOSPITALS</a></li>
+                                            <li><a href="#">AYURVEDIC HOSPITALS</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+
+                            <li>
+                                <a asp-action="Index"><strong><i class="fas fa-utensils"></i> &nbsp;RESTRAURENTS</strong></a>
+                                <ul>
+                                    <li><a href="#">Fine Dining</a></li>
+                                    <li><a href="#">Contemporary</a></li>
+                                    <li><a href="#">Casual Dining</a></li>
+                                    <li><a href="#">Family Style</a></li>
+                                    <li><a href="#">Fast Food</a></li>
+                                    <li><a href="#">Cafe</a></li>
+                                    <li><a href="#">Buffet</a></li>
+                                    <li><a href="#">Food Trucks</a></li>
+                                    <li><a href="#">Pop-up restaurent</a></li>
+                                    <li><a href="#">Ghost restaurent</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="#"><strong><i class="fas fa-hotel"></i> &nbsp;HOTELS</strong></a>
+                                <ul>
+                                    <li>
+                                    <li><a href="#">Business Hotels</a></li>
+                                    <li><a href="#">Resort Hotels</a></li>
+                                    <li><a href="#">Vacation Rental</a></li>
+                                    <li><a href="#">Conference centers</a></li>
+                                    <li><a href="#">Airport Hotels</a></li>
+                                    <li><a href="#">Suite Hotels</a></li>
+                                    <li><a href="#">Extended Stay Hotels</a></li>
+                                    <li><a href="#">Serviced Apartments</a></li>
+                                    <li><a href="#">Homestays</a></li>
+                                    <li><a href="#">Casino Hotels</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="#"><strong><i class="fas fa-car-side"></i> &nbsp;AUTOMOBILES</strong></a>
+                                <ul>
+                                    <li>
+                                    <li><a href="#">Car Insurance</a></li>
+                                    <li><a href="#">2 wheeler Insurance</a></li>
+                                    <li><a href="#">Car Loans</a></li>
+                                    <li><a href="#">Sell Cars</a></li>
+                                    <li><a href="#">2 wheeler services</a></li>
+                                    <li><a href="#">Car Services</a></li>
+                                    <li><a href="#">Used 2 wheeler</a></li>
+                                    <li><a href="#">Used Cars</a></li>
+                                    <li><a href="#">New vehicles</a></li>
+                                    <li><a href="#">Accessories</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><strong><i class="fas fa-shopping-cart"></i> &nbsp;RETAILS</strong></a>
+                                <ul>
+                                    <li><a href="#">Super markets</a></li>
+                                    <li><a href="#">small grocery</a></li>
+                                    <li><a href="#">Food and Drink</a></li>
+                                    <li><a href="#">Mixed Retails</a></li>
+                                    <li><a href="#">Health & Beauty Specialist</a></li>
+                                    <li><a href="#">Electronic & Appliance</a></li>
+                                    <li><a href="#">Home & Garden</a></li>
+                                    <li><a href="#">Leisure & Personal Good</a></li>
+                                    <li><a href="#">Hypermarkets</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><strong><i class="fas fa-calendar-alt"></i> &nbsp;EVENTS</strong></a>
+                                <ul>
+                                    <li><a href="#">Corporate Events</a></li>
+                                    <li><a href="#">Social Events</a></li>
+                                    <li><a href="#">Virtual Events</a></li>
+                                    <li><a href="#">Fundraising Events</a></li>
+                                    <li><a href="#">Festivals</a></li>
+                                    <li><a href="#">Community Events</a></li>
+                                    <li><a href="#">Pop-up Events</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><strong><i class="fas fa-skating"></i> &nbsp;FITNESS</strong></a>
+                                <ul>
+                                    <li><a href="#">Bootcamp</a></li>
+                                    <li><a href="#">Boxing</a></li>
+                                    <li><a href="#">Circuit training</a></li>
+                                    <li><a href="#">Cycling</a></li>
+                                    <li><a href="#">Dance</a></li>
+                                    <li><a href="#">Gym classes</a></li>
+                                    <li><a href="#">Gymnastics</a></li>
+                                    <li><a href="#">Interval training</a></li>
+                                    <li><a href="#">Martial arts</a></li>
+                                    <li><a href="#">Personal training</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><strong><i class="fas fa-cogs"></i> &nbsp;SERVICES</strong></a></li>
+                            <li><a href="#"><strong><i class="fas fa-user-tie"></i> &nbsp;ASSISTANCE</strong></a></li>
+
+                        </ul>
+
+                    </nav>
+                </div>
+
+            </td>
+
+
+            <td>
+                <div class="container " style="margin:0px 0px 0px 500px;padding:0px">
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <div class="input-group">
+                                <div class="input-group-btn search-panel">
+
+                                    <span class="mr-md-auto text-black-50">FILTER BY</span>
+                                    <h5>CITY</h5>
+                                    <select class="mr-2 form-control">
+                                        <option>Abha</option>
+                                        <option>Abu Dhabi</option>
+                                        <option>Aden</option>
+                                        <option>Ankara</option>
+                                        <option>Berlin</option>
+                                        <option>Beirut</option>
+                                        <option>Cairo</option>
+                                        <option>Colombo</option>
+                                        <option>Damman</option>
+                                        <option>Dubai</option>
+                                        <option>Frankfurt</option>
+
+                                    </select><br />
+                                    <h5>DISTANCE</h5>
+                                    <select class="mr-2 form-control">
+                                        <option>5 km</option>
+                                        <option>10 km</option>
+                                        <option>25 km</option>
+                                        <option>30 km</option>
+                                        <option>40 km</option>
+                                        <option>50 km</option>
+
+                                    </select><br />
+                                    <h5>Popularity</h5>
+                                    <select class="mr-2 form-control">
+                                        <option>Top ratings</option>
+                                        <option>5 star</option>
+                                        <option>4 star</option>
+                                        <option>3 star</option>
+
+
+                                    </select><br />
+
+
+
+                                    <a class="btn btn-outline-success my-2 my-sm-0" asp-action="second">SEARCH</a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</Body>
+@*<main role="main" class="container">
+        <div class="jumbotron text-center">
+            <h1>Bootstrap 4 NavBar</h1>
+            <p class="lead text-info">NavBar with too many childs.</p>
+            <a href="http://fontenele.github.io/bootstrap-navbar-dropdowns/">Github</a>
+        </div>
+    </main>*@

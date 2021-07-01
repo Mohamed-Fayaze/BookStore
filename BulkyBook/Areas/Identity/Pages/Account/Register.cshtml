@@ -4,142 +4,540 @@
 @{
     ViewData["Title"] = "Register";
 }
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/assets/css/default.css" rel="stylesheet" />
+<link href="~/assets/css/fontawesome.min.css" rel="stylesheet" />
+<link href="~/assets/css/ion.rangeSlider.min.css" rel="stylesheet" />
+<link href="~/assets/css/magnific-popup.css" rel="stylesheet" />
+<link href="~/assets/css/nice-select.css" rel="stylesheet" />
+<link href="~/assets/css/slick.css" rel="stylesheet" />
+<link href="~/assets/css/style.css" rel="stylesheet" />
+@*<link href="~/css/otp/intlTelInput.css" rel="stylesheet" />*@
+@*<link href="~/assets/css/intlTelInput.css" rel="stylesheet" />*@
+<link href="~/assets/css/intlcss.css" rel="stylesheet" />
+<style>
+    .iti-flag {
+        background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/10.0.2/img/flags.png");
+    }
+</style>
+@if (Model.SMS.IsValidSMS == true || Model.SMS.IsValid == true)
+{
+    <style>
+        .blur {
+            -webkit - filter: blur(3px);
+            -moz - filter: blur(3px);
+            -o - filter: blur(3px);
+            -ms - filter: blur(3px);
+            filter: blur(1.5px);
+            pointer-events: none;
+            user-select: none;
+           
+        }
+
+        .card{
+             box-shadow: 0 0 10px 5px blue;
+        }
+    </style>
+}
+
+
+
+@if (Model.SMS.IsValidSMS == false || Model.SMS.IsValid == true)
+{
+    <style>
+        .blur1 {
+            -webkit - filter: blur(3px);
+            -moz - filter: blur(3px);
+            -o - filter: blur(3px);
+            -ms - filter: blur(3px);
+            filter: blur(1.5px);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+
+}
+
+@if (Model.SMS.IsValid == false)
+{
+    <style>
+        .blur2 {
+            -webkit - filter: blur(3px);
+            -moz - filter: blur(3px);
+            -o - filter: blur(3px);
+            -ms - filter: blur(3px);
+            filter: blur(1.5px);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+
+}
+
 
 <div class="py-4">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<div asp-validation-summary="All" class="text-danger"></div>*@
     <div class="row form-group">
         <div class="col-8 offset-2">
-            <div class="card">
-                <div class="card-body px-lg-5 pt-4">
-                    <form autocomplete="off" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <h3 class="col-12 text-success text-center py-4">
-                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
-                            {
-                                <strong>Register an User Account</strong>
-                            }
-                            else
-                            {
-                                <strong>Sign Up</strong>
-                            }
-                        </h3>
-                        <hr />
-                        <div class="py-2">
-                            <input asp-for="Input.Name" placeholder="Name" class="form-control" />
-                            <span asp-validation-for="Input.Name" class="text-danger"></span>
-                        </div>
-                        <div class="py-2">
-                            <input asp-for="Input.Email" type="email" placeholder="Email" class="form-control" />
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                        <div class="py-2 input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> +1</span>
-                            </div>
-                            <input asp-for="Input.PhoneNumber" type="text" placeholder="Phone Number" class="form-control" />
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                        </div>
-                        <div class="py-2">
-                            <input asp-for="Input.StreetAddress" placeholder="Street Address" class="form-control" />
-                            <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
-                        </div>
-                        <div class="py-2">
-                            <input asp-for="Input.City" placeholder="Street Address" class="form-control" />
-                            <span asp-validation-for="Input.City" class="text-danger"></span>
-                        </div>
-                        <div class="form-row py-2">
-                            <div class="col">
-                                <input asp-for="Input.State" placeholder="State" class="form-control" />
-                                <span asp-validation-for="Input.State" class="text-danger"></span>
-                            </div>
-                            <div class="col">
-                                <input asp-for="Input.PostalCode" placeholder="Postal Code" class="form-control" />
-                                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+
+            <div class="card-body px-lg-5 pt-4">
+                <div class="sign_form_wrapper">
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <strong>Register an User Account</strong>
+                    }
+                    else
+                    {
+                        <div>
+                            <div class="row">
+                                <div class="col-1">
+                                    <a asp-area="Customer" asp-controller="Home" asp-action="City">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" color="red" style="margin-top:-10px;" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                                        </svg>
+                                    </a>
+
+                                </div>
+                                <div class="col-6">
+                                    <p style="font-size:40px;font-weight:500;color:orangered">SignUp On Kubri</p>
+                                </div>
                             </div>
 
+
+                            <br />
                         </div>
-                        <div class="form-row py-2">
-                            <div class="col">
-                                <input asp-for="Input.Password" type="password" placeholder="Password" class="form-control" />
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    }
+                    <form method="post">
+                        <div class="card shadow-lg mb-5 bg-white rounded blur ">
+
+                            <br />
+                            <div class="row" >
+                                <div class="col-1" style="margin-top:-5px;margin-left:15px">
+                                    <p style="background-color:#51b9bc;color:white;border-radius:100px;padding:21px 25px;font-size:28px;font-weight:bolder">1</p>
+                                </div>
+                                <div class="col-7" style="margin-top:20px;margin-left:-10px">
+                                    <p style="font-size:34px;font-weight:400;color:black">Mobile Verification</p>
+                                </div>
+
                             </div>
-                            <div class="col">
-                                <input asp-for="Input.ConfirmPassword" type="password" placeholder="Confirm Password" class="form-control" />
-                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            @*<h3>&nbsp;Mobile Verification</h3>*@
+
+
+                            <div style="margin-left:70px">
+                                <p style="margin-top:5px;margin-left:320px">Please Enter your Mobile Number for Verification</p>
+                                <div class="py-2" style="margin-top:-10px;margin-left:350px">
+                                    <div class="single_form">
+                                        @*<input asp-for="SMS.PhoneNumber" id="phone" maxlength="20">*@
+                                        @*<input type="text" id="textbox1" value="" />*@
+                                        <input style="margin-left:50px;width:220px" asp-for="SMS.PhoneNumber" id="mobileNumber">
+                                        <span class="glyphicon form-control-feedback hide" id="valid-msg" aria-hidden="true"></span>
+                                        <div style="margin-left:300px;margin-top:-50px;" class="help-block with-errors hide" id="error-msg">Invalid number</div>
+                                        @*<p align="center" style="color:red;margin-left:-50px;font-size:12px">@Html.ValidationMessage("DuplicateNumber")</p>*@
+                                        @*<span asp-validation-for="SMS.PhoneNumber" class="text-danger"></span>*@
+                                        @*<i class="fal fa-phone"></i>*@
+
+
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" style="margin-top:10px;margin-left:365px;width:250px;height:50px;background-color:#f74032;font-weight:500;border:none;border-radius:25px" id="sendotpbtn" class="" value="Sendotp" name="submit" asp-page-handler="Verify" data-toggle="modal" data-target=".bd-example-modal-lg">Send OTP</button>
+                                <br />
                             </div>
 
+
+                            <br />
+                            @*<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <div class="container height-100 d-flex justify-content-center align-items-center">
+                                                <div class="position-relative">
+                                                    <div class="cardd p-2 text-center">
+                                                        <h3>Please enter the one time password <br> to verify your account</h3>
+                                                        <div> <span>A code has been sent to</span> <small></small> </div>
+                                                        <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2"> <input class="m-2 text-center form-control rounded" type="text" id="first" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="text" id="second" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="text" id="third" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="text" id="fourth" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="text" id="fifth" maxlength="1" /> <input class="m-2 text-center form-control rounded" type="text" id="sixth" maxlength="1" /> </div>
+                                                        <div class="mt-4"> <button class="btn btn-danger px-4 validate">Validate</button> </div>
+                                                    </div>
+                                                    <div class="card-2">
+                                                        <div class="content d-flex justify-content-center align-items-center"> <span>Didn't get the code</span> <a href="#" class="text-decoration-none ms-3">Resend(1/3)</a> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
-                        @if (User.IsInRole(SD.Role_Admin))
-                        {
-                            <div class="form-group">
-                                <label asp-for="Input.Role"></label>
-                                @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList,
-                               "-Please select a role", new { @class = "form-control" })
+
+                        <div style="margin-top:10px" class="card shadow-lg mb-5 bg-white rounded blur1 ">
+
+                            <br />
+                            <div class="row">
+                                <div class="col-1" style="margin-top:-5px;margin-left:15px">
+                                    <p style="background-color:#51b9bc;color:white;border-radius:100px;padding:21px 25px;font-size:28px;font-weight:bolder">2</p>
+                                </div>
+                                <div class="col-7" style="margin-top:20px;margin-left:-10px">
+                                    <p style="font-size:34px;font-weight:400;color:black">OTP Verification</p>
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Input.CompanyId"></label>
-                                @Html.DropDownListFor(m => m.Input.CompanyId, Model.Input.CompanyList,
-                               "-Please select a company", new { @class = "form-control" })
+                            <div style="margin-left:80px">
+                                <p style="margin-top:5px;margin-left:280px">Enter the One Time Password (OTP) received on <span style="font-weight:500"> @Model.SMS.PhoneNumber </span> <a style="color:#51b9bc" asp-area="Identity" asp-page="/Account/Register">Change Number?</a> </p>
+
+
+
+                                <div class="py-2" style="margin-top:-10px;margin-left:350px;width:230px">
+                                    <div class="single_form">
+                                        <input style="width:270px" asp-for="SMS.Code">
+                                        <i class="fal fa-code-commit"></i>
+                                        <span asp-validation-for="SMS.Code" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <button style="margin-top:-10px;margin-left:410px;width:150px" value="Verifyotp" name="submit" class="main-btn" asp-page-handler="Verify">Verify OTP</button>
+
                             </div>
-                        }
-                        <div class="py-2">
-                            <button type="submit" class="btn btn-success form-control">Register</button>
+
+                            <div style="margin-left: -10px; margin-top:-30px">
+                                <div class="text-center mt-5" style="">
+                                    <span class="d-block mobile-text">
+                                        Don't receive the code?
+                                    </span>
+                                    <p>Request for a new one in <span id="time" style="color:red;font-weight:bold"></span> <span style="color:red;font-weight:bold"> Secs</span> </p>
+                                    <button style="visibility:hidden;Font" type="submit" id="sendotpbtn" value="Sendotp" name="submit" asp-page-handler="Verify" data-toggle="modal" data-target=".bd-example-modal-lg" class="timer font-weight-bold text-danger cursor bg-white border-0">Resend OTP</button>
+                                </div>
+                            </div>
+
+                            <br />
+
+
+
                         </div>
                     </form>
 
-                    @if (!User.IsInRole(SD.Role_Admin) && !User.IsInRole(SD.Role_Employee))
-                    {
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                    <p>
-                        By clicking <em>Register</em> you agree to our <a href="" target="_blank"> terms of service </a>
-                    </p>
-                    <hr />
+                    <div style="margin-top:10px" class="card shadow-lg mb-5 bg-white rounded blur2">
+                        <form id="regform" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <input asp-for="SMS.PhoneNumber" type="hidden" />
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-1" style="margin-top:-5px;margin-left:15px">
+                                    <p style="background-color:#51b9bc;color:white;border-radius:100px;padding:21px 25px;font-size:28px;font-weight:bolder">3</p>
+                                </div>
+                                <div class="col-7" style="margin-top:20px;margin-left:-10px">
+                                    <p style="font-size:34px;font-weight:400;color:black">Create your Kubri Account</p>
+                                </div>
 
-                    <div class="row">
-                        <p>
-                            @foreach (var provider in Model.ExternalLogins)
-                            {
-                            <div class="col-6">
-                                @if (provider.Name.ToLower().Contains("facebook"))
-                                {
-                                    <button type="submit" class="btn btn-block facebook-btn form-control"
-                                            name="provider" value="@provider.Name"
-                                            title="Log in using your @provider.DisplayName account">
-                                        <i class="fab fa-facebook-square"></i> @provider.DisplayName
-                                    </button>
-                                }
-                                else
-                                {
-                                    @if (provider.Name.ToLower().Contains("google"))
-                                    {
-                                        <button type="submit" class="btn btn-block google-btn form-control"
-                                                name="provider" value="@provider.Name"
-                                                title="Log in using your @provider.DisplayName account">
-                                            <i class="fab fa-google"></i> @provider.DisplayName
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button type="submit" class="btn btn-primary" name="provider"
-                                                value="@provider.Name"
-                                                title="Log in using your @provider.DisplayName account">
-                                        @provider.DisplayName</button>
-                                    }
-                                }
                             </div>
-                                
+
+                            <div class="form-row py-2">
+                                <div class="col-5" style="margin-left:90px">
+                                    <div class="single_form">
+                                        <input asp-for="Input.FirstName" placeholder="First Name" type="text">
+                                        <i class="fal fa-user"></i>
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-5">
+                                    <div class="single_form">
+                                        <input asp-for="Input.LastName" placeholder="Last Name" type="text">
+                                        <i class="fal fa-user"></i>
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-10" style="margin-left:90px">
+                                    <div class="py-2" style="margin-top:-40px">
+                                        <div class="single_form">
+                                            <input asp-for="Input.Email" type="email" placeholder="Email">
+                                            <i class="fal fa-envelope"></i>
+                                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-row py-2" style="margin-top:-40px">
+                                <div class="col-5" style="margin-left:90px">
+                                    <div class="single_form">
+                                        <input asp-for="Input.Password" class="make-pass" placeholder="Password">
+                                        <i class="fal fa-key"></i>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="single_form">
+                                        <input asp-for="Input.ConfirmPassword" class="make-pass" placeholder="Confirm Password">
+                                        <i class="fal fa-key"></i>
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" style="margin-top:-10px">
+                                <div class="col-2" style="margin-left:90px">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="Input.Role" type="radio" id="exampleRadios1" value="@SD.Role_User_Indi" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Normal User
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-2" style="margin-left:0px">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="Input.Role" type="radio" id="exampleRadios2" value="@SD.Role_User_Comp">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Business User
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="form-group">
+                                    SMS
+                                    @Html.RadioButtonFor(model => model.Input.Channel, "sms")
+                                    Call
+                                    @Html.RadioButtonFor(model => model.Input.Channel, "call")
+                                </div>*@
+
+                            @if (User.IsInRole(SD.Role_Admin))
+                            {
+                                <div class="form-group">
+                                    <label asp-for="Input.Role"></label>
+                                    @Html.DropDownListFor(m => m.Input.Role, Model.Input.RoleList,
+                                   "-Please select a role", new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.CompanyId"></label>
+                                    @Html.DropDownListFor(m => m.Input.CompanyId, Model.Input.CompanyList,
+                                   "-Please select a company", new { @class = "form-control" })
+                                </div>
                             }
-                        </p>
+                            <div class="single_form" style="margin-top:0px">
+                                <div class="sign_checkbox" style="margin-left:90px">
+                                    @*<input type="checkbox" id="checkbox">
+                                        <label for="checkbox"></label>*@
+                                    <span>By registering, you accept our Terms & Conditions</span>
+                                </div>
+                            </div>
+                            <div class="py-2">
+                                <div class="single_form">
+                                    <button type="submit" style="margin-left:90px" class="main-btn">Create Account</button>
+                                </div>
+                            </div>
+
+                        </form>
+
                     </div>
-                </form>
-                    }
+
+
+
+
                 </div>
+
+
             </div>
+
         </div>
     </div>
 </div>
 
 
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+
+
+
+
+    @*<script>
+            $(document).ready(function () {
+                $("#phoneno").intlTelInput();
+                $("#phoneno").change(
+                    function () {
+                        var phonevalue = document.getElementById("getNumber").value;
+                        document.getElementById("HiddenField1").value = phonevalue;
+                    }
+                );
+            });
+        </script>
+
+        <script type="text/javascript">
+            $("#phonenoo").on("keypress keyup blur", function (event) {
+                $(this).val($(this).val().replace(/[^\d].+/, ""));
+                if ((event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+        </script>*@
+
+
+    <script src="~/assets/js/intlTelInputupd.js"></script>
+    @*<script>
+            var input = document.querySelector("#phone");
+            window.intlTelInput(input, {
+                hiddenInput: "SMS.FullPhoneNumber",
+                //preferredCountries: ["us", "gb", "co", "de"],
+                preferredCountries: ["in"],
+                utilsScript: "/js/otp/utils.js"
+
+            });
+        </script>*@
+
+    <script>
+        var input = document.querySelector("#mobileNumber");
+        window.intlTelInput(input, {
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            // autoPlaceholder: "off",
+            // dropdownContainer: document.body,
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            // geoIpLookup: function(callback) {
+            //   $.get("http://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+            //     var countryCode = (resp && resp.country) ? resp.country : "";
+            //     callback(countryCode);
+            //   });
+            // },
+            // hiddenInput: "full_number",
+            // initialCountry: "auto",
+            // localizedCountries: { 'de': 'Deutschland' },
+            // nationalMode: false,
+            // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            preferredCountries: ['in', 'sa'],
+            // separateDialCode: true,
+            utilsScript: "/assets/js/utils.js",
+        });
+    </script>
+    <script src="~/assets/js/utils.js"></script>
+
+    @*<script type="text/javascript">
+            //$(".make-pass").attr("type", "password");
+
+            $(".sendotpbtn").click(function () {
+                $("#regform").rules("remove");
+                $("#smsform").rules("remove");
+
+                var myForm = document.getElementsByClassName('regform');
+                clearFormValidations(myForm);
+            });
+
+
+        </script>*@
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            function OTPInput() {
+                const inputs = document.querySelectorAll('#otp > *[id]');
+                for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function (event) { if (event.key === "Backspace") { inputs[i].value = ''; if (i !== 0) inputs[i - 1].focus(); } else { if (i === inputs.length - 1 && inputs[i].value !== '') { return true; } else if (event.keyCode > 47 && event.keyCode < 58) { inputs[i].value = event.key; if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode > 64 && event.keyCode < 91) { inputs[i].value = String.fromCharCode(event.keyCode); if (i !== inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); }
+            } OTPInput();
+        });
+    </script>
+
+
+    <script>
+        $("#sendotpbtn").click(function () {
+
+
+            $("#phone").(function () {
+                if (this.value == strmbl) {
+                    alert('Mobile Number already exists.');
+
+                }
+            });
+
+        });
+    </script>
+    <script>
+
+        $("#sendotpbtn").click(function () {
+
+            var value = $("#mobileNumber").val();
+
+            if (value == '') {
+                alert('Please Pick your Country and Fill Number Next to Country Code');
+                return false;
+            }
+
+
+
+            if (value.length < 8) {
+                alert('Invalid Mobile Number');
+                return false;
+            }
+
+
+
+
+
+        });
+
+    </script>
+
+
+    <script>
+    function UserCheck() {
+        $("#Status").html("Checking...");
+        $.post("@Url.Page("Register", "CheckMobile")",
+            {
+                userdata: $("#Username").val()
+            },
+        function (data) {
+            if (data == 0) {
+                $("#Status").html('<font color="Green">Available !. you can take it.</font>');
+                $("#phone").css("border-color", "Green");
+
+            }
+            else {
+                $("#Status").html('<font color="Red">Mobile Number Exists Please Login</font>');
+                $("#phone").css("border-color", "Red");
+            }
+        });
+    }
+    </script>
+
+    @if (Model.SMS.IsValidSMS == true)
+    {
+
+        <script>
+            var counter = 60;
+            var interval = setInterval(function () {
+                counter--;
+                // Display 'counter' wherever you want to display it.
+                if (counter <= 0) {
+                    clearInterval(interval);
+                    $('.timer').attr("style", "visibility:visible");
+                    return;
+                } else {
+                    $('#time').text(counter);
+                    console.log("Timer --> " + counter);
+                }
+            }, 1000);
+        </script>
+        }
+
+
+
+    }

@@ -16,15 +16,28 @@ namespace BulkyBook.DataAccess.Repository
         {
             _db = db;
         }
-
-        public void Update(Category category)
+        public void update(Category primaryCategory)
         {
-            var objFromDb = _db.Categories.FirstOrDefault(s => s.Id == category.Id);
+            var objFromDb = _db.Categories.FirstOrDefault(s => s.CategoryId == primaryCategory.CategoryId);
             if (objFromDb != null)
             {
-                objFromDb.Name = category.Name;
-               
+                if (primaryCategory.CategoryIcon != null)
+                {
+                    objFromDb.CategoryIcon = primaryCategory.CategoryIcon;
+                }
+
+                if (primaryCategory.CategoryImage != null)
+                {
+                    objFromDb.CategoryImage = primaryCategory.CategoryImage;
+                }
+
+
+                objFromDb.CategoryName = primaryCategory.CategoryName;
+
+                _db.SaveChanges();
             }
+
         }
+
     }
 }

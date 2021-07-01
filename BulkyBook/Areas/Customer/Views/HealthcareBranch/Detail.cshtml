@@ -1,0 +1,447 @@
+﻿@model BulkyBook.Models.ViewModels.HealthcareBranchVM
+@{
+    ViewData["Title"] = "Hospital Branch Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var subcategory = ViewData["subcategory"];
+}
+<html lang="en">
+<!-- Head -->
+<head>
+    <title>Hospital Branch Detail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Medical Care">
+
+    <!-- flexslider-css-file -->
+    <link rel="stylesheet" href="~/MedicalBranch/css/flexslider.css" type="text/css" media="screen" property="">
+    <!-- //flexslider-css-file -->
+
+    <link rel="stylesheet" href="~/MedicalBranch/css/easy-responsive-tabs.css">
+
+    <link href="~/MedicalBranch/css/font-awesome.css" rel="stylesheet">		<!-- font-awesome icons-css-file -->
+    <link href="~/MedicalBranch/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">	<!-- bootstrap-css-file -->
+    <link href="~/MedicalBranch/css/style.css" type="text/css" rel="stylesheet" media="all">	<!-- style-css-file -->
+    <!-- gallery -->
+    <link rel="stylesheet" href="~/MedicalBranch/css/lightbox.css">
+    <!-- //gallery -->
+    <!-- fonts -->
+    <link href="//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Cinzel:400,700,900" rel="stylesheet">
+    <!-- //fonts -->
+    <!-- Default-JavaScript-File -->
+    <script type="text/javascript" src="~/MedicalBranch/js/jquery-2.1.4.min.js"></script>
+    <!-- //Default-JavaScript-File -->
+
+    <script src="~/MedicalBranch/js/bootstrap.js"></script>	<!-- //bootstrap-JavaScript-File -->
+
+</head>
+<!-- Head -->
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- banner -->
+    <div id="home" class="w3ls-banner">
+        <!-- header -->
+        <div class="header-w3layouts">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-fixed-top top-nav-collapse">
+                <div class="container">
+                    <div class="navbar-header page-scroll">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Medical_care</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <h1><a class="navbar-brand">
+    @switch (subcategory)
+    {
+        case "hospital":
+            @Model.HealthcareBranch.HospitalType.Name
+            break;
+        case "testing":
+            @Model.HealthcareBranch.TestingLabType.Name
+            break;
+        case "nursing":
+            @Model.HealthcareBranch.NursingType.Name
+            break;
+        case "ambulatory":
+            @Model.HealthcareBranch.AmbulatoryType.Name
+            break;
+        case "devices":
+            @Model.HealthcareBranch.MedicalSuppliesType.Name
+            break;
+        case "insurance":
+            @Model.HealthcareBranch.MedicalInsuranceType.Name
+            break;
+        case "pharmaceuticals":
+            @Model.HealthcareBranch.PharmaceuticalType.Name
+            break;
+    }
+</a></h1>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+            </nav>
+        </div>
+        <!-- //header -->
+        <!--banner-->
+        <!--Slider-->
+        <div class="w3l_banner_info">
+            <div class="col-md-5 banner-form-agileinfo">
+                <img src="~/MedicalBranch/images/alt1.png" alt="">
+            </div>
+            <div class="col-md-7 slider">
+                <div class="callbacks_container">
+                    <ul class="rslides callbacks callbacks1" id="slider3">
+                        <li id="callbacks1_s0" class="" style="display: block; float: none; position: absolute; opacity: 0; z-index: 1; transition: opacity 500ms ease-in-out 0s;">
+                            <div class="slider_banner_info">
+                                <h4>WE make healthy</h4>
+                                <p>Medical school education and post graduate education empha -size thoroughness.The good physician treats the disease, great physician treats the patient who has the disease.</p>
+                            </div>
+
+                        </li>
+                        <li id="callbacks1_s1" class="callbacks1_on" style="display: block; float: left; position: relative; opacity: 1; z-index: 2; transition: opacity 500ms ease-in-out 0s;">
+                            <div class="slider_banner_info">
+                                <h4>Medicine is a science</h4>
+                                <p>The best doctor is the one you run to and can't find.We should be concerned not only about the health of individual patients, but also the health of our entire society.</p>
+                            </div>
+
+                        </li>
+                        <li id="callbacks1_s2" class="" style="display: block; float: none; position: absolute; opacity: 0; z-index: 1; transition: opacity 500ms ease-in-out 0s;">
+                            <div class="slider_banner_info">
+                                <h4>Nothing cures health</h4>
+                                <p>Never go to a doctor whose office plants have died.You know what they call the fellow who finishes last in his medical school graduating class? They call him 'Doctor. </p>
+                            </div>
+
+                        </li>
+                        <li id="callbacks1_s3" style="display: block; float: none; position: absolute; opacity: 0; z-index: 1; transition: opacity 500ms ease-in-out 0s;" class="">
+                            <div class="slider_banner_info">
+                                <h4>We do best treatment</h4>
+                                <p>Time is generally the best doctor.so well choose your best doctor before time lossesThe art of medicine consists in amusing the patient while nature cures the disease.</p>
+                            </div>
+
+                        </li>
+                    </ul><ul class="callbacks_tabs callbacks1_tabs"><li class="callbacks1_s1"><a href="#" class="callbacks1_s1">1</a></li><li class="callbacks1_s2 callbacks_here"><a href="#" class="callbacks1_s2">2</a></li><li class="callbacks1_s3"><a href="#" class="callbacks1_s3">3</a></li><li class="callbacks1_s4"><a href="#" class="callbacks1_s4">4</a></li></ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <!--//Slider-->
+
+        </div>
+        <!--//banner-->
+
+    </div>
+    <!-- //banner -->
+    <!-- about -->
+
+    <div class="about" id="about">
+        <a asp-controller="Healthcare" asp-action="Detail" asp-route-Id="@Model.HealthcareBranch.HealthcareId">Go to Hospital</a>
+        <div class="container">
+            <div class="w3ls-heading">
+                <h3>@Model.HealthcareBranch.Name</h3>
+            </div>
+            <div class="col-md-6 about-left">
+                <div class="w3labout-img boxw3-agile">
+                    @if (Model.HealthcareBranch.UploadImage != null)
+                    {
+                        <img src="@Model.HealthcareBranch.UploadImage" class="img-responsive" alt="Branch Photo">
+                    }
+                    else
+                    {
+                        <img src="~/images/dummyprofile/maleprofile.jpg" class="img-responsive" alt="Branch Photo">
+                    }
+                </div>
+            </div>
+            <div class="col-md-6 about-right">
+                <h2>Contact</h2>
+                <p><i class="fa fa-phone"></i> @Model.HealthcareBranch.ContactNo1</p>
+                @if (Model.HealthcareBranch.ContactNo2 != null)
+                {
+                    <p><i class="fa fa-phone"></i> @Model.HealthcareBranch.ContactNo2</p>}
+                <p><i class="fa fa-plus-square"></i> @Model.HealthcareBranch.EmergencyContactNo</p>
+                <p><i class="fa fa-share-square-o"></i> @Model.HealthcareBranch.SocialMediaURL</p>
+                <h2>Location</h2>
+                <p>@Model.HealthcareBranch.Address</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- //about -->
+    <!-- modal --><!-- for pop up -->
+    <div class="modal about-modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="span2" aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">
+                        @switch (subcategory)
+                        {
+                            case "hospital":
+                                @Model.HealthcareBranch.HospitalType.Name
+                                break;
+                            case "testing":
+                                @Model.HealthcareBranch.TestingLabType.Name
+                                break;
+                            case "nursing":
+                                @Model.HealthcareBranch.NursingType.Name
+                                break;
+                            case "ambulatory":
+                                @Model.HealthcareBranch.AmbulatoryType.Name
+                                break;
+                            case "devices":
+                                @Model.HealthcareBranch.MedicalSuppliesType.Name
+                                break;
+                            case "insurance":
+                                @Model.HealthcareBranch.MedicalInsuranceType.Name
+                                break;
+                            case "pharmaceuticals":
+                                @Model.HealthcareBranch.PharmaceuticalType.Name
+                                break;
+                        }
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="agileits-w3layouts-info">
+                        <img src="~/MedicalBranch/images/about.jpg" alt="">
+                        <p>Duis venenatis, turpis eu bibendum porttitor, sapien quam ultricies tellus, ac rhoncus risus odio eget nunc. Pellentesque ac fermentum diam. Integer eu facilisis nunc, a iaculis felis. Pellentesque pellentesque tempor enim, in dapibus turpis porttitor quis. Suspendisse ultrices hendrerit massa. Nam id metus id tellus ultrices ullamcorper.  Cras tempor massa luctus, varius lacus sit amet, blandit lorem. Duis auctor in tortor sed tristique. Proin sed finibus sem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //modal --><!-- //for pop up -->
+    <!-- tabs -->	<!-- services -->
+
+    <div class="demo" id="services">
+        <div class="container">
+            <div class="w3ls-heading">
+                <h3>What We Do</h3>
+            </div>
+            <div class="horizontalTab" id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
+               
+                <ul class="resp-tabs-list list-group">
+                    <li class="list-group-item text-center resp-tab-item" aria-controls="tab_item-0" role="tab">
+                        <div class="row">
+                            <div class="col">
+                                Department
+                            </div>
+                            <div class="col">
+                                @Model.HealthcareBranch.Department.DepartmentName
+                            </div>
+                        </div>
+                    </li>
+                    @if (Model.HealthcareBranch.FacilityId != null)
+                    {
+                    <li class="list-group-item text-center resp-tab-item" aria-controls="tab_item-0" role="tab">
+                        <div class="row">
+                            <div class="col">
+                                Facility
+                            </div>
+                            <div class="col">
+                                @Model.HealthcareBranch.Facility.Name
+                            </div>
+                        </div>
+                    </li>
+                    }
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <!-- //tabs -->    <!-- services -->
+    <!-- team -->	<!-- Our specialists -->
+
+    <div class="team" id="team">
+        <div class="container">
+            <div class="w3ls-heading">
+                <h3>Meet Our Specialists</h3>
+            </div>
+            <div class="agile_team_grids">
+                @foreach (var item in Model.HealthcareDoctors)
+                {
+                    <div class="col-md-3 agile_team_grid  agile_team_gridf">
+                        <div class="agile_team_grid_main">
+                            @if (item.DoctorPhoto != null)
+                            {
+                                <img src="@item.DoctorPhoto" class="img-responsive" alt="Doctor's Profile" style="height:250px;" >
+                            }
+                            else
+                            {
+                                <img src="~/images/dummyprofile/maleprofile.jpg" class="img-responsive" alt="Doctor's Profile" style="height:250px">
+                            }
+                            <div class="p-mask">
+                                <ul class="social-icons">
+                                    <li><a asp-controller="HealthcareDoctor" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-primary">View<span></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="agile_team_grid1">
+                            <h4>@item.Name</h4>
+                            <p>@item.Speciality.SpecialityName</p>
+                        </div>
+                    </div>
+                }
+                    <div class="clearfix"> </div>
+                </div>
+        </div>
+    </div>
+    <!-- //team -->	<!-- //Our specialists -->
+    <!-- appointment form -->
+    <!-- //appointment form -->
+    <!-- Laboratories -->
+
+    <div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="><div class="lb-nav"><a class="lb-prev" href=""></a><a class="lb-next" href=""></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div>
+    <!-- //Laboratories	-->
+    <!-- testimonials -->
+    <!-- //testimonials -->
+    <!-- classes -->	<!-- blog -->
+    <!-- //classes -->	<!-- //blog -->
+    <!-- contact -->
+    <!-- //contact -->
+    <!-- copyright -->
+    <!-- //copyright -->
+
+
+
+    <script src="~/MedicalBranch/js/easy-responsive-tabs.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#horizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true,   // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                activate: function (event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#tabInfo');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+            $('#verticalTab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true
+            });
+        });
+    </script>
+
+
+
+
+
+    <!--banner Slider starts Here-->
+    <script src="~/MedicalBranch/js/responsiveslides.min.js"></script>
+    <script>
+        // You can also use "$(window).load(function() {"
+        $(function () {
+            // Slideshow 4
+            $("#slider3").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: false,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
+
+        });
+    </script>
+
+    <!--banner Slider starts Here-->
+    <!--start-date-piker-->
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script src="~/MedicalBranch/js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+    <!--/End-date-piker-->
+    <!-- js for smooth scrollings -->
+    <script src="js/SmoothScroll.min.js"></script>
+    <!-- js for smooth scrollings -->
+    <!-- flexisel -->
+    <script type="text/javascript" src="~/MedicalBranch/js/jquery.flexisel.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $("#flexiselDemo1").flexisel({
+                visibleItems: 3,
+                animationSpeed: 1000,
+                autoPlay: false,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 1
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 2
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3
+                    }
+                }
+            });
+
+        });
+    </script>
+    <!-- //flexisel -->
+    <!-- start-smooth-scrolling -->
+    <script type="text/javascript" src="~/MedicalBranch/js/move-top.js"></script>
+    <script type="text/javascript" src="~/MedicalBranch/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smooth-scrolling -->
+    <!-- here stars scrolling icon -->
+    <script type="~/MedicalBranch/text/javascript">
+        $(document).ready(function() {
+            /*
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+                };
+            */
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+            });
+    </script>
+    <!-- //here ends scrolling icon -->
+    <!-- Scrolling Nav JavaScript -->
+    <script src="~/MedicalBranch/js/scrolling-nav.js"></script>
+    <!-- //fixed-scroll-nav-js -->
+
+
+
+
+
+
+
+
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+</body>
+</html>

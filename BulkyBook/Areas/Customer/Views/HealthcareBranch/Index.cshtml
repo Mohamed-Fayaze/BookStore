@@ -1,0 +1,147 @@
+﻿@model IEnumerable<BulkyBook.Models.HealthcareBranch>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var healthcareId = ViewData["healthcareId"];
+}
+
+<h1>Hospital Branch</h1>
+
+<p>
+    <a asp-action="Upsert" asp-route-healthcareId="@healthcareId" >Create New Branch</a>
+</p>
+<table class="table" style="overflow:scroll;width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UploadImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Healthcare)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HospitalType)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.TestingLabType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NursingType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmbulatoryType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedicalSuppliesType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MedicalInsuranceType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PharmaceuticalType)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facility)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPersonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmergencyContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SocialMediaURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <img src="@item.UploadImage" class="img-thumbnail">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Healthcare.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HospitalType.Name)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.TestingLabType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NursingType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmbulatoryType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicalSuppliesType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MedicalInsuranceType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PharmaceuticalType.Name)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Facility.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPersonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmergencyContactNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SocialMediaURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+
+            <td>
+                <a asp-controller="HealthcareDoctor" asp-action="Index" asp-route-BranchId="@item.Id" class="btn btn-primary">Doctor's List</a> |
+                <a asp-action="Upsert" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Detail" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+        <tr>
+            <td>
+                <a asp-controller="Healthcare" asp-action="Index" class="btn btn-primary">Back to My Listings</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,27 @@
+﻿@using BulkyBook.Areas.Identity.Pages.Account.Manage
+@{
+    ViewData["Title"] = "User details";
+    Layout = "~/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
+    ViewData["ActivePage"] = ManageNavPages.Favourite;
+}
+<br />
+<div class="col-lg-12 col-md-12 col-xs-12 pl-0 user-dash2">
+    <div class="my-properties">
+        <table id="tblData" class="table table-responsive-sm" style="width:100%;overflow:auto">
+            <thead class="thead-light">
+                <tr class="table-info">
+                    <th class="pl-2">My Favourites</th>
+                    <th class="p-0"></th>
+                    @*<th>Date Of Registered</th>*@
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script src="~/js/Data/Favourite.js"></script>
+}

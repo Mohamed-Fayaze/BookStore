@@ -1,0 +1,196 @@
+﻿@model BulkyBook.Models.ViewModels.ReviewRatingVM
+<div class="property-location mp">
+    <h5>Customer Review</h5>
+    <div class="review-content-wrap">
+        <div class="review-content">
+            <div class="review-rating-summary">
+                <div class="review-rating-summary-inner">
+                    <div class="stats-average__count">
+                        <h1 class="pt-4">@ViewBag.AverageRating</h1>
+                    </div>
+                    <!-- end stats-average__count -->
+                    <div class="stats-average__rating p-0">
+                        <ul class="p-0 m-0">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star-o"></i></li>
+                        </ul>
+                    </div>
+                    <p class="text-center mb-2">Out of 5.0</p>
+                    <!-- end stats-average__rating -->
+                </div>
+                <!-- end review-rating-summary-inner -->
+                <div class="course-rating-text">
+                    <p class="course-rating-text__text">Overall Rating</p>
+                </div>
+                <!-- end course-rating-text -->
+            </div>
+            <!-- end review-rating-summary -->
+            <div class="review-rating-widget">
+                @*<div class="review-rating-rate">
+                        <ul class="rate pl-00">
+                            <li class="review-rating-rate__items">
+                                <div class="review-rating-inner__item">
+                                    <div class="review-rating-rate__item-text">5 stars</div>
+                                    <div class="review-rating-rate__item-fill">
+                                        <span class="review-rating-rate__item-fill__fill rating-fill-width1"></span>
+                                    </div>
+                                    <div class="review-rating-rate__item-percent-text">77 %</div>
+                                </div>
+                            </li>
+                            <li class="review-rating-rate__items">
+                                <div class="review-rating-inner__item">
+                                    <div class="review-rating-rate__item-text">4 stars</div>
+                                    <div class="review-rating-rate__item-fill">
+                                        <span class="review-rating-rate__item-fill__fill rating-fill-width2"></span>
+                                    </div>
+                                    <div class="review-rating-rate__item-percent-text">54 %</div>
+                                </div>
+                            </li>
+                            <li class="review-rating-rate__items">
+                                <div class="review-rating-inner__item">
+                                    <div class="review-rating-rate__item-text">3 stars</div>
+                                    <div class="review-rating-rate__item-fill">
+                                        <span class="review-rating-rate__item-fill__fill rating-fill-width3"></span>
+                                    </div>
+                                    <div class="review-rating-rate__item-percent-text">14 %</div>
+                                </div>
+                            </li>
+                            <li class="review-rating-rate__items">
+                                <div class="review-rating-inner__item">
+                                    <div class="review-rating-rate__item-text">2 stars</div>
+                                    <div class="review-rating-rate__item-fill">
+                                        <span class="review-rating-rate__item-fill__fill rating-fill-width4"></span>
+                                    </div>
+                                    <div class="review-rating-rate__item-percent-text">5 %</div>
+                                </div>
+                            </li>
+                            <li class="review-rating-rate__items">
+                                <div class="review-rating-inner__item">
+                                    <div class="review-rating-rate__item-text">1 stars</div>
+                                    <div class="review-rating-rate__item-fill">
+                                        <span class="review-rating-rate__item-fill__fill rating-fill-width5"></span>
+                                    </div>
+                                    <div class="review-rating-rate__item-percent-text">2 %</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>*@
+                <!-- review-rating-rate -->
+            </div>
+            <!-- end review-rating-widget -->
+        </div>
+        <!-- end review-content -->
+    </div>
+    <!--  end review-content-wrap -->
+</div>
+<!-- START SECTION ASSIGNED AGENTS -->
+<div class="col-6 align-text-bottom">
+    <a class="btn btn-primary" asp-area="Admin" asp-controller="ReviewRating" asp-action="Upsert" asp-route-businessid="@ViewBag.businessId" asp-route-surlid="/Customer/Home/DetailLive?Id=@ViewBag.businessId"><i class="fas fa-plus"></i> &nbsp; Write your Review</a>
+</div>
+<div>
+    <a asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-reviewsort="0" asp-route-Id=" @ViewBag.businessId" ><input value="Most Recent" class="btn btn-success" /><i class="fas fa-sort"></i></a>
+    <a asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-reviewsort="1" asp-route-Id=" @ViewBag.businessId" ><input value="Most Liked" class="btn btn-primary"><i class="fa-thumbs-up"></i></a>
+</div>
+
+<section class="reviews comments">
+    @*<div class="col-6 align-text-bottom">
+            <a class="btn btn-primary" asp-action="Upsert" asp-route-businessid="@Model.ReviewRating.BussinessId"><i class="fas fa-plus"></i> &nbsp; Write your Review</a>
+            <input asp-for="ReviewRating.BussinessId" type="hidden" />
+        </div>*@
+    @if (Model.ReviewRatings != null)
+    {
+        @foreach (var item in Model.ReviewRatings)
+        {
+            <div class="row mb-5">
+                <ul class="col-12 commented pl-0">
+
+                    <li class="comm-inf">
+                        <div class="col-md-2">
+                            <img src="@item.ApplicationUser.ProfilePhoto" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-md-10 comments-info">
+                            <div class="conra">
+                                <h5 class="mb-2">@item.ApplicationUser.FirstName @item.ApplicationUser.LastName</h5>
+                                <div class="rating-box">
+                                    <div class="detail-list-rating mr-0">
+                                        @{
+                                            int rcount = 0;
+
+                                            for (decimal a = 0; a < (item.OverallRating); a++)
+                                            {
+                                                <i class="fa fa-star "></i>
+                                                rcount += 1;
+                                            }
+                                            for (int a = 5; a > rcount; a--)
+                                            {
+                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                            @*@Html.DisplayFor(modelItem => item.OverallRating)*@
+                                        }
+                                        <p class="checkbox">@Html.DisplayFor(modelItem => item.Recommendation)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="rest">@item.ReviewOn.ToString("dd MMM yyyy")</p>
+                            <p class="font-weight-bold">@Html.DisplayFor(modelItem => item.Title)</p>
+                            <p>@item.Description</p>
+                            <div class="rest"><img src="@item.Image" class="img-fluid" alt=""></div>
+
+                            <div> <a class="text-black-50 font-weight-bolder" asp-area="Admin" asp-controller="ReviewRating" asp-action="Helpful" asp-route-id="@item.Id" asp-route-surlid="/Customer/Home/DetailLive?Id=@item.BussinessId">Helpful<span class="blue-text pl-2">@item.HelpfulCount</span> </a> <a class="text-black-50 font-weight-bolder" asp-area="Admin" asp-controller="ReviewRating" asp-action="ReportAbuse" asp-route-id="@item.Id" asp-route-surlid="/Customer/Home/DetailLive?Id=@item.BussinessId"> ReportAbuse<span class="text-muted pl-2"></span></a> </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        }
+    }
+
+    @if (Model.PagingInfo.TotalItem > 0)
+    {
+        <nav aria-label="..." class="pt-3">
+            <ul class="pagination mt-0">
+                @if (Model.PagingInfo.CurrentPage == 1 || Model.PagingInfo.TotalPage == 1)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-businessid="@ViewBag.businessId" asp-route-ReviewPage="@(Model.PagingInfo.CurrentPage - 1)">Previous</a>
+                    </li>
+                }
+                @for (var val = 1; val <= Model.PagingInfo.TotalPage; val++)
+                {
+
+                    if (val == Model.PagingInfo.CurrentPage)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-businessid="@ViewBag.businessId" asp-route-ReviewPage="@val">@val <span class="sr-only">(current)</span></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-businessid="@ViewBag.businessId" asp-route-ReviewPage="@val">@val</a></li>
+                    }
+
+                }
+                @if (Model.PagingInfo.TotalPage == 1 || Model.PagingInfo.TotalPage == Model.PagingInfo.CurrentPage)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link">Next</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-area="Customer" asp-controller="Home" asp-action="DetailLive" asp-route-businessid="@ViewBag.businessId" asp-route-ReviewPage="@(Model.PagingInfo.CurrentPage + 1)">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+</section>
